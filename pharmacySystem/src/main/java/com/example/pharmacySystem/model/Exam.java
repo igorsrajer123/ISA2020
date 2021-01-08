@@ -18,9 +18,6 @@ public class Exam {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "grade", nullable = false)
-	private Integer grade;
-
 	@Column(name = "date", nullable = false)
 	private Date date;
 
@@ -39,14 +36,6 @@ public class Exam {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Integer getGrade() {
-		return grade;
-	}
-
-	public void setGrade(Integer grade) {
-		this.grade = grade;
 	}
 
 	public Date getDate() {
