@@ -69,6 +69,12 @@ public class User implements UserDetails{
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private PharmacySystemAdministrator pharmacySystemAdministrator;
 	
+	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Patient patient;
+	
+	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Supplier supplier;
+	
 	public User() {
 		super();
 	}
@@ -187,6 +193,22 @@ public class User implements UserDetails{
 
 	public void setPharmacyAdministrator(PharmacyAdministrator pharmacyAdministrator) {
 		this.pharmacyAdministrator = pharmacyAdministrator;
+	}
+	
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+	
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
 	}
 	
 	@Override
