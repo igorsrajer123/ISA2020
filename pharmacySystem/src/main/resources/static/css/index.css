@@ -1,0 +1,56 @@
+body{
+    background: url(1.jpg) no-repeat;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+nav{
+    font-family: "Georgia";
+    background: #1E90FF;
+    height: 80px;
+}
+
+label.navBar{
+    color: white;
+    font-size: 35px;
+    line-height:  80px;
+    padding: 0 100px;
+    font-weight: bold;
+}
+
+nav ul{
+    float: right;
+    margin-right: 20px;
+}
+
+nav ul lI{
+    display: inline-block;
+    line-height: 80px;
+    margin: 0 5px;
+}
+
+a{
+    border: 2px solid #FFFF;
+	background: white;
+	padding: 5px 5px;
+	font-size: 17px;
+	font-family: "Georgia", "Comic Sans", cursive;
+	margin: 7px;
+	cursor: pointer;
+	transition: 0.8s;
+	position: hidden;
+    color: #1E90FF;
+    border-radius: 15px;
+}
+
+a:hover{
+    border: 1px solid #fff;
+	background: #1E90FF;
+	color: #fff;
+}

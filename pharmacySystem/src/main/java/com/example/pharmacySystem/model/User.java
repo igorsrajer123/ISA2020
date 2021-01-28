@@ -1,5 +1,6 @@
 package com.example.pharmacySystem.model;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,6 +19,8 @@ import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "userEntity")
@@ -47,11 +50,14 @@ public class User implements UserDetails{
 	@Column(name = "activated", nullable = true)
 	private boolean activated;
 	
-	@Column(name = "authorized", nullable = true)
-	private boolean authorized;
+	@Column(name = "enabled", nullable = true)
+	private boolean enabled;
 	
 	@Column(name = "type", nullable = true)
 	private String type;
+	
+	@Column(name = "last_password_reset_date", nullable = true)
+    private Timestamp lastPasswordResetDate;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "userAuthority", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "authorityId", referencedColumnName = "id"))
@@ -69,6 +75,7 @@ public class User implements UserDetails{
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private PharmacySystemAdministrator pharmacySystemAdministrator;
 	
+	@JsonIgnoreProperties("user")
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Patient patient;
 	
@@ -76,16 +83,13 @@ public class User implements UserDetails{
 	private Supplier supplier;
 	
 	public User() {
-		super();
 	}
 	
-	public User(String email, String password, String firstName, String lastName) {
-		super();
+	public User(String email, String password) {
 		this.email = email;
 		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
 	}
+	
 
 	public Long getId() {
 		return id;
@@ -151,12 +155,8 @@ public class User implements UserDetails{
 		this.activated = activated;
 	}
 
-	public boolean isAuthorized() {
-		return authorized;
-	}
-
-	public void setAuthorized(boolean authorized) {
-		this.authorized = authorized;
+	public void setEnabled(boolean authorized) {
+		this.enabled = authorized;
 	}
 
 	public void setAuthorities(List<Authority> authorities) {
@@ -211,6 +211,14 @@ public class User implements UserDetails{
 		this.supplier = supplier;
 	}
 	
+	public Timestamp getLastPasswordResetDate() {
+		return lastPasswordResetDate;
+	}
+
+	public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+		this.lastPasswordResetDate = lastPasswordResetDate;
+	}
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.authorities;
@@ -238,6 +246,6 @@ public class User implements UserDetails{
 
 	@Override
 	public boolean isEnabled() {
-		return this.authorized;
+		return this.enabled;
 	}
 }
