@@ -34,7 +34,7 @@ public class EmailService {
 		String path = "http://localhost:8080/activateAccount/" + myUser.getId();
 		
 		SimpleMailMessage msg = new SimpleMailMessage();
-		msg.setTo("isapsw7@gmail.com");
+		msg.setTo("isapsw123@gmail.com");
 		msg.setFrom(environment.getProperty("spring.mail.username"));
 		msg.setSubject("Account Activation");
 		

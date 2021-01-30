@@ -28,16 +28,17 @@ public class Patient {
 	@Column(name = "phoneNumber", nullable = true)
 	private String phoneNumber;
 	
+	@Column(name = "city", nullable = true)
+	private String city;
+	
+	@Column(name = "country", nullable = true)
+	private String country;
+	
+	@Column(name = "processed", nullable = false)
+	private boolean processed;
+	
 	public Patient() {
 		super();
-	}
-	
-	public Patient(Long id, User user, String address, String phoneNumber) {
-		super();
-		 this.id = id;
-		 this.user = user;
-		 this.address = address;
-		 this.phoneNumber = phoneNumber;
 	}
 	
 	public Long getId() {
@@ -70,5 +71,29 @@ public class Patient {
 	
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public boolean isProcessed() {
+		return processed;
+	}
+
+	public void setProcessed(boolean processed) {
+		this.processed = processed;
 	}
 }

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -59,6 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/register").permitAll().antMatchers("/login").permitAll()
 		.antMatchers("/getUser").permitAll().antMatchers("/h2-console/**").permitAll()
 		.antMatchers("/getUserRole").permitAll().antMatchers("/sendAccountConfirmation").permitAll()
+		.antMatchers("/activateAccount/*").permitAll().antMatchers("/updatePatient").permitAll()
 		.antMatchers("/index.html", "/", "/login.html", "/registration.html", "/favicon.ico","/*.js", "/*.css").permitAll()
 		.anyRequest().authenticated().and()
 		.cors().and()

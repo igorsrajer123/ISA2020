@@ -1,6 +1,7 @@
 package com.example.pharmacySystem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.pharmacySystem.model.Patient;
@@ -12,6 +13,9 @@ public class PatientService {
 	@Autowired
 	private PatientRepository patientRepository;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	public Patient findOneById(Long id) {
 		return patientRepository.findOneById(id);
 	}
@@ -22,5 +26,17 @@ public class PatientService {
 	
 	public Patient save(Patient patient) {
 		return patientRepository.save(patient);
+	}
+	
+	public Patient updatePatient(Patient patient) {
+		Patient myPatient = patientRepository.findOneById(patient.getId());
+		myPatient.setAddress(patient.getAddress());
+		myPatient.setCity(patient.getCity());
+		myPatient.setCountry(patient.getCountry());
+		myPatient.setPhoneNumber(patient.getPhoneNumber());
+		myPatient.getUser().setPassword(passwordEncoder.encode(patient.getUser().getPassword()));
+		myPatient.getUser().setFirstName(patient.getUser().getFirstName());
+		myPatient.getUser().setLastName(patient.getUser().getLastName());
+		return myPatient;
 	}
 }

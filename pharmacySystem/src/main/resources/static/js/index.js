@@ -1,6 +1,6 @@
-window.onload = function(){
+$(window).on('load', function(){
     getCurrentUser();
-}
+});
 
 function welcomeMessage(user){
     if (user == undefined) {
@@ -21,9 +21,8 @@ function getCurrentUser(){
    			Authorization: 'Bearer ' + $.cookie('token')
 		},
         complete: function (data) {
-            //welcomeMessage(data.responseJSON);
+            welcomeMessage(data.responseJSON);
             alert(data.responseJSON.type);
         }
     });
-
 }

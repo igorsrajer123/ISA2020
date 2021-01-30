@@ -15,4 +15,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long>{
 	Patient findOneById(Long id);
 	
 	Patient findOneByUserId(Long id);	
+	
+	@SuppressWarnings("unchecked")
+	Patient save(Patient patient);
 }

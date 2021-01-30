@@ -40,25 +40,20 @@ public class LoginService implements UserDetailsService{
 		
 		if(myUser == null) return null;
 		
-		if(myUser != null && myUser.getType().equals("ROLE_PATIENT"))
-			return myUser;
-		else if(!myUser.isFirstLogin() && !myUser.getType().equals("ROLE_PATIENT"))
-			return myUser;
-		else if(!myUser.getType().equals("ROLE_PATIENT"))
-			return myUser;
-		else
-			return null;
+		if(myUser != null && !myUser.isActivated()) return null;
+
+		return myUser;
 	}
 	
 	public Patient register(Patient patient) {
 		User myUser = (User) loadUserByUsername(patient.getUser().getEmail());
 		
-		if(myUser != null)
-			return null;
+		if(myUser != null) return null;
 		
 		patient.getUser().setPassword(passwordEncoder.encode(patient.getUser().getPassword()));
 		patient.getUser().setEnabled(true);
 		patient.getUser().setActivated(false);
+		patient.setProcessed(false);
 		patient.getUser().setType("ROLE_PATIENT");
 		List<Authority> authorities = authorityService.findByName("ROLE_PATIENT");
 		patient.getUser().setAuthorities(authorities);

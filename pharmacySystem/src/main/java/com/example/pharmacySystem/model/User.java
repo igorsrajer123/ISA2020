@@ -44,9 +44,6 @@ public class User implements UserDetails{
 	@Column(name = "lastName")
 	private String lastName;
 	
-	@Column(name = "firstLogin", nullable = true)
-	private boolean firstLogin;
-	
 	@Column(name = "activated", nullable = true)
 	private boolean activated;
 	
@@ -137,14 +134,6 @@ public class User implements UserDetails{
 	
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public boolean isFirstLogin() {
-		return firstLogin;
-	}
-
-	public void setFirstLogin(boolean firstLogin) {
-		this.firstLogin = firstLogin;
 	}
 
 	public boolean isActivated() {

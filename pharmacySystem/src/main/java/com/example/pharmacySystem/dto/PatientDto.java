@@ -8,6 +8,8 @@ public class PatientDto {
 	private UserDto user;
 	private String address;
 	private String phoneNumber;
+	private String city;
+	private String country;
 	
 	public PatientDto() {
 		super();
@@ -58,5 +60,21 @@ public class PatientDto {
 	
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 }

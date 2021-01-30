@@ -1,8 +1,8 @@
-window.onload = function(){
+$(window).on('load', function(){
     $("#error").hide();
     
     login();
-}
+});
 
 function login(){    
 	$('#login').click(function (event) {
