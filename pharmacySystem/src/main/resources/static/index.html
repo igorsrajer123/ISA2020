@@ -7,13 +7,75 @@
     <script src="js/index.js"></script>
    <script src="js/logout.js"></script>
 <body>
-	<nav>
+	<nav class="navBar">
         <label class="navBar" id="navBar"></label>
         <ul id="options">
-            <li><a href="login.html" id="login">Log In</a></li>
-            <li><a href="registration.html" id="register">Registration</a></li>
-            <li><a href="index.html" id="logout">Logout</a>
+            <li><a href="login.html" id="login" class="navBarLinks">Log In</a></li>
+            <li><a href="registration.html" id="register" class="navBarLinks">Registration</a></li>
+            <li><a href="index.html" id="logout" class="navBarLinks">Logout</a>
+            <li><a href="patientProfile.html" id="patientProfile" class="navBarLinks">My Profile</a></li>
         </ul>
+    </nav>
+    
+    <nav class="sideBar">
+    	<ul class="sideBar-nav">
+    		<li>
+    			<img src="css/menuIcon.png" id="icon"/>
+    		</li>
+    		
+    		<li class="nav-item" id="allPharmacies">
+    			<a href="allPharmacies.html" class="nav-link">All Pharmacies</a>
+    		</li>
+    		
+    		<li class="nav-item" id="myPharmacies">
+    			<a href="#" class="nav-link">My Pharmacies</a>
+    		</li>
+    		
+    		<li class="nav-item" id="allMeds">
+    			<a href="allMedications.html" class="nav-link">All Medications</a>
+    		</li>
+    		
+    		<li class="nav-item" id="reservedMeds">
+    			<a href="#" class="nav-link">Reserved Medications</a>
+    		</li>
+    		
+    		<li class="nav-item" id="acquireMed">
+    			<a href="#" class="nav-link">Acquire Medication</a>
+    		</li>
+    		
+    		<li class="nav-item" id="counseling">
+    			<a href="#" class="nav-link">Schedule Counseling(Pharmacist)</a>
+    		</li>
+    		
+    		<li class="nav-item" id="examination">
+    			<a href="#" class="nav-link">Schedule Examination(Dermatologist)</a>
+    		</li>
+    		
+    		<li class="nav-item" id="counselingHistory">
+    			<a href="#" class="nav-link">Counseling History</a>
+    		</li>
+    		
+    		<li class="nav-item" id="examinationHistory">
+    			<a href="#" class="nav-link">Examination History</a>
+    		</li>
+    		
+    		<li class="nav-item" id="activeCounselings">
+    			<a href="#" class="nav-link">Active Counselings</a>
+    		</li>
+    		
+    		<li class="nav-item" id="activeExaminations">
+    			<a href="#" class="nav-link">Active Examinations</a>
+    		</li>
+    		
+    		<li class="nav-item" id="penalties">
+    			<a href="#" class="nav-link">Penalties</a>
+    		</li>
+    		
+    		<li class="nav-item" id="complaint">
+    			<a href="#" class="nav-link">Write A Complaint</a>
+    		</li>
+    		
+    	</ul>
     </nav>
 </body>
 </html>

@@ -1,5 +1,8 @@
 body{
     background: url(1.jpg) no-repeat;
+    margin: 0;
+    padding: 0;
+    owerflow-y: auto;
 }
 
 *{
@@ -16,26 +19,18 @@ nav{
     height: 80px;
 }
 
-label.navBar{
-    color: white;
-    font-size: 35px;
-    line-height:  80px;
-    padding: 0 100px;
-    font-weight: bold;
-}
-
 nav ul{
     float: right;
     margin-right: 20px;
 }
 
-nav ul lI{
+.navBar ul lI{
     display: inline-block;
     line-height: 80px;
     margin: 0 5px;
 }
 
-a{
+.navBarLinks{
     border: 2px solid #FFFF;
 	background: white;
 	padding: 5px 5px;
@@ -49,8 +44,54 @@ a{
     border-radius: 15px;
 }
 
-a:hover{
+.navBarLinks:hover{
     border: 1px solid #fff;
 	background: #1E90FF;
 	color: #fff;
 }
+
+.sideBar{
+	width: 4rem;
+	height: 500vh;
+	position: fixed;
+	background-color: #1E90FF;
+	transition: width 100ms ease;
+	text-align: center;
+	border: 1px solid #FFFF;
+	border-color: white;
+}
+
+.sideBar-nav{
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.nav-item{
+	width: 100%;
+	line-height: 42px;
+}
+
+.nav-item:last-child{
+   	bottom:0;
+	margin-top: auto;
+}
+
+#allMeds, #allPharmacies, #reservedMeds,
+#acquireMed, #examination, #counseling,
+#counselingHistory, #examinationHistory,
+#activeExaminations, #activeCounselings,
+#penalties, #myPharmacies, #complaint{
+	display: none;
+}
+
+.nav-link {
+	align-items: center;
+	height: 1rem;
+	color: white;
+	text-decoration: none;
+}
+
+

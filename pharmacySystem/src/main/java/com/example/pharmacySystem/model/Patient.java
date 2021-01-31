@@ -1,5 +1,7 @@
 package com.example.pharmacySystem.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -36,6 +41,10 @@ public class Patient {
 	
 	@Column(name = "processed", nullable = false)
 	private boolean processed;
+	
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "patientAllergicOn", joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "medicationId", referencedColumnName = "id"))
+	private List<Medication> allergicOn;
 	
 	public Patient() {
 		super();
@@ -95,5 +104,13 @@ public class Patient {
 
 	public void setProcessed(boolean processed) {
 		this.processed = processed;
+	}
+
+	public List<Medication> getAllergicOn() {
+		return allergicOn;
+	}
+
+	public void setAllergicOn(List<Medication> allergicOn) {
+		this.allergicOn = allergicOn;
 	}
 }

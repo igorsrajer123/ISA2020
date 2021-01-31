@@ -1,0 +1,43 @@
+<html>
+ <meta charset="utf-8" />
+    <title>Patient Allergies</title>
+    <link rel="stylesheet" href="css/patientAllergies.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.cookie.js"></script> 
+    <script src="js/patientAllergies.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<body>
+	<nav>
+	
+    </nav>
+    
+    <div id="modal" class="modal">
+  		<p id="warning" style="color:red;">Please check the medications you are allergic on!</p>
+	</div>
+
+    <div id="content">
+    	<div>
+	    	<p id="">Search medications:</p><input type="text" id="search"/>
+	    </div>
+	    <br/>
+	    <table id="table">
+	        <thead id="header">
+	        	<td>?</td>
+	            <td>Medication </td>
+	        </thead>
+	        <tbody>
+	        </tbody>
+	    </table>
+	    <br/>
+	    <button id="done">Done</button>
+    </div>
+    
+    <div>
+    	<p>Please avoid these medications:</p>
+    	<select id="select">
+    		<option></option>
+    	</select>
+    </div>
+</body>
+</html>

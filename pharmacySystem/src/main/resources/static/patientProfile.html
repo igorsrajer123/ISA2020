@@ -1,0 +1,52 @@
+<html>
+ <meta charset="utf-8" />
+    <title>Patient Profile</title>
+    <link rel="stylesheet" href="css/patientProfile.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.cookie.js"></script> 
+    <script src="js/patientProfile.js"></script>
+<body>
+	<nav>
+		<button class="allergies" id="allergies">My Allergies</button>
+    </nav>
+    
+    <div class="form">
+        <form>
+        	<p> User Category: <b>Patient</b></p>
+            <p>Email:</p>
+            <input type="text" name="email" placeholder="Email" id="email" disabled="true">
+
+            <p>Password:</p>
+            <input type="password" name="password" placeholder="Password" id="password" disabled="true">
+            <button id="changePassword" class="s">Change Password</button>
+
+            <p id="newPassword2" hidden="true">New Password:</p>
+            <input type="password" name="newPassword" placeholder="New Password" id="newPassword" hidden="true">
+
+            <p id="retypeNewPassword2" hidden="true">Retype New Password:</p>
+            <input type="password" name="newPassword" placeholder="Retype..." id="retypeNewPassword" hidden="true">
+
+            <p>First Name:</p>
+            <input type="text" name="firstName" id="firstName">
+
+            <p>Last Name:</p>
+            <input type="text" name="lastName" id="lastName">
+
+            <p>Address:</p>
+            <input type="text" name="address" id="address">
+            
+            <p>City:</p>
+            <input type="text" name="city" id="city">
+            
+            <p>Country:</p>
+            <input type="text" name="country" id="country">
+
+            <p>Phone Number:</p>
+            <input type="text" name="phone" id="phoneNumber">
+            <br/><br/>
+            <button type="submit" id="save" class="s">Save Changes</button>
+            <button type="submit" id="cancel" class="c">Cancel</button>
+        </form>
+    </div>
+</body>
+</html>

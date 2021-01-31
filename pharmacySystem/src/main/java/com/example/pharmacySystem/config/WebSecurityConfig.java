@@ -58,8 +58,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/register").permitAll().antMatchers("/login").permitAll()
 		.antMatchers("/getUser").permitAll().antMatchers("/h2-console/**").permitAll()
 		.antMatchers("/getUserRole").permitAll().antMatchers("/sendAccountConfirmation").permitAll()
-		.antMatchers("/activateAccount/*").permitAll().antMatchers("/updatePatient").permitAll()
-		.antMatchers("/index.html", "/", "/login.html", "/registration.html", "/favicon.ico","/*.js", "/*.css").permitAll()
+		.antMatchers("/activateAccount/*").permitAll().antMatchers("/getPatientAllergicMedications/*").permitAll()
+		.antMatchers("/addPatientAllergicMedication/*").permitAll()
+		.antMatchers("/", "/*.html", "/favicon.ico","/*.js", "/*.css").permitAll()
 		.anyRequest().authenticated().and()
 		.cors().and()
 		.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, loginService),

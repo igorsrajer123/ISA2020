@@ -1,0 +1,106 @@
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+body{
+    background: url(1.jpg) repeat;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+nav{
+    font-family: "Georgia";
+    background: #1E90FF;
+    height: 80px;
+}
+
+::-webkit-scrollbar {
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
+#content{
+    overflow: auto;
+    display: block;
+    border-collapse: collapse;
+    height: 500px;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+   	box-sizing: border-box;
+}
+
+td, tr{
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody{
+    background-color: #fff;
+}
+
+#header{
+    position: sticky;
+    top: 0;
+    background-color: #1E90FF;
+    color: #fff;
+}
+
+
+input { 
+    text-align: center; 
+}
+
+button{
+    border: 2px solid #FFFF;
+	background: white;
+	padding: 5px 5px;
+	font-size: 15px;
+	font-family: "Georgia", "Comic Sans", cursive;
+	font-weight: bold;
+	cursor: pointer;
+	transition: 0.8s;
+	position: hidden;
+    color: #1E90FF;
+    position: relative;
+    width: 70px;
+}
+
+button:hover{
+    border: 1px solid #fff;
+	background: #1E90FF;
+	color: #fff;
+}
+
+p{
+	font-size: 20px;
+	font-family: FreeMono, monospace;
+	color: white;
+}
+
+.search{
+	position: relative;
+	left: 41.4%;
+	font-size: 20px;
+	font-family: FreeMono, monospace;
+	color: black;
+}
+
+#select{
+	padding: 0 1em 0 0;
+    margin: 2px;
+    width: 20%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    line-height: inherit;
+    outline: none;
+    background-color: #F0F8FF;
+    font-family: "Rockwell", "Comic Sans", cursive;
+    height: 40px;
+}
+

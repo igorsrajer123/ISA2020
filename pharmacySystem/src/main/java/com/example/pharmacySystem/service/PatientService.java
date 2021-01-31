@@ -34,9 +34,14 @@ public class PatientService {
 		myPatient.setCity(patient.getCity());
 		myPatient.setCountry(patient.getCountry());
 		myPatient.setPhoneNumber(patient.getPhoneNumber());
-		myPatient.getUser().setPassword(passwordEncoder.encode(patient.getUser().getPassword()));
 		myPatient.getUser().setFirstName(patient.getUser().getFirstName());
 		myPatient.getUser().setLastName(patient.getUser().getLastName());
+		
+		if(patient.getUser().getPassword().contains("$2a$"))
+			myPatient.getUser().setPassword(patient.getUser().getPassword());
+		else
+			myPatient.getUser().setPassword(passwordEncoder.encode(patient.getUser().getPassword()));
+		
 		return myPatient;
 	}
 }
