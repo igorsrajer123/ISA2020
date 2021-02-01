@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.pharmacySystem.dto.MedicationDto;
+import com.example.pharmacySystem.dto.PharmacyDto;
 import com.example.pharmacySystem.model.Medication;
 import com.example.pharmacySystem.model.Patient;
+import com.example.pharmacySystem.model.Pharmacy;
 import com.example.pharmacySystem.service.MedicationService;
 import com.example.pharmacySystem.service.PatientService;
+import com.example.pharmacySystem.service.PharmacyService;
 
 @RestController
 public class MedicationController {
@@ -28,6 +31,9 @@ public class MedicationController {
 	
 	@Autowired
 	private PatientService patientService;
+	
+	@Autowired
+	private PharmacyService pharmacyService;
 	
 	@GetMapping(value = "/getAllMedications", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_PATIENT')")
@@ -92,5 +98,23 @@ public class MedicationController {
 			patientMedsDto.add(new MedicationDto(m));
 		
 		return new ResponseEntity<List<MedicationDto>>(patientMedsDto ,HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getPharmacyMedications/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<MedicationDto>> getPharmacyMedications(@PathVariable("pharmacyId") Long id){
+		PharmacyDto pharmacy = pharmacyService.findOneById(id);
+		Pharmacy myPharmacy = pharmacyService.findOneByName(pharmacy.getName());
+		
+		if(myPharmacy == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		List<Medication> pharmacyMeds = myPharmacy.getMedications();
+		List<MedicationDto> pharmacyMedsDto = new ArrayList<MedicationDto>();
+		
+		if(pharmacyMeds == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		for(Medication m : pharmacyMeds)
+			pharmacyMedsDto.add(new MedicationDto(m));
+		
+		return new ResponseEntity<List<MedicationDto>>(pharmacyMedsDto, HttpStatus.OK);
 	}
 }

@@ -60,6 +60,7 @@ function getAllPharmacies(){
 			
 				CITIES.push(allPharmacies[i].city);	
                 $("#table").append(pharmaciesTable);
+                choosePharmacy(allPharmacies[i].id);
             }
             
             var myCities = eliminateDuplicates(CITIES);
@@ -96,6 +97,7 @@ function sortByName(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
+                choosePharmacy(mojNiz[i].id);
 			}
 			rising = false;
 		}else{
@@ -113,6 +115,7 @@ function sortByName(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
+                choosePharmacy(mojNiz[i].id);
 			}
 			rising = true;
 		}			
@@ -137,6 +140,7 @@ function sortByAddress(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
+                choosePharmacy(mojNiz[i].id);
 			}
 			rising = false;
 		}else{
@@ -154,6 +158,7 @@ function sortByAddress(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
+                choosePharmacy(mojNiz[i].id);
 			}
 			rising = true;
 		}			
@@ -178,6 +183,7 @@ function sortByCity(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
+                choosePharmacy(mojNiz[i].id);
 			}
 			rising = false;
 		}else{
@@ -195,6 +201,7 @@ function sortByCity(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
+                choosePharmacy(mojNiz[i].id);
 			}
 			rising = true;
 		}			
@@ -220,6 +227,7 @@ function sortByRating(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
+                choosePharmacy(mojNiz[i].id);
 			}
 			rising = false;
 		}else{
@@ -237,6 +245,7 @@ function sortByRating(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
+                choosePharmacy(mojNiz[i].id);
 			}
 			rising = true;
 		}			
@@ -260,6 +269,7 @@ function searchPharmacies(allPharmacies){
 	                "</td></tr>");
 	
 	                $("#table").append(pharmaciesTable);
+	                choosePharmacy(allPharmacies[i].id);
 				}
 			}
 		}else{
@@ -271,12 +281,14 @@ function searchPharmacies(allPharmacies){
 function checkOnlyOneRating(){
     $(".rating-list").on("change", function(){
         $(this).siblings("input:checkbox").prop("checked", false);
+        $("#search").val("");
     });
 }
 
 function checkOnlyOneCity(){
 	$(".city-list").on("change", function(){
         $(this).siblings("input:checkbox").prop("checked", false);
+        $("#search").val("");
     });
 }
 
@@ -417,4 +429,11 @@ function generateTable(pharmacy, pharmaciesTable){
 	"</td></tr>");
 				
 	$("#table").append(pharmaciesTable);
+	choosePharmacy(pharmacy.id);
+}
+
+function choosePharmacy(pharmacyId){
+	$("#" + pharmacyId).click(function(event){
+		window.location.href = "pharmacyProfile.html?pharmacyId=" + pharmacyId;
+	});
 }

@@ -33,3 +33,34 @@ INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes) VALU
 INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes) VALUES ('Apoteka Jankovic', 'Rumunski Drum 11', 'Beograd', 3.6, 11);
 INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes) VALUES ('Apoteka Sveti Petar', 'Mise Dimitrijevica 26', 'Novi Sad', 4.2, 101);
 INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes) VALUES ('Apoteka Crveni Krst', 'Vojvode Petra Bojovica 1B', 'Beograd', 3.9, 2);
+
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (1, 2);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (1, 3);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (1, 4);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (1, 1);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (1, 5);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (2, 5);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (2, 7);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (2, 8);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (2, 9);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (2, 10);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (2, 3);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (2, 4);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (3, 1);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (3, 2);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (3, 8);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (3, 9);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (3, 7);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (3, 6);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (4, 8);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (4, 9);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (4, 10);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (4, 15);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (4, 14);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (5, 15);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (5, 16);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (5, 6);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (5, 7);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (5, 5);
+INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (5, 9);
+

@@ -31,8 +31,8 @@ public class PharmacyService {
 		return new PharmacyDto(pharmacy);
 	}
 	
-	public PharmacyDto findOneByName(String name) {
+	public Pharmacy findOneByName(String name) {
 		Pharmacy pharmacy = pharmacyRepository.findOneByName(name);
-		return new PharmacyDto(pharmacy);
+		return pharmacy;
 	}
 }

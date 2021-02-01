@@ -1,5 +1,5 @@
 body{
-    background: url(1.jpg) no-repeat;
+    background: url(4.jpg) no-repeat;
     margin: 0;
     padding: 0;
 }
@@ -12,41 +12,55 @@ body{
     box-sizing: border-box;
 }
 
-nav{
+.navBar{
     font-family: "Georgia";
     background: #1E90FF;
     height: 80px;
 }
 
-nav ul{
-    float: right;
-    margin-right: 20px;
+.form{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    width: 550px;
 }
 
-.navBar ul lI{
-    display: inline-block;
-    line-height: 80px;
-    margin: 0 5px;
-}
-
-.navBarLinks{
+button{
     border: 2px solid #FFFF;
 	background: white;
-	padding: 5px 5px;
-	font-size: 17px;
+	padding: 1px 1px;
+	font-size: 15px;
 	font-family: "Georgia", "Comic Sans", cursive;
-	margin: 7px;
+    margin: 7px;
+    width: 235px;
 	cursor: pointer;
-	transition: 0.8s;
+    transition: 0.8s;
 	position: hidden;
     color: #1E90FF;
-    border-radius: 15px;
+    border-radius: 7px;
+    height: 50px;
+    font-weight: bold;
 }
 
-.navBarLinks:hover{
+button:hover{
     border: 1px solid #fff;
 	background: #1E90FF;
 	color: #fff;
+}
+
+p{
+    font-size: 20px;
+    margin: 5px 0;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    display: inline
+}
+
+.pharmacyInfo{
+	display:inline-block;
+    -webkit-transform: scale(1,1.5);
 }
 
 .sideBar{
@@ -55,10 +69,10 @@ nav ul{
 	position: fixed;
 	background-color: #1E90FF;
 	transition: width 100ms ease;
-	text-align: left;
+	text-align: center;
 	border: 1px solid #FFFF;
 	border-color: white;
-	align-items: left;
+	align-items: center;
 }
 
 .sideBar-nav{
@@ -66,7 +80,7 @@ nav ul{
 	margin: 0;
 	display: flex;
 	flex-direction: column;
-	align-items: left;
+	align-items: center;
 }
 
 .nav-item{
@@ -80,11 +94,7 @@ nav ul{
 	margin-top: auto;
 }
 
-#allMeds, #allPharmacies, #reservedMeds,
-#acquireMed, #examination, #counseling,
-#counselingHistory, #examinationHistory,
-#activeExaminations, #activeCounselings,
-#penalties, #myPharmacies, #complaint{
+.nav-link{
 	display: none;
 }
 
@@ -93,6 +103,17 @@ nav ul{
 	height: 1rem;
 	color: white;
 	text-decoration: none;
+	font-weight: bold;
 }
 
+.lines{
+	display: none;
+}
 
+hr
+{
+    background-color: #eee;
+    border: 0 none;
+    color: #eee;
+    height: 1px;
+}

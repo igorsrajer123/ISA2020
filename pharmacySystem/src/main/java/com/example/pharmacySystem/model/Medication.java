@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Medication {
 
@@ -22,6 +24,7 @@ public class Medication {
 	@Column(name = "price", nullable = false)
 	private double price;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "medications")
 	private List<Pharmacy> pharmacies;
 

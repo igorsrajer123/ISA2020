@@ -60,6 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/getUserRole").permitAll().antMatchers("/sendAccountConfirmation").permitAll()
 		.antMatchers("/activateAccount/*").permitAll()
 		.antMatchers("/getAllPharmacies").permitAll()
+		.antMatchers("/getPharmacy/*").permitAll()
+		.antMatchers("/getPharmacyMedications/*").permitAll()
 		.antMatchers("/", "/*.html", "/favicon.ico","/*.js", "/*.css").permitAll()
 		.anyRequest().authenticated().and()
 		.cors().and()

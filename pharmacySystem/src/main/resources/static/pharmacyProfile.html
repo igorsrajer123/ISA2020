@@ -1,0 +1,70 @@
+<html>
+ <meta charset="utf-8" />
+    <title>Patient Profile</title>
+    <link rel="stylesheet" href="css/pharmacyProfile.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.cookie.js"></script> 
+    <script src="js/pharmacyProfile.js"></script>
+<body>
+	<nav class="navBar">
+    </nav>
+    
+     <nav class="sideBar">
+    	<ul class="sideBar-nav">
+    		<li>
+    			<img src="css/menuIcon.png" id="icon"/>
+    		</li>
+    		
+    		<li class="nav-item">
+    			<a href="reserveMedication.html" class="nav-link" id="reserveMed">Reserve Medication</a>
+    			<hr class="lines"/>
+    		</li>
+    		
+    		<li class="nav-item">
+    			<a href="#" class="nav-link" id="checkMedAvailable">Check Medication Availability</a>
+    			<hr class="lines"/>
+    		</li>
+    		
+    		<li class="nav-item">
+    			<a href="#" class="nav-link" id="scheduleExamination">Schedule Examination(Dermatologist)</a>
+    			<hr class="lines"/>
+    		</li>
+    		
+    		<li class="nav-item">
+    			<a href="#" class="nav-link" id="scheduleCounseling">Schedule Counseling(Pharmacist)</a>
+    			<hr class="lines"/>
+    		</li>
+    		
+    		<li class="nav-item">
+    			<a href="#" class="nav-link" id="subscribe">Subscribe for Actions and Promotions</a>
+    			<hr class="lines"/>
+    		</li>
+    	</ul>
+    </nav>
+    
+    <div class="form">
+        <form>
+            <p>Pharmacy Name:</p>
+            <p class="pharmacyInfo" id="name" style="color:#1E90FF;"></p>
+			<br/>
+            <p>Address:</p>
+            <p class="pharmacyInfo" id="address" style="color:#1E90FF;"></p>
+			<br/>
+            <p>City:</p>
+            <p class="pharmacyInfo" id="city" style="color:#1E90FF;"></p>
+			<br/>
+            <p>Pharmacy Rating:</p>
+            <p class="pharmacyInfo" id="rating" style="color:#1E90FF;"></p>
+			
+			<br/>
+            <button id="pharmacyMeds">View Pharmacy Medications</button>
+            <br/><br/>
+            <button>View Pharmacy Dermatologists</button>
+            <br/><br/>
+            <button>View Pharmacy Pharmacists</button>
+            <br/><br/>
+            <button>View Available Examinations(Dermatologist)</button>
+        </form>
+    </div>
+</body>
+</html>
