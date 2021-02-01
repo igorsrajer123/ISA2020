@@ -40,7 +40,7 @@ public class MedicationController {
 	}
 	
 	@GetMapping(value = "/getPatientAllergicMedications/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	//@PreAuthorize("hasRole('ROLE_PATIENT'")
+	@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<List<MedicationDto>> getPatientAllergicMedications(@PathVariable("patientId") Long id){
 		Patient myPatient = patientService.findOneById(id);
 		
@@ -55,6 +55,7 @@ public class MedicationController {
 	}
 	
 	@PostMapping(value = "/addPatientAllergicMedication/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<List<MedicationDto>> addPatientAllergicMedication(@PathVariable("patientId") Long id, @RequestBody Medication medication){
 		Patient myPatient = patientService.findOneById(id);
 		
@@ -65,6 +66,26 @@ public class MedicationController {
 		List<MedicationDto> patientMedsDto = new ArrayList<MedicationDto>();
 		
 		patientMeds.add(medication);
+		patientService.save(myPatient);
+		
+		for(Medication m : patientMeds)
+			patientMedsDto.add(new MedicationDto(m));
+		
+		return new ResponseEntity<List<MedicationDto>>(patientMedsDto ,HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/removePatientAllergicMedication/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PATIENT')")
+	public ResponseEntity<List<MedicationDto>> removePatientAllergicMedication(@PathVariable("patientId") Long id, @RequestBody Medication medication){
+		Patient myPatient = patientService.findOneById(id);
+		
+		if(medicationService.findOneByName(medication.getName()) == null)
+			return new ResponseEntity<List<MedicationDto>>(HttpStatus.NOT_FOUND);
+		
+		List<Medication> patientMeds = myPatient.getAllergicOn();
+		List<MedicationDto> patientMedsDto = new ArrayList<MedicationDto>();
+		
+		patientMeds.removeIf(med -> med.getName().equals(medication.getName()));
 		patientService.save(myPatient);
 		
 		for(Medication m : patientMeds)

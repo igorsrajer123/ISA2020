@@ -69,6 +69,7 @@ function showAllMedications(patientAllergicMedications, patientId){
 
                 $("#table").append(medsTable);
                 addPatientAllergicMedication(patientId, allMedications[i]);
+                removePatientAllergicMedication(patientId, allMedications[i]);
             }
             
             for(var i = 0; i < allMedications.length; i++){
@@ -99,6 +100,7 @@ function searchMedications(allMedications, patientAllergicMedications, patientId
 	
 	                $("#table").append(medsTable);
 	                addPatientAllergicMedication(patientId, allMedications[i]);
+	                removePatientAllergicMedication(patientId, allMedications[i]);
 				}
 			}
 			
@@ -142,5 +144,34 @@ function addPatientAllergicMedication(patientId, medication){
 	        }
        });
     }
-});
+	});
+}
+
+function removePatientAllergicMedication(patientId, medication){
+	$("#" + medication.name).change(function() {
+	
+	if(!this.checked) {
+    	var data = {
+    		"id": medication.id,
+    		"name": medication.name,
+    	}
+    	
+    	var transformedData = JSON.stringify(data);
+    	
+        $.ajax({
+	        url: 'http://localhost:8080/removePatientAllergicMedication/' + patientId,
+	        type: 'POST',
+	        data: transformedData,
+        	contentType: 'application/json',
+        	dataType: 'json',
+	        headers: {
+	           Authorization: 'Bearer ' + $.cookie('token')
+	        },
+	        complete: function(data){
+	        	if(data.status == 200)
+	        		window.location.href = "patientAllergies.html";
+	        }
+       });
+    }
+	});
 }
