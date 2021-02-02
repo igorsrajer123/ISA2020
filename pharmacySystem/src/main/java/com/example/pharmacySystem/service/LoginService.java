@@ -61,13 +61,4 @@ public class LoginService implements UserDetailsService{
 		
 		return patient;
 	}
-	
-	public String getUserRole(String email) {
-		User myUser = userRepository.findOneByEmail(email);
-		
-		if(myUser == null) return "NO_USER_ROLE";
-		
-		return myUser.getType();
-	}
-
 }

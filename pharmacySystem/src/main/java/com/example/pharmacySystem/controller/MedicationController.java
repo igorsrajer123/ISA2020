@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.pharmacySystem.dto.MedicationDto;
-import com.example.pharmacySystem.dto.PharmacyDto;
 import com.example.pharmacySystem.model.Medication;
 import com.example.pharmacySystem.model.Patient;
 import com.example.pharmacySystem.model.Pharmacy;
@@ -38,11 +37,16 @@ public class MedicationController {
 	@GetMapping(value = "/getAllMedications", produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<List<MedicationDto>> getAllMedications(){
-		List<MedicationDto> allMedications = medicationService.findAll();
+		List<Medication> allMedications = medicationService.findAll();
 		
-		if(allMedications == null) return new ResponseEntity<List<MedicationDto>>(HttpStatus.NOT_FOUND);
+		if(allMedications == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
-		return new ResponseEntity<List<MedicationDto>>(allMedications, HttpStatus.OK);
+		List<MedicationDto> allMedicationsDto = new ArrayList<MedicationDto>();
+		
+		for(Medication m : allMedications)
+			allMedicationsDto.add(new MedicationDto(m));
+		
+		return new ResponseEntity<List<MedicationDto>>(allMedicationsDto, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/getPatientAllergicMedications/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,9 +57,8 @@ public class MedicationController {
 		List<Medication> patientMeds = myPatient.getAllergicOn();
 		List<MedicationDto> patientMedsDto = new ArrayList<MedicationDto>();
 		
-		for(Medication m : patientMeds) {
+		for(Medication m : patientMeds) 
 			patientMedsDto.add(new MedicationDto(m));
-		}
 		
 		return new ResponseEntity<List<MedicationDto>>(patientMedsDto, HttpStatus.OK);
 	}
@@ -102,12 +105,11 @@ public class MedicationController {
 	
 	@GetMapping(value = "/getPharmacyMedications/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<MedicationDto>> getPharmacyMedications(@PathVariable("pharmacyId") Long id){
-		PharmacyDto pharmacy = pharmacyService.findOneById(id);
-		Pharmacy myPharmacy = pharmacyService.findOneByName(pharmacy.getName());
+		Pharmacy pharmacy = pharmacyService.findOneById(id);
 		
-		if(myPharmacy == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		if(pharmacy == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
-		List<Medication> pharmacyMeds = myPharmacy.getMedications();
+		List<Medication> pharmacyMeds = pharmacy.getMedications();
 		List<MedicationDto> pharmacyMedsDto = new ArrayList<MedicationDto>();
 		
 		if(pharmacyMeds == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);

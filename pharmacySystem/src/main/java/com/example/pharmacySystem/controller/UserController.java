@@ -1,5 +1,7 @@
 package com.example.pharmacySystem.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,5 +24,12 @@ public class UserController {
 	
 		User myUser = userService.findOneByEmail(email);
 		return new ResponseEntity<User>(myUser, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getAllUsers", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<User>> getAllUsers(){
+		List<User> all = userService.findAll();
+		
+		return new ResponseEntity<List<User>>(all, HttpStatus.OK);
 	}
 }

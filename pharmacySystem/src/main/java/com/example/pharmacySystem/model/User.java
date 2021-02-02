@@ -16,10 +16,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -50,6 +48,9 @@ public class User implements UserDetails{
 	@Column(name = "enabled", nullable = true)
 	private boolean enabled;
 	
+	@Column(name = "firstLogin", nullable = true)
+	private boolean firstLogin;
+	
 	@Column(name = "type", nullable = true)
 	private String type;
 	
@@ -66,9 +67,11 @@ public class User implements UserDetails{
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Pharmacist pharmacist;
 	
+	@JsonIgnoreProperties("user")
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private PharmacyAdministrator pharmacyAdministrator;
 	
+	@JsonIgnoreProperties("user")
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private PharmacySystemAdministrator pharmacySystemAdministrator;
 	
@@ -236,5 +239,13 @@ public class User implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		return this.enabled;
+	}
+
+	public boolean isFirstLogin() {
+		return firstLogin;
+	}
+
+	public void setFirstLogin(boolean firstLogin) {
+		this.firstLogin = firstLogin;
 	}
 }

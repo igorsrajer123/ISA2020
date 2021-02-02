@@ -1,10 +1,14 @@
 package com.example.pharmacySystem.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,4 +33,17 @@ public class PatientController {
 		return new ResponseEntity<Patient>(myPatient, HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/getAllPatients", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Patient>> getAllPatients() {
+		List<Patient> all = patientService.findAll();
+		
+		return new ResponseEntity<List<Patient>>(all, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getPatientById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Patient> getById(@PathVariable("id") Long id) {
+		Patient p = patientService.findOneById(id);
+		
+		return new ResponseEntity<Patient>(p, HttpStatus.OK);
+	}
 }

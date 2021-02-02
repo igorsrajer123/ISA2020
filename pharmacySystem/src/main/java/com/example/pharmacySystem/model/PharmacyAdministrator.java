@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class PharmacyAdministrator {
 
@@ -16,20 +18,18 @@ public class PharmacyAdministrator {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("pharmacyAdministrator")
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Pharmacy pharmacy;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("pharmacyAdministrator")
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
 	
 	public PharmacyAdministrator() {
 		super();
 	}
 
-	public PharmacyAdministrator(Long id) {
-		super();
-		this.id = id;
-	}
 	public Long getId() {
 		return id;
 	}

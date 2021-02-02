@@ -1,12 +1,8 @@
 package com.example.pharmacySystem.service;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.example.pharmacySystem.dto.PharmacyDto;
 import com.example.pharmacySystem.model.Pharmacy;
 import com.example.pharmacySystem.repository.PharmacyRepository;
 
@@ -16,19 +12,14 @@ public class PharmacyService {
 	@Autowired
 	private PharmacyRepository pharmacyRepository;
 	
-	public List<PharmacyDto> findAll(){
+	public List<Pharmacy> findAll(){
 		List<Pharmacy> allPharmacies = pharmacyRepository.findAll();
-		List<PharmacyDto> myPharmacies = new ArrayList<PharmacyDto>();
-		
-		for(Pharmacy p : allPharmacies) 
-			myPharmacies.add(new PharmacyDto(p));
-		
-		return myPharmacies;
+		return allPharmacies;
 	}
 	
-	public PharmacyDto findOneById(Long id) {
+	public Pharmacy findOneById(Long id) {
 		Pharmacy pharmacy = pharmacyRepository.findOneById(id);	
-		return new PharmacyDto(pharmacy);
+		return pharmacy;
 	}
 	
 	public Pharmacy findOneByName(String name) {

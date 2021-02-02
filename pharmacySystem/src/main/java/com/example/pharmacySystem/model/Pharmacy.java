@@ -14,8 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Pharmacy {
@@ -45,10 +44,11 @@ public class Pharmacy {
 	@ManyToMany(mappedBy = "pharmacies")
 	private Set<Dermatologist> dermatologists;
 	
+	@JsonIgnoreProperties("pharmacy")
 	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<PharmacyAdministrator> pharmacyAdministrators;
 	
-	@JsonIgnore
+	@JsonIgnoreProperties("pharmacy")
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "pharmacyMedications", joinColumns = { @JoinColumn(name = "pharmacyId", referencedColumnName = "id")}, inverseJoinColumns = @JoinColumn(name = "medicationId", referencedColumnName = "id"))
 	private List<Medication> medications;

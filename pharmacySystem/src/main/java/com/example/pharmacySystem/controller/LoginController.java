@@ -14,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,6 +39,9 @@ public class LoginController {
 	
 	@Autowired
 	private TokenUtils tokenUtils;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -79,14 +83,18 @@ public class LoginController {
 		return new ResponseEntity<User>(myUser, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/getUserRole", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> getUserRole(HttpServletRequest request) throws Exception{
-		String token = tokenUtils.getToken(request);
-		String email = tokenUtils.getUsernameFromToken(token);
-		String role = loginService.getUserRole(email);
+	@PostMapping(value = "/changePassword", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<User> changePass(@RequestBody String[] data, HttpServletRequest request){
+		String myToken = tokenUtils.getToken(request);
+		String email = tokenUtils.getUsernameFromToken(myToken);
+		User myUser = userService.findOneByEmail(email);
 		
-		if(role.equals("NO_USER_ROLE")) return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+		if(myUser == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
-		return new ResponseEntity<String>(role, HttpStatus.OK);
+		myUser.setPassword(passwordEncoder.encode(data[0]));
+		myUser.setFirstLogin(false);
+		myUser = userService.save(myUser);
+		
+		return new ResponseEntity<User>(myUser, HttpStatus.OK);
 	}
 }

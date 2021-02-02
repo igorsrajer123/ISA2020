@@ -5,11 +5,16 @@ INSERT INTO authority(name) VALUES ('ROLE_SUPPLIER');
 INSERT INTO authority(name) VALUES ('ROLE_PHARMACY_ADMIN');
 INSERT INTO authority(name) VALUES ('ROLE_PHARMACY_SYSTEM_ADMIN');
 
-INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled) VALUES ('isapsw1234@gmail.com', '$2a$10$M3.YOtEuBCSNbgzJ3hkQv.ZgOMGNSTataYMx1UU7OnqMrlC6Osgzm', 'Misa', 'Dimitrijevic', 'ROLE_PATIENT', true, true);
+--user password: 123
+-- system admin password: admin
+-- pharmacy admin password: phadmin
+INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('isapsw1234@gmail.com', '$2a$10$M3.YOtEuBCSNbgzJ3hkQv.ZgOMGNSTataYMx1UU7OnqMrlC6Osgzm', 'Misa', 'Dimitrijevic', 'ROLE_PATIENT', true, true, false);
+INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('admin@gmail.com', '$2a$10$cQSdC5wh2L6oZ2QFGNyD.OhnZ7akIGf7FEx0lmQ4RK6RiHyqz7cOC', 'Nikola', 'Stankovic', 'ROLE_PHARMACY_SYSTEM_ADMIN', true, true, true);
+INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('phadmin@gmail.com', '$2a$10$n8yxFV7zy7PDResCzemMLOhcPcbwLuF7Npn5lHhxVg6pKkFOi8PE2', 'Sima', 'Savic', 'ROLE_PHARMACY_ADMIN', true, true, true);
 
 INSERT INTO patient(address, phone_number, city, country, processed, user_id) VALUES ('adresica','1234567890', 'zrenjanin', 'serbia', true, 1);
 
-INSERT INTO user_authority(user_id, authority_id) VALUES (1, 1);
+INSERT INTO pharmacy_system_administrator(user_id) VALUES (2);
 
 INSERT INTO medication(name, price) VALUES ('Rivotril', 1500);
 INSERT INTO medication(name, price) VALUES ('Acetaminophen', 850);
@@ -64,3 +69,8 @@ INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (5, 7);
 INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (5, 5);
 INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (5, 9);
 
+INSERT INTO pharmacy_administrator(pharmacy_id, user_id) VALUES (1, 3);
+
+INSERT INTO user_authority(user_id, authority_id) VALUES (1, 1);
+INSERT INTO user_authority(user_id, authority_id) VALUES (2, 6);
+INSERT INTO user_authority(user_id, authority_id) VALUES (3, 5);

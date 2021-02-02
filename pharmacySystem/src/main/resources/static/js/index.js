@@ -69,6 +69,12 @@ function userOptions(user){
 	    	$("#penalties").hide();
 	    	$("#myPharmacies").hide();
     	});
+    }else if(user.type == "ROLE_PHARMACY_SYSTEM_ADMIN"){
+    	showSystemAdminUserOptions();
+    	
+    }else if(user.type == "ROLE_PHARMACY_ADMIN"){
+    	showPharmacyAdminUserOptions();
+    	
     }
 }
 
@@ -77,6 +83,9 @@ function showUnidentifiedUserOptions(){
     $("#register").show();
     $("#logout").hide();
     $("#patientProfile").hide();
+    $("#changePassword").hide();
+    $("#systemAdminProfile").hide();
+    $("#pharmacyAdminProfile").hide();
 }
 
 function showPatientUserOptions(){
@@ -84,6 +93,29 @@ function showPatientUserOptions(){
     $("#register").hide();
     $("#logout").show();
     $("#patientProfile").show();
+    $("#changePassword").hide();
+    $("#systemAdminProfile").hide();
+    $("#pharmacyAdminProfile").hide();
+}
+
+function showSystemAdminUserOptions(){
+	$("#login").hide();
+    $("#register").hide();
+    $("#logout").show();
+    $("#patientProfile").hide();
+    $("#changePassword").show();
+    $("#systemAdminProfile").show();
+    $("#pharmacyAdminProfile").hide();
+}
+
+function showPharmacyAdminUserOptions(){
+	$("#login").hide();
+    $("#register").hide();
+    $("#logout").show();
+    $("#patientProfile").hide();
+    $("#changePassword").show();
+    $("#systemAdminProfile").hide();
+    $("#pharmacyAdminProfile").show();
 }
 
 function getCurrentUser(){
@@ -96,6 +128,14 @@ function getCurrentUser(){
         complete: function (data) {
             welcomeMessage(data.responseJSON);
             userOptions(data.responseJSON);
+            if(data.responseJSON != undefined && data.responseJSON.type != "ROLE_PATIENT"){
+            	if(data.responseJSON.firstLogin){
+            		$("#modal").modal('show');
+            		setTimeout(function(){
+					    window.location.href = "changePassword.html";
+					}, 1500);
+            	}
+           	}
         }
     });
 }

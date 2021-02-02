@@ -1,5 +1,7 @@
 package com.example.pharmacySystem.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,10 @@ public class PatientService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	public List<Patient> findAll(){
+		return patientRepository.findAll();
+	}
 	
 	public Patient findOneById(Long id) {
 		return patientRepository.findOneById(id);
