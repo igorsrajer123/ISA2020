@@ -15,6 +15,11 @@ $(window).on('load', function(){
 	});
 });
 
+function blockTableClick(user){
+	if(user == undefined || user.type == "ROLE_PHARMACY_SYSTEM_ADMIN")
+	   $("#table tr").off("click");
+}
+
 function getCurrentUser(){
 	$.ajax({
         method: 'GET',
@@ -25,7 +30,7 @@ function getCurrentUser(){
         complete: function (data) {
             if(data.responseJSON == undefined || data.responseJSON.type == "ROLE_PATIENT" ||
             		data.responseJSON.type == "ROLE_PHARMACY_SYSTEM_ADMIN"){
-                getAllPharmacies();
+                getAllPharmacies(data.responseJSON);
             }else {
             	alert("You cannot access this page!");
                 window.location.href = "../index.html";
@@ -34,7 +39,7 @@ function getCurrentUser(){
     });
 }
 
-function getAllPharmacies(){
+function getAllPharmacies(user){
 	$.ajax({
         method: 'GET',
         url: 'http://localhost:8080/getAllPharmacies',
@@ -60,26 +65,26 @@ function getAllPharmacies(){
 			
 				CITIES.push(allPharmacies[i].city);	
                 $("#table").append(pharmaciesTable);
-                choosePharmacy(allPharmacies[i].id);
+                choosePharmacy(allPharmacies[i].id, user);
             }
-            
+            blockTableClick(user);
             var myCities = eliminateDuplicates(CITIES);
 				
 			for(var j = 0; j < myCities.length; j++)
 				$("#cities").append("<input type='checkbox' class='city-list' value='" + myCities[j] + "'/> <label>" + myCities[j] + "</label><br/>");	
 					
-            sortByName(allPharmacies);
-            sortByAddress(allPharmacies);
-            sortByCity(allPharmacies);
-            sortByRating(allPharmacies);
-            searchPharmacies(allPharmacies);
+            sortByName(allPharmacies, user);
+            sortByAddress(allPharmacies, user);
+            sortByCity(allPharmacies, user);
+            sortByRating(allPharmacies, user);
+            searchPharmacies(allPharmacies, user);
             checkOnlyOneCity();
-            filterPharmacies(allPharmacies);
+            filterPharmacies(allPharmacies, user);
         }
     });
 }
 
-function sortByName(allPharmacies){
+function sortByName(allPharmacies, user){
 	var rising = false;
 	$("#name").click(function(){
 		if(rising){
@@ -97,9 +102,10 @@ function sortByName(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
-                choosePharmacy(mojNiz[i].id);
+                choosePharmacy(mojNiz[i].id, user);
 			}
 			rising = false;
+			blockTableClick(user);
 		}else{
 			var pharmaciesTable = $("#table tbody");
             pharmaciesTable.empty();
@@ -115,14 +121,15 @@ function sortByName(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
-                choosePharmacy(mojNiz[i].id);
+                choosePharmacy(mojNiz[i].id, user);
 			}
 			rising = true;
+			blockTableClick(user);
 		}			
 	});
 }
 
-function sortByAddress(allPharmacies){
+function sortByAddress(allPharmacies, user){
 	var rising = false;
 	$("#address").click(function(){
 		if(rising){
@@ -140,9 +147,10 @@ function sortByAddress(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
-                choosePharmacy(mojNiz[i].id);
+                choosePharmacy(mojNiz[i].id, user);
 			}
 			rising = false;
+			blockTableClick(user);
 		}else{
 			var pharmaciesTable = $("#table tbody");
             pharmaciesTable.empty();
@@ -158,14 +166,15 @@ function sortByAddress(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
-                choosePharmacy(mojNiz[i].id);
+                choosePharmacy(mojNiz[i].id, user);
 			}
 			rising = true;
+			blockTableClick(user);
 		}			
 	});
 }
 
-function sortByCity(allPharmacies){
+function sortByCity(allPharmacies, user){
 	var rising = false;
 	$("#city").click(function(){
 		if(rising){
@@ -183,9 +192,10 @@ function sortByCity(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
-                choosePharmacy(mojNiz[i].id);
+                choosePharmacy(mojNiz[i].id, user);
 			}
 			rising = false;
+			blockTableClick(user);
 		}else{
 			var pharmaciesTable = $("#table tbody");
             pharmaciesTable.empty();
@@ -201,14 +211,15 @@ function sortByCity(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
-                choosePharmacy(mojNiz[i].id);
+                choosePharmacy(mojNiz[i].id, user);
 			}
 			rising = true;
+			blockTableClick(user);
 		}			
 	});
 }
 
-function sortByRating(allPharmacies){	
+function sortByRating(allPharmacies, user){	
 	
 	var rising = false;
 	$("#rating").click(function(){
@@ -227,9 +238,10 @@ function sortByRating(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
-                choosePharmacy(mojNiz[i].id);
+                choosePharmacy(mojNiz[i].id, user);
 			}
 			rising = false;
+			blockTableClick(user);
 		}else{
 			var pharmaciesTable = $("#table tbody");
             pharmaciesTable.empty();
@@ -245,14 +257,15 @@ function sortByRating(allPharmacies){
                 "</td></tr>");
 
                 $("#table").append(pharmaciesTable);
-                choosePharmacy(mojNiz[i].id);
+                choosePharmacy(mojNiz[i].id, user);
 			}
 			rising = true;
+			blockTableClick(user);
 		}			
 	});
 }
 
-function searchPharmacies(allPharmacies){
+function searchPharmacies(allPharmacies, user){
 	$("#search").on("input", function(e){
 		if($("#search").val() != ""){
 			
@@ -269,11 +282,12 @@ function searchPharmacies(allPharmacies){
 	                "</td></tr>");
 	
 	                $("#table").append(pharmaciesTable);
-	                choosePharmacy(allPharmacies[i].id);
+	                choosePharmacy(allPharmacies[i].id, user);
 				}
 			}
+			blockTableClick(user);
 		}else{
-			getAllPharmacies();
+			getAllPharmacies(user);
 		}
 	});
 }
@@ -307,10 +321,10 @@ function eliminateDuplicates(arr) {
   return out;
 }
 
-function filterPharmacies(allPharmacies){
+function filterPharmacies(allPharmacies, user){
 	$(".rating-list").on("change", function(){
 		if($(".rating-list:checked").val() == undefined && $(".city-list:checked").val() == undefined){
-			getAllPharmacies();
+			getAllPharmacies(user);
 		}
 		else if($(".rating-list:checked").val() != undefined && $(".city-list:checked").val() == undefined){
 			var pharmaciesTable = $("#table tbody");
@@ -319,21 +333,21 @@ function filterPharmacies(allPharmacies){
 				for(var i = 0; i < allPharmacies.length; i++)
 					if(allPharmacies[i] != undefined)
 						if(allPharmacies[i].rating < 2.5)
-							generateTable(allPharmacies[i], pharmaciesTable);
+							generateTable(allPharmacies[i], pharmaciesTable, user);
 			if($(".rating-list:checked").val() == "2")
 				for(var i = 0; i < allPharmacies.length; i++)
 					if(allPharmacies[i] != undefined)
 						if(allPharmacies[i].rating >= 2.5 && allPharmacies[i].rating < 3.5)
-							generateTable(allPharmacies[i], pharmaciesTable);                				
+							generateTable(allPharmacies[i], pharmaciesTable, user);                				
 			if($(".rating-list:checked").val() == "3")
 				for(var i = 0; i < allPharmacies.length; i++)
 					if(allPharmacies[i] != undefined)
 						if(allPharmacies[i].rating >= 3.5 && allPharmacies[i].rating < 4.5)
-							generateTable(allPharmacies[i], pharmaciesTable);	                							
+							generateTable(allPharmacies[i], pharmaciesTable, user);	                							
 			if($(".rating-list:checked").val() == "4")
 				for(var i = 0; i < allPharmacies.length; i++)
 					if(allPharmacies[i].rating >= 4.5 && allPharmacies[i].rating < 5.0)
-						generateTable(allPharmacies[i], pharmaciesTable);	                							
+						generateTable(allPharmacies[i], pharmaciesTable, user);	                							
 		}
 		else if($(".rating-list:checked").val() != undefined && $(".city-list:checked").val() != undefined){
 			var pharmaciesTable = $("#table tbody");
@@ -342,16 +356,16 @@ function filterPharmacies(allPharmacies){
 			for(var i = 0; i < allPharmacies.length; i++){
 				if($(".rating-list:checked").val() == "1" && $(".city-list:checked").val() == allPharmacies[i].city)
 					if(allPharmacies[i].rating < 2.5)
-						generateTable(allPharmacies[i], pharmaciesTable);	                				
+						generateTable(allPharmacies[i], pharmaciesTable, user);	                				
 				if($(".rating-list:checked").val() == "2" && $(".city-list:checked").val() == allPharmacies[i].city)
 					if(allPharmacies[i].rating >= 2.5 && allPharmacies[i].rating < 3.5)
-						generateTable(allPharmacies[i], pharmaciesTable);	                				
+						generateTable(allPharmacies[i], pharmaciesTable, user);	                				
 				if($(".rating-list:checked").val() == "3" && $(".city-list:checked").val() == allPharmacies[i].city)
 					if(allPharmacies[i].rating >= 3.5 && allPharmacies[i].rating < 4.5)
-						generateTable(allPharmacies[i], pharmaciesTable);	                				
+						generateTable(allPharmacies[i], pharmaciesTable, user);	                				
 				if($(".rating-list:checked").val() == "4" && $(".city-list:checked").val() == allPharmacies[i].city)
 					if(allPharmacies[i].rating > 4.5)
-						generateTable(allPharmacies[i], pharmaciesTable);	                	
+						generateTable(allPharmacies[i], pharmaciesTable, user);	                	
 			}
 		}
 		else if($(".rating-list:checked").val() == undefined && $(".city-list:checked").val() != undefined){
@@ -360,13 +374,13 @@ function filterPharmacies(allPharmacies){
             
 			for(var i = 0; i < allPharmacies.length; i++)
 				if($(".city-list:checked").val() == allPharmacies[i].city)
-					generateTable(allPharmacies[i], pharmaciesTable);							
+					generateTable(allPharmacies[i], pharmaciesTable, user);							
 		}
 	});
 	
 	$(".city-list").on("change", function(){
 		if($(".city-list:checked").val() == undefined && $(".rating-list:checked").val() == undefined){
-			getAllPharmacies();
+			getAllPharmacies(user);
 		}
 		else if($(".city-list:checked").val() != undefined && $(".rating-list:checked").val() == undefined){
 			var pharmaciesTable = $("#table tbody");
@@ -374,7 +388,7 @@ function filterPharmacies(allPharmacies){
             
 			for(var i = 0; i < allPharmacies.length; i++)
 				if($(".city-list:checked").val() == allPharmacies[i].city)
-					generateTable(allPharmacies[i], pharmaciesTable);
+					generateTable(allPharmacies[i], pharmaciesTable, user);
 				
 			
 		}
@@ -385,16 +399,16 @@ function filterPharmacies(allPharmacies){
 			for(var i = 0; i < allPharmacies.length; i++){
 				if($(".rating-list:checked").val() == "1" && $(".city-list:checked").val() == allPharmacies[i].city)
 					if(allPharmacies[i].rating < 2.5)
-						generateTable(allPharmacies[i], pharmaciesTable);	                				
+						generateTable(allPharmacies[i], pharmaciesTable, user);	                				
 				if($(".rating-list:checked").val() == "2" && $(".city-list:checked").val() == allPharmacies[i].city)
 					if(allPharmacies[i].rating >= 2.5 && allPharmacies[i].rating < 3.5)
-						generateTable(allPharmacies[i], pharmaciesTable);	                				
+						generateTable(allPharmacies[i], pharmaciesTable, user);	                				
 				if($(".rating-list:checked").val() == "3" && $(".city-list:checked").val() == allPharmacies[i].city)
 					if(allPharmacies[i].rating >= 3.5 && allPharmacies[i].rating < 4.5)
-						generateTable(allPharmacies[i], pharmaciesTable);	                				
+						generateTable(allPharmacies[i], pharmaciesTable, user);	                				
 				if($(".rating-list:checked").val() == "4" && $(".city-list:checked").val() == allPharmacies[i].city)
 					if(allPharmacies[i].rating > 4.5)
-						generateTable(allPharmacies[i], pharmaciesTable);	                				
+						generateTable(allPharmacies[i], pharmaciesTable, user);	                				
 			}
 		}
 		else if($(".city-list:checked").val() == undefined && $(".rating-list:checked").val() != undefined){
@@ -404,24 +418,24 @@ function filterPharmacies(allPharmacies){
 			if($(".rating-list:checked").val() == "1")
 				for(var i = 0; i < allPharmacies.length; i++)
 					if(allPharmacies[i].rating < 2.5)
-						generateTable(allPharmacies[i], pharmaciesTable);	                							
+						generateTable(allPharmacies[i], pharmaciesTable, user);	                							
 			if($(".rating-list:checked").val() == "2")
 				for(var i = 0; i < allPharmacies.length; i++)
 					if(allPharmacies[i].rating >= 2.5 && allPharmacies[i].rating < 3.5)
-						generateTable(allPharmacies[i], pharmaciesTable);	                							
+						generateTable(allPharmacies[i], pharmaciesTable, user);	                							
 			if($(".rating-list:checked").val() == "3")
 				for(var i = 0; i < allPharmacies.length; i++)
 					if(allPharmacies[i].rating >= 3.5 && allPharmacies[i].rating < 4.5)
-						generateTable(allPharmacies[i], pharmaciesTable);	                							
+						generateTable(allPharmacies[i], pharmaciesTable, user);	                							
 			if($(".rating-list:checked").val() == "4")
 				for(var i = 0; i < allPharmacies.length; i++)
 					if(allPharmacies[i].rating >= 4.5 && allPharmacies[i].rating < 5.0)
-						generateTable(allPharmacies[i], pharmaciesTable);	                							
+						generateTable(allPharmacies[i], pharmaciesTable, user);	                							
 		}
 	});
 }
 
-function generateTable(pharmacy, pharmaciesTable){
+function generateTable(pharmacy, pharmaciesTable, user){
 	pharmaciesTable.append("<tr id='" + pharmacy.id + "'><td>" + pharmacy.name +   
 	"</td><td>" + pharmacy.address +
 	"</td><td>" + pharmacy.city +
@@ -429,11 +443,17 @@ function generateTable(pharmacy, pharmaciesTable){
 	"</td></tr>");
 				
 	$("#table").append(pharmaciesTable);
-	choosePharmacy(pharmacy.id);
+	blockTableClick(user);
+	choosePharmacy(pharmacy.id, user);
 }
 
-function choosePharmacy(pharmacyId){
+function choosePharmacy(pharmacyId, user){
 	$("#" + pharmacyId).click(function(event){
-		window.location.href = "pharmacyProfile.html?pharmacyId=" + pharmacyId;
+		if(user == undefined || user.type == "ROLE_PHARMACY_SYSTEM_ADMIN"){
+		
+		}
+		
+		if(user.type == "ROLE_PATIENT")
+			window.location.href = "pharmacyProfile.html?pharmacyId=" + pharmacyId;
 	});
 }

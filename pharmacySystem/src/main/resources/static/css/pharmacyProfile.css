@@ -86,7 +86,7 @@ p{
 .nav-item{
 	width: 100%;
 	line-height: 42px;
-	text-align: left;
+	text-align: center;
 }
 
 .nav-item:last-child{

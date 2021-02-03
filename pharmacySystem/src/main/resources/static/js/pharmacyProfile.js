@@ -15,7 +15,8 @@ $(window).on('load', function(){
     	$(".lines").hide();
     });
     
-    pharmacyMeds();
+    var pharmacyId = getUrlVars()["pharmacyId"];
+    pharmacyMeds(pharmacyId);
 });
 
 function getUrlVars() {
@@ -34,8 +35,7 @@ function getCurrentUser(){
    			Authorization: 'Bearer ' + $.cookie('token')
 		},
         complete: function (data) {
-            if(data.responseJSON == undefined || data.responseJSON.type == "ROLE_PATIENT" ||
-            		data.responseJSON.type == "ROLE_PHARMACY_SYSTEM_ADMIN"){
+            if(data.responseJSON != undefined && data.responseJSON.type == "ROLE_PATIENT"){
                 getPharmacy();
             }else {
             	alert("You cannot access this page!");
@@ -67,9 +67,9 @@ function getPharmacy(){
 	});
 }
 
-function pharmacyMeds(){
+function pharmacyMeds(pharmacyId){
 	$("#pharmacyMeds").click(function(event){
 		event.preventDefault();
-		window.location.href="pharmacyMedications.html";
+		window.location.href="pharmacyMedications.html?pharmacyId=" + pharmacyId;
 	});
 }

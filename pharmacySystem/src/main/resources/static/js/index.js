@@ -18,7 +18,7 @@ function userOptions(user){
     	showUnidentifiedUserOptions();
     	
     	$(".sideBar").mouseover(function(){
-    		$(".sideBar").width(130);
+    		$(".sideBar").width(200);
     		$("#icon").hide();
 	    	$("#allMeds").show();
 	    	$("#allPharmacies").show();
@@ -71,6 +71,46 @@ function userOptions(user){
     	});
     }else if(user.type == "ROLE_PHARMACY_SYSTEM_ADMIN"){
     	showSystemAdminUserOptions();
+    	
+    	$(".sideBar").mouseover(function(){
+    		$(".sideBar").width(230);
+    		$("#icon").hide();
+	    	$("#allMeds").show();
+	    	$("#allPharmacies").show();
+	    	$("#examination").hide();
+	    	$("#counseling").hide();
+	    	$("#reservedMeds").hide();
+	    	$("#acquireMed").hide();
+	    	$("#counselingHistory").hide();
+	    	$("#examinationHistory").hide();
+	    	$("#activeExaminations").hide();
+	    	$("#activeCounselings").hide();
+	    	$("#complaint").hide();
+	    	$("#penalties").hide();
+	    	$("#myPharmacies").hide();
+	    	$("#complaints").show();
+	    	$("#loyalty").show();
+    	});
+    
+    	$(".sideBar").mouseout(function(){
+    		$(".sideBar").width(65);
+    		$("#icon").show();
+	    	$("#allMeds").hide();
+	    	$("#allPharmacies").hide();
+	    	$("#examination").hide();
+	    	$("#counseling").hide();
+	    	$("#reservedMeds").hide();
+	    	$("#acquireMed").hide();
+	    	$("#counselingHistory").hide();
+	    	$("#examinationHistory").hide();
+	    	$("#activeExaminations").hide();
+	    	$("#activeCounselings").hide();
+	    	$("#complaint").hide();
+	    	$("#penalties").hide();
+	    	$("#myPharmacies").hide();
+	    	$("#complaints").hide();
+	    	$("#loyalty").hide();
+    	});
     	
     }else if(user.type == "ROLE_PHARMACY_ADMIN"){
     	showPharmacyAdminUserOptions();

@@ -1,10 +1,34 @@
 <html>
+<head>
  <meta charset="utf-8" />
-    <title>All Medications</title>
+    <title>Medication Catalogue</title>
+    <link rel="stylesheet" href="css/allMedications.css">
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/jquery.cookie.js"></script> 
+</head>
+<body>
 	<nav>
         
     </nav>
+    
+    <div class="mainDiv">
+    	<div>
+	    	<p id="searchParagraph">Search Medications:</p><input placeholder="Name/Code/Price" type="text" id="search"/><br/>
+	    </div>
+	    <br/>
+        <table  id="table">
+	        <thead id="header">
+	            <td id="name">Medication Name</td>
+	            <td id="code">Code</td>
+	            <td id="intake">Daily Intake(mg)</td>
+	            <td id="sideEffects">Side Effects</td>
+	            <td id="substitution">Substitution</td>
+	            <td id="composition">Chemical Composition</td>
+	            <td id="price">Price</td>
+	        </thead>
+	        <tbody>
+	        </tbody>
+    	</table>
+    </div>
 </body>
 </html>
