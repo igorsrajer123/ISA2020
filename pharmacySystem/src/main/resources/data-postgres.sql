@@ -5,6 +5,24 @@ INSERT INTO authority(name) VALUES ('ROLE_SUPPLIER');
 INSERT INTO authority(name) VALUES ('ROLE_PHARMACY_ADMIN');
 INSERT INTO authority(name) VALUES ('ROLE_PHARMACY_SYSTEM_ADMIN');
 
+INSERT INTO medication_type(name) VALUES ('Analgesic');
+INSERT INTO medication_type(name) VALUES ('Anesthetic');
+INSERT INTO medication_type(name) VALUES ('Antibiotic');
+INSERT INTO medication_type(name) VALUES ('Antihistamine');
+INSERT INTO medication_type(name) VALUES ('Androgen');
+INSERT INTO medication_type(name) VALUES ('Antiandrogens');
+INSERT INTO medication_type(name) VALUES ('Estrogen');
+INSERT INTO medication_type(name) VALUES ('Antiseptic');
+INSERT INTO medication_type(name) VALUES ('Local Anesthetic');
+INSERT INTO medication_type(name) VALUES ('Antifungal');
+INSERT INTO medication_type(name) VALUES ('Insulin');
+INSERT INTO medication_type(name) VALUES ('Antidiabetic');
+INSERT INTO medication_type(name) VALUES ('Alkalinizing agent');
+INSERT INTO medication_type(name) VALUES ('Oestrogen');
+INSERT INTO medication_type(name) VALUES ('Antimalarial');
+INSERT INTO medication_type(name) VALUES ('Antiviral');
+INSERT INTO medication_type(name) VALUES ('Antitoxin');
+
 --user password: 123
 -- system admin password: admin
 -- pharmacy admin password: phadmin
@@ -24,28 +42,28 @@ INSERT INTO pharmacy_system_administrator(user_id) VALUES (2);
 
 INSERT INTO supplier(user_id) VALUES (5);
 
-INSERT INTO medication(name, price) VALUES ('Rivotril', 1500);
-INSERT INTO medication(name, price) VALUES ('Acetaminophen', 850);
-INSERT INTO medication(name, price) VALUES ('Adderall', 999);
-INSERT INTO medication(name, price) VALUES ('Entyvio', 2000);
-INSERT INTO medication(name, price) VALUES ('Gabapentin', 566);
-INSERT INTO medication(name, price) VALUES ('Gilenya', 555);
-INSERT INTO medication(name, price) VALUES ('Humira', 1000);
-INSERT INTO medication(name, price) VALUES ('Hydrochlorothiazide', 400);
-INSERT INTO medication(name, price) VALUES ('Lexapro', 1200);
-INSERT INTO medication(name, price) VALUES ('Melatonin', 890);
-INSERT INTO medication(name, price) VALUES ('Meloxicam', 390);
-INSERT INTO medication(name, price) VALUES ('Rybelsus', 525);
-INSERT INTO medication(name, price) VALUES ('Tramadol', 1100);
-INSERT INTO medication(name, price) VALUES ('Wellbutrin', 350);
-INSERT INTO medication(name, price) VALUES ('Xanax', 3000);
-INSERT INTO medication(name, price) VALUES ('Omeprazole', 220);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Rivotril', 1500, '#123', 100, 'Caughing Blood', 'diklofenak-kalium 50 mg', 17);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Acetaminophen', 850, '#222', 50, 'Coryza', 'silicium-dioxide', 16);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Adderall', 999, '#333', 75, 'Dry Caugh', 'povidon K-30', 15);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Entyvio', 2000, '#444', 50, '', 'magnezium-stearat', 14);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Gabapentin', 566, '#555', 50, 'Crying', 'Cochenillerotlack E124 C.I. 16255', 13);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Gilenya', 555, '#655', 50, 'Headache', 'makrogol 6000', 12);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Humira', 1000, '#657', 80, 'Sore throat', 'Croton tiglium', 11);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Hydrochlorothiazide', 70, '#666', 100, 'Diarrhea', 'Cypripedium pubescens', 10);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Lexapro', 1200, '#442', 50, 'Muscle or body aches', 'Ferrum phosphoricum', 9);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Melatonin', 890, '#338', 120, 'Shortness of breath or difficulty breathing', 'Hepar sulfuris', 8);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Meloxicam', 390, '#675', 60, 'New loss of taste or smell', 'Kalijum fosfat', 7);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Rybelsus', 525, '#776', 70, 'Congestion or runny nose', 'Lac defloratum', 6);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Tramadol', 1100, '#880', 90, 'Nausea or vomiting', 'Veratrum album', 5);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Wellbutrin', 350, '#920', 50, 'Trouble breathing', 'makrogol 4700', 4);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Xanax', 3000, '#121', 100, 'Bluish lips or face', 'diklofenak-kalium 50 mg', 3);
+INSERT INTO medication(name, price, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Omeprazole', 220, '#662', 100, 'Inability to wake or stay awake', 'silicium-dioxide E', 2);
 
-INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes) VALUES ('Apoteka Jankovic', 'Mileticeva 57', 'Zrenjanin', 2.5, 55);
-INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes) VALUES ('Apoteka Sveti Jovan', 'Apatinska 21', 'Novi Sad', 3.2, 21);
-INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes) VALUES ('Apoteka Jankovic', 'Rumunski Drum 11', 'Beograd', 3.6, 11);
-INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes) VALUES ('Apoteka Sveti Petar', 'Mise Dimitrijevica 26', 'Novi Sad', 4.2, 101);
-INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes) VALUES ('Apoteka Crveni Krst', 'Vojvode Petra Bojovica 1B', 'Beograd', 3.9, 2);
+INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description) VALUES ('Apoteka Jankovic', 'Mileticeva 57', 'Zrenjanin', 2.5, 55, 'Opis apoteke 1');
+INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description) VALUES ('Apoteka Sveti Jovan', 'Apatinska 21', 'Novi Sad', 3.2, 21, 'Opis apoteke 2');
+INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description) VALUES ('Apoteka Jankovic', 'Rumunski Drum 11', 'Beograd', 3.6, 11, 'Opis apoteke 3');
+INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description) VALUES ('Apoteka Sveti Petar', 'Mise Dimitrijevica 26', 'Novi Sad', 4.2, 101, 'Opis apoteke 4');
+INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description) VALUES ('Apoteka Crveni Krst', 'Vojvode Petra Bojovica 1B', 'Beograd', 3.9, 2, 'Opis apoteke 5');
 
 INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (1, 2);
 INSERT INTO pharmacy_medications(pharmacy_id, medication_id) VALUES (1, 3);

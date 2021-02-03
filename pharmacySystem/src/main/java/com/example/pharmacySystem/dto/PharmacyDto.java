@@ -8,6 +8,7 @@ public class PharmacyDto {
 	private String name;
 	private String address;
 	private String city;
+	private String description;
 	private double rating;
 	private int numberOfVotes;
 	
@@ -15,7 +16,7 @@ public class PharmacyDto {
 		super();
 	}
 	
-	public PharmacyDto(Long id, String name, String address, String city, double rating, int numberOfVotes) {
+	public PharmacyDto(Long id, String name, String address, String city, String description, double rating, int numberOfVotes) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -23,6 +24,7 @@ public class PharmacyDto {
 		this.city = city;
 		this.rating = rating;
 		this.numberOfVotes = numberOfVotes;
+		this.description = description;
 	}
 	
 	public PharmacyDto(Pharmacy pharmacy) {
@@ -80,5 +82,13 @@ public class PharmacyDto {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

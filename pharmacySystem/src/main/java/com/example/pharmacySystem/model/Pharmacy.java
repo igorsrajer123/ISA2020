@@ -32,6 +32,9 @@ public class Pharmacy {
 	@Column(name = "city")
 	private String city;
 	
+	@Column(name = "description")
+	private String description;
+	
 	@Column(name = "rating")
 	private double rating;
 	
@@ -42,7 +45,6 @@ public class Pharmacy {
 	private Set<Pharmacist> pharmacists;
 	
 	@JsonIgnoreProperties(value = {"pharmacies"}, allowSetters = true)
-	//@ManyToMany(mappedBy = "pharmacies")
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "pharmacyDermatologists", joinColumns = { @JoinColumn(name = "dermatologistId", referencedColumnName = "id")}, inverseJoinColumns = @JoinColumn(name = "pharmacyId", referencedColumnName = "id"))
 	private List<Dermatologist> dermatologists;
@@ -60,7 +62,7 @@ public class Pharmacy {
 		super();
 	}
 	
-	public Pharmacy(Long id, String name, String address, String city, double rating, int numberOfVotes) {
+	public Pharmacy(Long id, String name, String address, String city, String description, double rating, int numberOfVotes) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -68,6 +70,7 @@ public class Pharmacy {
 		this.rating = rating;
 		this.numberOfVotes = numberOfVotes;
 		this.city = city;
+		this.description = description;
 	}
 	
 	public Long getId() {
@@ -148,5 +151,13 @@ public class Pharmacy {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

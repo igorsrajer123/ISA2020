@@ -35,7 +35,7 @@ public class MedicationController {
 	private PharmacyService pharmacyService;
 	
 	@GetMapping(value = "/getAllMedications", produces = MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("hasRole('ROLE_PATIENT')")
+	//@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<List<MedicationDto>> getAllMedications(){
 		List<Medication> allMedications = medicationService.findAll();
 		
@@ -64,18 +64,14 @@ public class MedicationController {
 	}
 	
 	@PostMapping(value = "/addPatientAllergicMedication/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("hasRole('ROLE_PATIENT')")
-	public ResponseEntity<List<MedicationDto>> addPatientAllergicMedication(@PathVariable("patientId") Long id, @RequestBody Medication medication){
-		Patient myPatient = patientService.findOneById(id);
+//	@PreAuthorize("hasRole('ROLE_PATIENT')")
+	public ResponseEntity<List<MedicationDto>> addPatientAllergicMedication(@PathVariable("patientId") Long id, @RequestBody MedicationDto medication){
+		Patient myPatient = patientService.addPatientAllergicMedication(id, medication);
 		
-		if(medicationService.findOneByName(medication.getName()) == null)
-				return new ResponseEntity<List<MedicationDto>>(HttpStatus.NOT_FOUND);
+		if(myPatient == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
 		List<Medication> patientMeds = myPatient.getAllergicOn();
 		List<MedicationDto> patientMedsDto = new ArrayList<MedicationDto>();
-		
-		patientMeds.add(medication);
-		patientService.save(myPatient);
 		
 		for(Medication m : patientMeds)
 			patientMedsDto.add(new MedicationDto(m));
@@ -118,5 +114,16 @@ public class MedicationController {
 			pharmacyMedsDto.add(new MedicationDto(m));
 		
 		return new ResponseEntity<List<MedicationDto>>(pharmacyMedsDto, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/addMedication", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MedicationDto> addMed(@RequestBody MedicationDto medication){
+		Medication newMed = medicationService.create(medication);
+		
+		if(newMed == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		MedicationDto medDto = new MedicationDto(newMed);
+		
+		return new ResponseEntity<MedicationDto>(medDto, HttpStatus.CREATED);
 	}
 }

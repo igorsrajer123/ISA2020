@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.pharmacySystem.dto.MedicationDto;
+import com.example.pharmacySystem.model.Medication;
 import com.example.pharmacySystem.model.Patient;
+import com.example.pharmacySystem.repository.MedicationRepository;
 import com.example.pharmacySystem.repository.PatientRepository;
 
 @Service
@@ -17,6 +20,9 @@ public class PatientService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private MedicationRepository medicationRepository;
 	
 	public List<Patient> findAll(){
 		return patientRepository.findAll();
@@ -49,5 +55,14 @@ public class PatientService {
 			myPatient.getUser().setPassword(passwordEncoder.encode(patient.getUser().getPassword()));
 		
 		return myPatient;
+	}
+	
+	public Patient addPatientAllergicMedication(Long id, MedicationDto medicationDto){
+		Patient myPatient = patientRepository.findOneById(id);
+		
+		Medication medication = medicationRepository.findOneByName(medicationDto.getName());
+		myPatient.getAllergicOn().add(medication);
+		
+		return patientRepository.save(myPatient);
 	}
 }

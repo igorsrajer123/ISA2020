@@ -79,4 +79,8 @@ function redirectUser(){
 		window.location.href = "newSupplier.html";
 	});
 	
+	$("#newMedication").click(function(){
+		window.location.href = "newMedication.html";
+	});
+	
 }

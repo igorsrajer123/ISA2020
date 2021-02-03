@@ -56,7 +56,6 @@ function submitData(){
 }
 
 function createNewPharmacy(){
-	var admins = SELECTED;
 	var data = {
 		"name": $("#name").val(),
 		"address": $("#address").val(),

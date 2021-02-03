@@ -123,8 +123,7 @@ function addPatientAllergicMedication(patientId, medication){
     if(this.checked) {
     	var data = {
     		"id": medication.id,
-    		"name": medication.name,
-    		"price": medication.price
+    		"name": medication.name
     	}
     	
     	var transformedData = JSON.stringify(data);
