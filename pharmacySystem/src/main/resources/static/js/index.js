@@ -75,6 +75,11 @@ function userOptions(user){
     }else if(user.type == "ROLE_PHARMACY_ADMIN"){
     	showPharmacyAdminUserOptions();
     	
+    }else if(user.type == "ROLE_DERMATOLOGIST"){
+    	showDermatologistUserOptions();
+    	
+    }else if(user.type == "ROLE_SUPPLIER"){
+    	showSupplierUserOptions();
     }
 }
 
@@ -117,6 +122,28 @@ function showPharmacyAdminUserOptions(){
     $("#systemAdminProfile").hide();
     $("#pharmacyAdminProfile").show();
 }
+
+function showDermatologistUserOptions(){
+	$("#login").hide();
+    $("#register").hide();
+    $("#logout").show();
+    $("#patientProfile").hide();
+    $("#changePassword").show();
+    $("#systemAdminProfile").hide();
+    $("#pharmacyAdminProfile").hide();
+}
+
+
+function showSupplierUserOptions(){
+	$("#login").hide();
+    $("#register").hide();
+    $("#logout").show();
+    $("#patientProfile").hide();
+    $("#changePassword").show();
+    $("#systemAdminProfile").hide();
+    $("#pharmacyAdminProfile").hide();
+}
+
 
 function getCurrentUser(){
 	$.ajax({

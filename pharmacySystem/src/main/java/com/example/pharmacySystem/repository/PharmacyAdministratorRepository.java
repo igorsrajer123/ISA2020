@@ -11,4 +11,6 @@ import com.example.pharmacySystem.model.PharmacyAdministrator;
 public interface PharmacyAdministratorRepository extends JpaRepository<PharmacyAdministrator, Long>{
 
 	List<PharmacyAdministrator> findAll();
+	
+	PharmacyAdministrator findOneById(Long id);
 }

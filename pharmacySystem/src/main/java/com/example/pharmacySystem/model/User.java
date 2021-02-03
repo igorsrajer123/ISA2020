@@ -61,6 +61,7 @@ public class User implements UserDetails{
 	@JoinTable(name = "userAuthority", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "authorityId", referencedColumnName = "id"))
 	private List<Authority> authorities;
 	
+	@JsonIgnoreProperties("user")
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Dermatologist dermatologist;
 	
@@ -79,6 +80,7 @@ public class User implements UserDetails{
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Patient patient;
 	
+	@JsonIgnoreProperties("user")
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Supplier supplier;
 	

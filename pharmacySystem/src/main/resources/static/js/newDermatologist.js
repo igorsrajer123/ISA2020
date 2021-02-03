@@ -14,38 +14,12 @@ function getCurrentUser(){
                 alert("You cannot access this page!");
                 window.location.href = "../index.html";
             }else {
-            	getAllPharmacies();
+            	checkFields();
+            	submitData();
             }
         }
     });
 }
-
-function getAllPharmacies(){
-	$.ajax({
-        url: 'http://localhost:8080/getAllPharmacies',
-        type: 'GET',
-        headers: {
-           Authorization: 'Bearer ' + $.cookie('token')
-        },
-        complete: function(data){
-            var pharmacies = data.responseJSON;
-                        
-            for(var i = 0; i < pharmacies.length; i++)
-            	$("#pharmacies").append("<br/><input type='checkbox' class='pharmacy-list' value='" + pharmacies[i].id + "' id='" + pharmacies[i].id + "'/> <label>" + pharmacies[i].name + "(" + pharmacies[i].city + ")" + "</label>");           		
-            
-           	checkFields();
-            submitData();  
-            checkOnlyOnePharmacy();    
-        }
-    });
-}
-
-function checkOnlyOnePharmacy(){
-    $(".pharmacy-list").on("change", function(){
-        $(this).siblings("input:checkbox").prop("checked", false);     
-    });
-}
-
 
 function checkFields(){
 	$("#save").click(function(event){
@@ -79,47 +53,28 @@ function submitData(){
 			$("#password").css("background-color","white");
 			$("#firstName").css("background-color","white");
 			$("#lastName").css("background-color","white");
-			collectCheckedPharmacy();
+			createDermatologist();
 		}else{
 			alert("Please enter the required data!");
 		}
 	});
 }
 
-function collectCheckedPharmacy(){
-	$("input:checked").each(function(){
-		var pharmacyId = $(this).closest('input').attr('id');
-		
-		$.ajax({
-			url: 'http://localhost:8080/getPharmacy/' + pharmacyId,
-	        type: 'GET',
-	        async: false,
-	        headers: {
-	           Authorization: 'Bearer ' + $.cookie('token')
-	        },
-	        complete: function(data){
-				createPharmacyAdmin(data.responseJSON);
-			}
-		});
-	});
-}
-
-function createPharmacyAdmin(pharmacy){
+function createDermatologist(){
 	var data = {
-		"pharmacy": pharmacy,
 		"user": {
 			"email": $("#email").val(),
 			"password": $("#password").val(),
 			"firstName": $("#firstName").val(),
 			"lastName": $("#lastName").val(),
-			"type": "ROLE_PHARMACY_ADMIN"
+			"type": "ROLE_DERMATOLOGIST"
 		}
 	}
 	
 	var transformedData = JSON.stringify(data);
 	
 	$.ajax({
-        url: 'http://localhost:8080/addPharmacyAdmin',
+        url: 'http://localhost:8080/addDermatologist',
         type: 'POST',
         data: transformedData,
         contentType: 'application/json',

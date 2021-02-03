@@ -27,8 +27,15 @@ public class PharmacyAdministratorService {
 	@Autowired
 	private AuthorityService authorityService;
 	
+	@Autowired
+	private PharmacyService pharmacyService;
+	
 	public List<PharmacyAdministrator> findAll(){
 		return pharmacyAdminRepository.findAll();
+	}
+	
+	public PharmacyAdministrator findOneById(Long id) {
+		return pharmacyAdminRepository.findOneById(id);
 	}
 	
 	public PharmacyAdministrator create(PharmacyAdministrator admin){
@@ -50,6 +57,7 @@ public class PharmacyAdministratorService {
 		List<Authority> authorities = authorityService.findByName("ROLE_PHARMACY_ADMIN");
 		user.setAuthorities(authorities);
 		newAdmin.setUser(user);
+		newAdmin.setPharmacy(pharmacyService.findOneById(admin.getPharmacy().getId()));
 		
 		return pharmacyAdminRepository.save(newAdmin);
 	}

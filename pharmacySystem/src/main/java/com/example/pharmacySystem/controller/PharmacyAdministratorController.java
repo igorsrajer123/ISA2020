@@ -8,11 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.pharmacySystem.dto.PharmacyAdministratorDto;
+import com.example.pharmacySystem.dto.PharmacyDto;
+import com.example.pharmacySystem.dto.UserDto;
 import com.example.pharmacySystem.model.PharmacyAdministrator;
 import com.example.pharmacySystem.service.PharmacyAdministratorService;
 
@@ -30,20 +33,43 @@ public class PharmacyAdministratorController {
 		
 		List<PharmacyAdministratorDto> adminsDto = new ArrayList<PharmacyAdministratorDto>();
 				
-		for(PharmacyAdministrator p : admins)
-			adminsDto.add(new PharmacyAdministratorDto(p));
+		for(PharmacyAdministrator p : admins) {
+			PharmacyAdministratorDto admin = new PharmacyAdministratorDto();
+			admin.setId(p.getId());
+			admin.setUser(new UserDto(p.getUser()));
+			admin.setPharmacyDto(new PharmacyDto(p.getPharmacy()));
+			
+			adminsDto.add(admin);
+		}
 		
 		return new ResponseEntity<List<PharmacyAdministratorDto>>(adminsDto, HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/addPharmacyAdmin", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<PharmacyAdministratorDto> addPharmacyAdmin(@RequestBody PharmacyAdministrator admin) throws NullPointerException{
-		PharmacyAdministrator a = pharmacyAdminService.create(admin);
+	@PostMapping(value = "/addPharmacyAdmin", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PharmacyAdministratorDto> addPharmacyAdmin(@RequestBody PharmacyAdministrator admin){
+		PharmacyAdministrator newAdmin = pharmacyAdminService.create(admin);
 		
-		if(a == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		if(newAdmin == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-		PharmacyAdministratorDto adminDto = new PharmacyAdministratorDto(a);
+		PharmacyAdministratorDto adminDto = new PharmacyAdministratorDto();
+		adminDto.setId(newAdmin.getId());
+		adminDto.setUser(new UserDto(newAdmin.getUser()));
+		adminDto.setPharmacyDto(new PharmacyDto(newAdmin.getPharmacy()));
 		
 		return new ResponseEntity<PharmacyAdministratorDto>(adminDto, HttpStatus.CREATED);
+	}
+	
+	@GetMapping(value = "/getPharmacyAdmin/{adminId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PharmacyAdministratorDto> getPharmacyAdmin(@PathVariable("adminId") Long id) {
+		PharmacyAdministrator admin = pharmacyAdminService.findOneById(id);
+		
+		if(admin == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		PharmacyAdministratorDto adminDto = new PharmacyAdministratorDto();
+		adminDto.setId(admin.getId());
+		adminDto.setUser(new UserDto(admin.getUser()));		
+		adminDto.setPharmacyDto(new PharmacyDto(admin.getPharmacy()));
+
+		return new ResponseEntity<PharmacyAdministratorDto>(adminDto, HttpStatus.OK);
 	}
 }

@@ -41,12 +41,15 @@ public class Pharmacy {
 	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Pharmacist> pharmacists;
 	
-	@ManyToMany(mappedBy = "pharmacies")
-	private Set<Dermatologist> dermatologists;
+	@JsonIgnoreProperties(value = {"pharmacies"}, allowSetters = true)
+	//@ManyToMany(mappedBy = "pharmacies")
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "pharmacyDermatologists", joinColumns = { @JoinColumn(name = "dermatologistId", referencedColumnName = "id")}, inverseJoinColumns = @JoinColumn(name = "pharmacyId", referencedColumnName = "id"))
+	private List<Dermatologist> dermatologists;
 	
-	@JsonIgnoreProperties("pharmacy")
+	@JsonIgnoreProperties(value = {"pharmacy"}, allowSetters = true)
 	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<PharmacyAdministrator> pharmacyAdministrators;
+	private List<PharmacyAdministrator> pharmacyAdministrators;
 	
 	@JsonIgnoreProperties("pharmacy")
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -99,19 +102,19 @@ public class Pharmacy {
 		this.pharmacists = pharmacists;
 	}
 	
-	public Set<Dermatologist> getDermatologists() {
+	public List<Dermatologist> getDermatologists() {
 		return dermatologists;
 	}
 
-	public void setDermatologists(Set<Dermatologist> dermatologists) {
+	public void setDermatologists(List<Dermatologist> dermatologists) {
 		this.dermatologists = dermatologists;
 	}
 
-	public Set<PharmacyAdministrator> getPharmacyAdministrators() {
+	public List<PharmacyAdministrator> getPharmacyAdministrators() {
 		return pharmacyAdministrators;
 	}
 
-	public void setPharmacyAdministrators(Set<PharmacyAdministrator> pharmacyAdministrators) {
+	public void setPharmacyAdministrators(List<PharmacyAdministrator> pharmacyAdministrators) {
 		this.pharmacyAdministrators = pharmacyAdministrators;
 	}
 

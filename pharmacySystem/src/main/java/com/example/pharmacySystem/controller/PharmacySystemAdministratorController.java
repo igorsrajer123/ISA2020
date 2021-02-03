@@ -45,6 +45,7 @@ public class PharmacySystemAdministratorController {
 		if(myAdmin== null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
 		PharmacySystemAdministratorDto myAdminDto = new PharmacySystemAdministratorDto(myAdmin);
+		
 		return new ResponseEntity<PharmacySystemAdministratorDto>(myAdminDto, HttpStatus.CREATED);
 	}
 }

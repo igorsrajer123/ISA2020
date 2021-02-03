@@ -43,7 +43,7 @@ function submitData(){
 	$("#save").click(function(){
 		event.preventDefault();
 		
-		if($("#name").val() != "" && $("#address").val() != "" && $("#city").val() != ""){
+		if($("#name").val() != "" && $("#address").val() != "" && $("#city").val() != "" ){
 			$("#name").css("background-color","white");
 			$("#address").css("background-color","white");
 			$("#city").css("background-color","white");
@@ -56,6 +56,30 @@ function submitData(){
 }
 
 function createNewPharmacy(){
+	var admins = SELECTED;
+	var data = {
+		"name": $("#name").val(),
+		"address": $("#address").val(),
+		"city": $("#city").val(),
+		"rating": 0,
+		"numberOfVotes": 0,
+	}
+	
+	data = JSON.stringify(data);
 
+	$.ajax({
+		url: 'http://localhost:8080/addPharmacy',
+        type: 'POST',
+        data: data,
+        contentType: 'application/json',
+        dataType: 'json',
+        complete: function (data) {
+       		if(data.status == 200){
+       			alert("Success!");
+       			window.location.href = "systemAdminProfile.html";	
+       		}else
+       			alert("ERROR!");
+       	}
+	});
 }
 

@@ -71,4 +71,12 @@ function redirectUser(){
 		window.location.href = "newPharmacyAdmin.html";
 	});
 	
+	$("#newDermatologist").click(function(){
+		window.location.href = "newDermatologist.html";
+	});
+	
+	$("#newSupplier").click(function(){
+		window.location.href = "newSupplier.html";
+	});
+	
 }

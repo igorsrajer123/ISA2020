@@ -1,17 +1,16 @@
 package com.example.pharmacySystem.model;
 
-import java.util.Set;
-
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Dermatologist {
@@ -20,10 +19,11 @@ public class Dermatologist {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToMany
-	@JoinTable(name = "dermatologistsPharmacies", joinColumns = @JoinColumn(name = "dermatologistId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "pharmacyId", referencedColumnName = "id"))
-	private Set<Pharmacy> pharmacies;
+	@JsonIgnoreProperties(value = {"dermatologists"}, allowSetters = true)
+	@ManyToMany(mappedBy = "dermatologists")
+	private List<Pharmacy> pharmacies;
 	
+	@JsonIgnoreProperties("dermatologist")
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
 	
@@ -51,11 +51,11 @@ public class Dermatologist {
 		this.id = id;
 	}
 
-	public Set<Pharmacy> getPharmacies() {
+	public List<Pharmacy> getPharmacies() {
 		return pharmacies;
 	}
 
-	public void setPharmacies(Set<Pharmacy> pharmacies) {
+	public void setPharmacies(List<Pharmacy> pharmacies) {
 		this.pharmacies = pharmacies;
 	}
 
