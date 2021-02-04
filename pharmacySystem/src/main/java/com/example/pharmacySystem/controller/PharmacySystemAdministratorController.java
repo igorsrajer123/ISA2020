@@ -24,7 +24,6 @@ public class PharmacySystemAdministratorController {
 	@PostMapping(value = "/updateSystemAdmin", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PharmacySystemAdministrator> updateSystemAdministrator(@RequestBody PharmacySystemAdministrator admin){
 		PharmacySystemAdministrator myAdmin = systemAdministratorService.updateSystemAdministrator(admin);
-		systemAdministratorService.updateSystemAdmin(myAdmin);
 		
 		if(myAdmin == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		

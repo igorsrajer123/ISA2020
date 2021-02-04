@@ -1,5 +1,7 @@
 package com.example.pharmacySystem.dto;
 
+import com.example.pharmacySystem.model.PharmacyAdministrator;
+
 public class PharmacyAdministratorDto {
 
 	private Long id;
@@ -15,6 +17,12 @@ public class PharmacyAdministratorDto {
 		this.id = id;
 		this.user = user;
 		this.pharmacyDto = pharmacyDto;
+	}
+	
+	public PharmacyAdministratorDto(PharmacyAdministrator admin) {
+		this.id = admin.getId();
+		this.user = new UserDto(admin.getUser());
+		this.pharmacyDto = new PharmacyDto(admin.getPharmacy());
 	}
 	
 	public Long getId() {

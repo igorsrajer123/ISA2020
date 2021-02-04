@@ -17,6 +17,8 @@ $(window).on('load', function(){
     
     var pharmacyId = getUrlVars()["pharmacyId"];
     pharmacyMeds(pharmacyId);
+    pharmacyDermatologists(pharmacyId);
+    pharmacyPharmacists(pharmacyId);
 });
 
 function getUrlVars() {
@@ -73,3 +75,18 @@ function pharmacyMeds(pharmacyId){
 		window.location.href="pharmacyMedications.html?pharmacyId=" + pharmacyId;
 	});
 }
+
+function pharmacyDermatologists(pharmacyId){
+	$("#pharmacyDerms").click(function(event){
+		event.preventDefault();
+		window.location.href="pharmacyDermatologists.html?pharmacyId=" + pharmacyId;
+	});
+}
+
+function pharmacyPharmacists(pharmacyId){
+	$("#pharmacyPharmacists").click(function(event){
+		event.preventDefault();
+		window.location.href="pharmacyPharmacists.html?pharmacyId=" + pharmacyId;
+	});
+}
+

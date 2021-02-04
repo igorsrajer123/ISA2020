@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.pharmacySystem.dto.PharmacyAdministratorDto;
 import com.example.pharmacySystem.model.Authority;
 import com.example.pharmacySystem.model.PharmacyAdministrator;
 import com.example.pharmacySystem.model.User;
@@ -44,7 +45,6 @@ public class PharmacyAdministratorService {
 		if(user != null) return null;
 		
 		PharmacyAdministrator newAdmin = new PharmacyAdministrator();
-		
 		user = new User();
 		user.setEmail(admin.getUser().getEmail());
 		user.setPassword(passwordEncoder.encode(admin.getUser().getPassword()));
@@ -60,5 +60,13 @@ public class PharmacyAdministratorService {
 		newAdmin.setPharmacy(pharmacyService.findOneById(admin.getPharmacy().getId()));
 		
 		return pharmacyAdminRepository.save(newAdmin);
+	}
+	
+	public PharmacyAdministrator updateAdmin(PharmacyAdministratorDto admin) {
+		PharmacyAdministrator myAdmin = pharmacyAdminRepository.findOneById(admin.getId());
+		myAdmin.getUser().setFirstName(admin.getUser().getFirstName());
+		myAdmin.getUser().setLastName(admin.getUser().getLastName());
+		pharmacyAdminRepository.save(myAdmin);		
+		return myAdmin;
 	}
 }

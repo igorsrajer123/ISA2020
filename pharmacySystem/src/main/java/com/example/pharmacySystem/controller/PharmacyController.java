@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.pharmacySystem.dto.PharmacyDto;
 import com.example.pharmacySystem.model.Pharmacy;
 import com.example.pharmacySystem.service.PharmacyService;
@@ -53,5 +52,49 @@ public class PharmacyController {
 		if(myPharmacy == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
 		return new ResponseEntity<PharmacyDto>(pharmacy, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getAdminsPharmacy/{adminId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PharmacyDto> getAdminsPharmacy(@PathVariable("adminId") Long id){
+		Pharmacy myPharmacy = pharmacyService.getAdminsPharmacy(id);
+		
+		if(myPharmacy == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		PharmacyDto pharmacyDto = new PharmacyDto(myPharmacy);
+		return new ResponseEntity<PharmacyDto>(pharmacyDto, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/updatePharmacy", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PharmacyDto> updatePharmacy(@RequestBody PharmacyDto pharmacyDto){
+		Pharmacy myPharmacy = pharmacyService.updatePharmacy(pharmacyDto);
+		
+		if(myPharmacy == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		PharmacyDto myPharmacyDto = new PharmacyDto(myPharmacy);
+		return new ResponseEntity<PharmacyDto>(myPharmacyDto, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getDermatologistPharmacies/{dermatologistId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<PharmacyDto>> getDermatologistPharmacies(@PathVariable("dermatologistId") Long id){
+		List<Pharmacy> pharmacies = pharmacyService.getDermatologistPharmacies(id);
+		
+		if(pharmacies == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		List<PharmacyDto> myPharmacies = new ArrayList<PharmacyDto>();
+		for(Pharmacy p : pharmacies)
+			myPharmacies.add(new PharmacyDto(p));
+		
+		return new ResponseEntity<List<PharmacyDto>>(myPharmacies, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getPharmacistPharmacy/{pharmacistId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PharmacyDto> getPharmacistPharmacy(@PathVariable("pharmacistId") Long id){
+		Pharmacy pharmacy = pharmacyService.getPharmacistPharmacy(id);
+		
+		if(pharmacy == null ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		PharmacyDto pharmacyDto = new PharmacyDto(pharmacy);
+		
+		return new ResponseEntity<PharmacyDto>(pharmacyDto, HttpStatus.OK);
 	}
 }

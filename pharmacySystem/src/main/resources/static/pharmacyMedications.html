@@ -13,7 +13,7 @@
     
 	<div class="mainDiv">
     	<div>
-	    	<p id="searchParagraph">Search Medications:</p><input placeholder="Name/Code/Price" type="text" id="search"/><br/>
+	    	<p id="searchParagraph">Search Medications:</p><input placeholder="Name/Code" type="text" id="search"/><br/>
 	    </div>
 	    <br/>
         <table  id="table">
@@ -22,13 +22,21 @@
 	            <td id="code">Code</td>
 	            <td id="intake">Daily Intake(mg)</td>
 	            <td id="sideEffects">Side Effects</td>
-	            <td id="substitution">Substitution</td>
-	            <td id="composition">Chemical Composition</td>
-	            <td id="price">Price</td>
+	            <td id="price">Price(RSD)</td>
 	        </thead>
 	        <tbody>
 	        </tbody>
     	</table>
+    	<div id="addMedication">
+    	<h3>Available medications</h3>
+    	<select id="availableMedications">
+    		<option></option>
+    	</select>
+    	<br/><br/>
+    	<p>Price(RSD): <input type="text" id="medPrice"></p>
+    	<br/>
+    	<button id="add">Add</button>
+    	</div>
     </div>
 
 </body>

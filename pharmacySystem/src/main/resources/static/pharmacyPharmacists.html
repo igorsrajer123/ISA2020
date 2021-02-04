@@ -1,0 +1,41 @@
+<html>
+ <meta charset="utf-8" />
+    <title>Pharmacy Pharmacists</title>
+    <link rel="stylesheet" href="css/pharmacyPharmacists.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.cookie.js"></script> 
+    <script src="js/pharmacyPharmacists.js"></script>
+<body>
+	
+	<nav>       
+    </nav>
+    
+	<div class="mainDiv">
+    	<div>
+	    	<p id="searchParagraph">Search Pharmacists:</p><input placeholder="Name" type="text" id="search"/><br/>
+	    </div>
+	    <br/>
+        <table  id="table">
+	        <thead id="header">
+	            <td id="firstName">First Name</td>
+	            <td id="lastName">Last Name</td>
+	            <td id="pharmacies">Employed In</td>
+	            <td id="rating">Rating</td>
+	        </thead>
+	        <tbody>
+	        </tbody>
+    	</table>
+    	<div id="addPharmacist">
+    	<h3>Available Pharmacists</h3>
+    	<select id="availablePharmacists">
+    		<option></option>
+    	</select>
+    	<br/><br/>
+    	<p>Price(RSD): <input type="text" id="workingTime"></p>
+    	<br/>
+    	<button id="add">Add</button>
+    	</div>
+    </div>
+
+</body>
+</html>

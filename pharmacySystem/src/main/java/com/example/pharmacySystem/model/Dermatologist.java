@@ -2,6 +2,7 @@ package com.example.pharmacySystem.model;
 
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,6 +28,12 @@ public class Dermatologist {
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
 	
+	@Column(name = "rating")
+	private double rating;
+	
+	@Column(name = "numberOfVotes")
+	private int numberOfVotes;
+	
 	public Dermatologist(){
 		super();
 	}
@@ -41,6 +48,8 @@ public class Dermatologist {
 		this.id = dermatologist.id;
 		this.pharmacies = dermatologist.pharmacies;
 		this.user = dermatologist.user;
+		this.rating = dermatologist.rating;
+		this.numberOfVotes = dermatologist.numberOfVotes;
 	}
 
 	public Long getId() {
@@ -65,5 +74,21 @@ public class Dermatologist {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+
+	public int getNumberOfVotes() {
+		return numberOfVotes;
+	}
+
+	public void setNumberOfVotes(int numberOfVotes) {
+		this.numberOfVotes = numberOfVotes;
 	}
 }

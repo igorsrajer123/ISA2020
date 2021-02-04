@@ -1,8 +1,6 @@
 package com.example.pharmacySystem.model;
 
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +30,7 @@ public class Pharmacy {
 	@Column(name = "city")
 	private String city;
 	
-	@Column(name = "description")
+	@Column(name = "description", nullable = true)
 	private String description;
 	
 	@Column(name = "rating")
@@ -41,12 +39,13 @@ public class Pharmacy {
 	@Column(name = "numberOfVotes")
 	private int numberOfVotes;
 	
+	@JsonIgnoreProperties(value = {"pharmacy"}, allowSetters = true)
 	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<Pharmacist> pharmacists;
+	private List<Pharmacist> pharmacists;
 	
 	@JsonIgnoreProperties(value = {"pharmacies"}, allowSetters = true)
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "pharmacyDermatologists", joinColumns = { @JoinColumn(name = "dermatologistId", referencedColumnName = "id")}, inverseJoinColumns = @JoinColumn(name = "pharmacyId", referencedColumnName = "id"))
+	@JoinTable(name = "pharmacyDermatologists", joinColumns = { @JoinColumn(name = "pharmacyId", referencedColumnName = "id")}, inverseJoinColumns = @JoinColumn(name = "dermatologistId", referencedColumnName = "id"))
 	private List<Dermatologist> dermatologists;
 	
 	@JsonIgnoreProperties(value = {"pharmacy"}, allowSetters = true)
@@ -95,14 +94,6 @@ public class Pharmacy {
 	
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public Set<Pharmacist> getPharmacists() {
-		return pharmacists;
-	}
-
-	public void setPharmacists(Set<Pharmacist> pharmacists) {
-		this.pharmacists = pharmacists;
 	}
 	
 	public List<Dermatologist> getDermatologists() {
@@ -159,5 +150,13 @@ public class Pharmacy {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<Pharmacist> getPharmacists(){
+		return pharmacists;
+	}
+	
+	public void setPharmacists(List<Pharmacist> pharmacists) {
+		this.pharmacists = pharmacists;
 	}
 }

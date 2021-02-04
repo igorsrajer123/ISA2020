@@ -29,7 +29,7 @@ table{
     overflow: auto;
     display: block;
     border-collapse: collapse;
-    width: 800px;
+    width: 1100px;
     height: 400px;
 }
 
@@ -79,4 +79,9 @@ tr:hover{
 	font-size: 20px;
 	font-family: FreeMono, monospace;
 	color: black;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+table::-webkit-scrollbar {
+  display: none;
 }

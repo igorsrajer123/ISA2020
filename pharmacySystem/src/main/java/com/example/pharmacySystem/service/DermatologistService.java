@@ -7,8 +7,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.example.pharmacySystem.model.Authority;
 import com.example.pharmacySystem.model.Dermatologist;
+import com.example.pharmacySystem.model.Pharmacy;
 import com.example.pharmacySystem.model.User;
 import com.example.pharmacySystem.repository.DermatologistRepository;
+import com.example.pharmacySystem.repository.PharmacyRepository;
 import com.example.pharmacySystem.repository.UserRepository;
 
 @Service
@@ -25,6 +27,9 @@ public class DermatologistService {
 	
 	@Autowired
 	private AuthorityService authorityService;
+	
+	@Autowired
+	private PharmacyRepository pharmacyRepository;
 	
 	public List<Dermatologist> findAll(){
 		return dermatologistRepository.findAll();
@@ -55,5 +60,13 @@ public class DermatologistService {
 		newDermatologist.setUser(user);
 		
 		return dermatologistRepository.save(newDermatologist);
+	}
+	
+	public List<Dermatologist> getPharmacyDermatologists(Long pharmacyId){
+		Pharmacy myPharmacy = pharmacyRepository.findOneById(pharmacyId);
+		System.out.println(myPharmacy.getId());
+		List<Dermatologist> dermatologists = myPharmacy.getDermatologists();
+		System.out.println(dermatologists.size());
+		return dermatologists;
 	}
 }

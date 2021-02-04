@@ -1,5 +1,4 @@
 package com.example.pharmacySystem.model;
-
 import java.util.List;
 
 import javax.persistence.CascadeType;

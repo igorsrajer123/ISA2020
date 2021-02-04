@@ -1,6 +1,7 @@
 package com.example.pharmacySystem.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Pharmacist {
 
@@ -16,11 +19,19 @@ public class Pharmacist {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@JsonIgnoreProperties(value = {"dermatologists"}, allowSetters = true)
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Pharmacy pharmacy;
 	
+	@JsonIgnoreProperties("pharmacist")
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
+	
+	@Column(name = "rating")
+	private double rating;
+	
+	@Column(name = "numberOfVotes")
+	private int numberOfVotes;
 	
 	public Pharmacist() {
 		super();
@@ -36,6 +47,8 @@ public class Pharmacist {
 		this.id = pharmacist.id;
 		this.pharmacy = pharmacist.pharmacy;
 		this.user = pharmacist.user;
+		this.rating = pharmacist.rating;
+		this.numberOfVotes = pharmacist.numberOfVotes;
 	}
 	
 	public Long getId() {
@@ -60,5 +73,21 @@ public class Pharmacist {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+
+	public int getNumberOfVotes() {
+		return numberOfVotes;
+	}
+
+	public void setNumberOfVotes(int numberOfVotes) {
+		this.numberOfVotes = numberOfVotes;
 	}
 }

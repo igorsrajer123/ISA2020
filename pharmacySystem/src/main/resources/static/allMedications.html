@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="css/allMedications.css">
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/jquery.cookie.js"></script> 
+    <script src="js/allMedications.js"></script>
 </head>
 <body>
 	<nav>
@@ -13,7 +14,7 @@
     
     <div class="mainDiv">
     	<div>
-	    	<p id="searchParagraph">Search Medications:</p><input placeholder="Name/Code/Price" type="text" id="search"/><br/>
+	    	<p id="searchParagraph">Search Medications:</p><input placeholder="Name/Code" type="text" id="search"/><br/>
 	    </div>
 	    <br/>
         <table  id="table">
@@ -22,13 +23,13 @@
 	            <td id="code">Code</td>
 	            <td id="intake">Daily Intake(mg)</td>
 	            <td id="sideEffects">Side Effects</td>
-	            <td id="substitution">Substitution</td>
 	            <td id="composition">Chemical Composition</td>
-	            <td id="price">Price</td>
+	            <td id="type">Type</td>
 	        </thead>
 	        <tbody>
 	        </tbody>
     	</table>
+    	<p style="color:red;background-color:white; width:350px;"><b>*Medication price varies depending on pharmacy</b></p>
     </div>
 </body>
 </html>

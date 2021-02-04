@@ -34,6 +34,7 @@ public class PharmacyDto {
 		this.city = pharmacy.getCity();
 		this.rating = pharmacy.getRating();		
 		this.numberOfVotes = pharmacy.getNumberOfVotes();
+		this.description = pharmacy.getDescription();
 	}
 	
 	public Long getId() {

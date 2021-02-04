@@ -72,4 +72,15 @@ public class PharmacyAdministratorController {
 
 		return new ResponseEntity<PharmacyAdministratorDto>(adminDto, HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/updatePharmacyAdmin", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PharmacyAdministratorDto> updatePharmacyAdmin(@RequestBody PharmacyAdministratorDto adminDto){
+		PharmacyAdministrator myAdmin = pharmacyAdminService.updateAdmin(adminDto);
+		
+		if(myAdmin == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		PharmacyAdministratorDto myAdminDto = new PharmacyAdministratorDto(myAdmin);
+		
+		return new ResponseEntity<PharmacyAdministratorDto>(myAdminDto, HttpStatus.OK);
+	}
 }

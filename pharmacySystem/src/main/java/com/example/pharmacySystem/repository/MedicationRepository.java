@@ -13,5 +13,5 @@ public interface MedicationRepository extends JpaRepository<Medication, Long>{
 	
 	Medication findOneById(Long id);
 	
-	Medication findOneByName(String name);
+	List<Medication> findAllByName(String name);
 }

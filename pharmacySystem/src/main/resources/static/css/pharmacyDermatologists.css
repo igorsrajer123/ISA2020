@@ -30,7 +30,7 @@ table{
     display: block;
     border-collapse: collapse;
     width: 800px;
-    height: 280px;
+    height: 210px;
 }
 
 table::-webkit-scrollbar {
@@ -136,7 +136,7 @@ p{
     color: white;
 }
 
-#price{
+#workingtime{
 	font-size: 15px;
     padding: 10px 10px;
     width: 80px;

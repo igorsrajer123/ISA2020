@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,7 +51,7 @@ public class MedicationController {
 	}
 	
 	@GetMapping(value = "/getPatientAllergicMedications/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("hasRole('ROLE_PATIENT')")
+//	@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<List<MedicationDto>> getPatientAllergicMedications(@PathVariable("patientId") Long id){
 		Patient myPatient = patientService.findOneById(id);
 		
@@ -81,19 +82,14 @@ public class MedicationController {
 	
 	@PostMapping(value = "/removePatientAllergicMedication/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_PATIENT')")
-	public ResponseEntity<List<MedicationDto>> removePatientAllergicMedication(@PathVariable("patientId") Long id, @RequestBody Medication medication){
-		Patient myPatient = patientService.findOneById(id);
+	public ResponseEntity<List<MedicationDto>> removePatientAllergicMedication(@PathVariable("patientId") Long id, @RequestBody MedicationDto medicationDto){
+		Patient myPatient = patientService.removePatientAllergicMedication(id, medicationDto);
 		
-		if(medicationService.findOneByName(medication.getName()) == null)
-			return new ResponseEntity<List<MedicationDto>>(HttpStatus.NOT_FOUND);
-		
-		List<Medication> patientMeds = myPatient.getAllergicOn();
+		if(myPatient == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+					
 		List<MedicationDto> patientMedsDto = new ArrayList<MedicationDto>();
 		
-		patientMeds.removeIf(med -> med.getName().equals(medication.getName()));
-		patientService.save(myPatient);
-		
-		for(Medication m : patientMeds)
+		for(Medication m : myPatient.getAllergicOn())
 			patientMedsDto.add(new MedicationDto(m));
 		
 		return new ResponseEntity<List<MedicationDto>>(patientMedsDto ,HttpStatus.OK);
@@ -125,5 +121,69 @@ public class MedicationController {
 		MedicationDto medDto = new MedicationDto(newMed);
 		
 		return new ResponseEntity<MedicationDto>(medDto, HttpStatus.CREATED);
+	}
+	
+	@GetMapping(value = "/getMedicationsNotInPharmacy/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<MedicationDto>> getMedicationsNotInPharmacy(@PathVariable("pharmacyId") Long id){
+		List<Medication> meds = medicationService.medicationsNotInPharmacy(id);
+		
+		if(meds == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		List<MedicationDto> myMeds = new ArrayList<MedicationDto>();
+		for(Medication m : meds)
+			myMeds.add(new MedicationDto(m));
+		
+		return new ResponseEntity<List<MedicationDto>>(myMeds, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/addMedicationToPharmacy/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MedicationDto> addMedicationToPharmacy(@PathVariable("pharmacyId") Long id, @RequestBody MedicationDto medicationDto){
+		Medication med = medicationService.addMedicationToPharmacy(id, medicationDto);
+		
+		if(med == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		MedicationDto medDto = new MedicationDto(med);
+		return new ResponseEntity<MedicationDto>(medDto, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/findMedicationsByName/{medName}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Medication>> getMedicationsNotInPharmacy(@PathVariable("medName") String name){
+		List<Medication> meds = medicationService.findAllByName(name);
+		
+		if(meds == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		return new ResponseEntity<List<Medication>>(meds, HttpStatus.OK);
+	}	
+	
+	@GetMapping(value = "/getMedicationById/{medId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MedicationDto> getMedicationById(@PathVariable("medId") Long id){
+		Medication myMed = medicationService.findOneById(id);
+
+		if(myMed == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		MedicationDto medDto = new MedicationDto(myMed);
+		return new ResponseEntity<MedicationDto>(medDto, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/removeMedicationFromPharmacy/{pharmacyId}/{medId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MedicationDto> removeMedicationFromPharmacy(@PathVariable("pharmacyId") Long id, @PathVariable("medId") Long medId){
+		Medication myMed = medicationService.removeMedicationFromPharmacy(id, medId);
+		
+		if(myMed == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		MedicationDto myMedDto = new MedicationDto(myMed);
+		
+		return new ResponseEntity<MedicationDto>(myMedDto, HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/updateMedication", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MedicationDto> updateMedication(@RequestBody MedicationDto medDto){
+		Medication med = medicationService.updateMedication(medDto);
+		
+		if(med == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		MedicationDto myMedDto = new MedicationDto(med);
+		
+		return new ResponseEntity<MedicationDto>(myMedDto, HttpStatus.OK);
 	}
 }

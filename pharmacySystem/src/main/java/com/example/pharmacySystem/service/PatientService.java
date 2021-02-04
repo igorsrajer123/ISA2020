@@ -60,9 +60,22 @@ public class PatientService {
 	public Patient addPatientAllergicMedication(Long id, MedicationDto medicationDto){
 		Patient myPatient = patientRepository.findOneById(id);
 		
-		Medication medication = medicationRepository.findOneByName(medicationDto.getName());
-		myPatient.getAllergicOn().add(medication);
-		
+		List<Medication> allMeds = medicationRepository.findAll();
+		for(Medication m : allMeds)
+			if(m.getName().toLowerCase().equals(medicationDto.getName().toLowerCase()))
+				myPatient.getAllergicOn().add(m);
+						
 		return patientRepository.save(myPatient);
+	}
+	
+	public Patient removePatientAllergicMedication(Long id, MedicationDto medicationDto) {
+		Patient myPatient = patientRepository.findOneById(id);
+		
+		List<Medication> patientAllergicMeds = myPatient.getAllergicOn();
+		List<Medication> meds = medicationRepository.findAllByName(medicationDto.getName());
+		patientAllergicMeds.removeAll(meds);
+		
+		patientRepository.save(myPatient);
+		return myPatient;
 	}
 }

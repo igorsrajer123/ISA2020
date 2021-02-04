@@ -39,18 +39,11 @@ public class PharmacySystemAdministratorService {
 		return systemAdministratorRepository.findOneByUserId(id);
 	}
 	
-	public PharmacySystemAdministrator updateSystemAdmin(PharmacySystemAdministrator admin) {
-		PharmacySystemAdministrator myAdmin = systemAdministratorRepository.findOneById(admin.getId());
-		myAdmin.setUser(admin.getUser());
-		systemAdministratorRepository.save(myAdmin);
-		return myAdmin;
-	}
-	
 	public PharmacySystemAdministrator updateSystemAdministrator(PharmacySystemAdministrator admin) {
 		PharmacySystemAdministrator myAdmin = systemAdministratorRepository.findOneById(admin.getId());
 		myAdmin.getUser().setFirstName(admin.getUser().getFirstName());
 		myAdmin.getUser().setLastName(admin.getUser().getLastName());
-		
+		systemAdministratorRepository.save(myAdmin);
 		return myAdmin;
 	}
 	

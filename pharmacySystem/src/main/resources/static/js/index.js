@@ -27,8 +27,7 @@ function userOptions(user){
     	$(".sideBar").mouseout(function(){
     		$(".sideBar").width(65);
     		$("#icon").show();
-	    	$("#allMeds").hide();
-	    	$("#allPharmacies").hide();
+	    	$(".nav-item").hide();
     	});
     	
     }else if(user.type == "ROLE_PATIENT"){
@@ -50,24 +49,13 @@ function userOptions(user){
 	    	$("#complaint").show();
 	    	$("#penalties").show();
 	    	$("#myPharmacies").show();
+	    	$("#myPharmacy").hide();
     	});
     
     	$(".sideBar").mouseout(function(){
     		$(".sideBar").width(65);
     		$("#icon").show();
-	    	$("#allMeds").hide();
-	    	$("#allPharmacies").hide();
-	    	$("#examination").hide();
-	    	$("#counseling").hide();
-	    	$("#reservedMeds").hide();
-	    	$("#acquireMed").hide();
-	    	$("#counselingHistory").hide();
-	    	$("#examinationHistory").hide();
-	    	$("#activeExaminations").hide();
-	    	$("#activeCounselings").hide();
-	    	$("#complaint").hide();
-	    	$("#penalties").hide();
-	    	$("#myPharmacies").hide();
+    		$(".nav-item").hide();
     	});
     }else if(user.type == "ROLE_PHARMACY_SYSTEM_ADMIN"){
     	showSystemAdminUserOptions();
@@ -90,11 +78,21 @@ function userOptions(user){
 	    	$("#myPharmacies").hide();
 	    	$("#complaints").show();
 	    	$("#loyalty").show();
+	    	$("#myPharmacy").hide();
     	});
     
     	$(".sideBar").mouseout(function(){
     		$(".sideBar").width(65);
     		$("#icon").show();
+    		$(".nav-item").hide();
+    	});
+    	
+    }else if(user.type == "ROLE_PHARMACY_ADMIN"){
+    	showPharmacyAdminUserOptions();
+    	
+    	$(".sideBar").mouseover(function(){
+    		$(".sideBar").width(230);
+    		$("#icon").hide();
 	    	$("#allMeds").hide();
 	    	$("#allPharmacies").hide();
 	    	$("#examination").hide();
@@ -110,10 +108,14 @@ function userOptions(user){
 	    	$("#myPharmacies").hide();
 	    	$("#complaints").hide();
 	    	$("#loyalty").hide();
+	    	$("#myPharmacy").show();
     	});
-    	
-    }else if(user.type == "ROLE_PHARMACY_ADMIN"){
-    	showPharmacyAdminUserOptions();
+    
+    	$(".sideBar").mouseout(function(){
+    		$(".sideBar").width(65);
+    		$("#icon").show();
+    		$(".nav-item").hide();
+    	});
     	
     }else if(user.type == "ROLE_DERMATOLOGIST"){
     	showDermatologistUserOptions();
@@ -131,6 +133,7 @@ function showUnidentifiedUserOptions(){
     $("#changePassword").hide();
     $("#systemAdminProfile").hide();
     $("#pharmacyAdminProfile").hide();
+    $(".sideBar").show();
 }
 
 function showPatientUserOptions(){
@@ -141,6 +144,7 @@ function showPatientUserOptions(){
     $("#changePassword").hide();
     $("#systemAdminProfile").hide();
     $("#pharmacyAdminProfile").hide();
+    $(".sideBar").show();
 }
 
 function showSystemAdminUserOptions(){
@@ -151,6 +155,7 @@ function showSystemAdminUserOptions(){
     $("#changePassword").show();
     $("#systemAdminProfile").show();
     $("#pharmacyAdminProfile").hide();
+    $(".sideBar").show();
 }
 
 function showPharmacyAdminUserOptions(){
@@ -161,6 +166,7 @@ function showPharmacyAdminUserOptions(){
     $("#changePassword").show();
     $("#systemAdminProfile").hide();
     $("#pharmacyAdminProfile").show();
+    $(".sideBar").show();
 }
 
 function showDermatologistUserOptions(){
@@ -171,6 +177,7 @@ function showDermatologistUserOptions(){
     $("#changePassword").show();
     $("#systemAdminProfile").hide();
     $("#pharmacyAdminProfile").hide();
+    $(".sideBar").hide();
 }
 
 
@@ -182,6 +189,7 @@ function showSupplierUserOptions(){
     $("#changePassword").show();
     $("#systemAdminProfile").hide();
     $("#pharmacyAdminProfile").hide();
+    $(".sideBar").hide();
 }
 
 
