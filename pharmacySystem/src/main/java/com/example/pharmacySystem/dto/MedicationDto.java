@@ -6,7 +6,6 @@ public class MedicationDto {
 
 	private Long id;
 	private String name;
-	private double price;
 	private String code;
 	private double dailyIntake;
 	private String sideEffects;
@@ -21,7 +20,6 @@ public class MedicationDto {
 	public MedicationDto(Medication medication) {
 		this.id = medication.getId();
 		this.name = medication.getName();
-		this.price = medication.getPrice();
 		this.code = medication.getCode();
 		this.dailyIntake = medication.getDailyIntake();
 		this.sideEffects = medication.getSideEffects();
@@ -46,14 +44,6 @@ public class MedicationDto {
 		this.name = name;
 	}
 	
-	public double getPrice() {
-		return price;
-	}
-	
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
 	public String getCode() {
 		return code;
 	}

@@ -72,8 +72,8 @@ public class PatientService {
 		Patient myPatient = patientRepository.findOneById(id);
 		
 		List<Medication> patientAllergicMeds = myPatient.getAllergicOn();
-		List<Medication> meds = medicationRepository.findAllByName(medicationDto.getName());
-		patientAllergicMeds.removeAll(meds);
+		Medication med = medicationRepository.findOneByName(medicationDto.getName());
+		patientAllergicMeds.remove(med);
 		
 		patientRepository.save(myPatient);
 		return myPatient;

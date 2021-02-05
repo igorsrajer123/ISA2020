@@ -15,10 +15,23 @@ function getCurrentUser(){
                 alert("You cannot access this page!");
                 window.location.href = "../index.html";
             }else {
-           		getPatientAllergicMedications(data.responseJSON.id);
+           		getPatientByUserId(data.responseJSON.id);
            	}
         }
     });
+}
+
+function getPatientByUserId(userId){
+	$.ajax({
+        method: 'GET',
+        url: 'http://localhost:8080/getPatientByUserId/' + userId,
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
+        complete: function (data) {                
+                getPatientAllergicMedications(data.responseJSON.id);
+        }
+	});
 }
 
 function getPatientAllergicMedications(patientId){
@@ -43,10 +56,9 @@ function getPatientAllergicMedications(patientId){
 	            		value: medications[i].name.toLowerCase(),
 	            		text: medications[i].name
 	            	}));
-	            	removeDuplicateOptionTags();
+	            //	removeDuplicateOptionTags();
            		}
-            }
-            
+            }         
             showAllMedications(medications, patientId);
         }
     });
@@ -85,7 +97,7 @@ function showAllMedications(patientAllergicMedications, patientId){
             	}
             }           
             searchMedications(allMedications, patientAllergicMedications, patientId);
-            removeDuplicateRows();
+            //removeDuplicateRows();
         }
     });
 }

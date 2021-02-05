@@ -57,15 +57,15 @@ public class Pharmacy {
 	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<PharmacyAdministrator> pharmacyAdministrators;
 	
-	@JsonIgnoreProperties("pharmacy")
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "pharmacyMedications", joinColumns = { @JoinColumn(name = "pharmacyId", referencedColumnName = "id")}, inverseJoinColumns = @JoinColumn(name = "medicationId", referencedColumnName = "id"))
-	private List<Medication> medications;
-	
 	@JsonManagedReference(value = "pharmacyHours-movement")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<DermatologistPharmacyHours> dermatologistHours;
+	
+	@JsonManagedReference(value = "pharmacyMeds-movement")
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<MedicationsPharmacies> medicationsInPharmacy;
 	
 	public Pharmacy() {
 		super();
@@ -130,14 +130,6 @@ public class Pharmacy {
 		this.rating = rating;
 	}
 
-	public List<Medication> getMedications() {
-		return medications;
-	}
-
-	public void setMedications(List<Medication> medications) {
-		this.medications = medications;
-	}
-
 	public int getNumberOfVotes() {
 		return numberOfVotes;
 	}
@@ -176,5 +168,13 @@ public class Pharmacy {
 
 	public void setDermatologistHours(List<DermatologistPharmacyHours> dermatologistHours) {
 		this.dermatologistHours = dermatologistHours;
+	}
+
+	public List<MedicationsPharmacies> getMedicationsInPharmacy() {
+		return medicationsInPharmacy;
+	}
+
+	public void setMedicationsInPharmacy(List<MedicationsPharmacies> medicationsInPharmacy) {
+		this.medicationsInPharmacy = medicationsInPharmacy;
 	}
 }

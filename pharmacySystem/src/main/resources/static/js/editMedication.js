@@ -12,13 +12,42 @@ function getCurrentUser(){
         complete: function (data) {
             if(data.responseJSON != undefined && data.responseJSON.type == "ROLE_PHARMACY_ADMIN"){
                 getMedicationData();
-                getAdminPharmacy(data.responseJSON.pharmacyAdministrator);
+                getAdminFromUserId(data.responseJSON.id);
             }else {
             	alert("You cannot access this page!");
                 window.location.href = "../index.html";
            	}
         }
     });
+}
+
+function getAdminFromUserId(userId){
+	$.ajax({
+        method: 'GET',
+        url: 'http://localhost:8080/getPharmacyAdminFromUserId/' + userId,
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
+        complete: function (data) {
+         getAdminPharmacy(data.responseJSON);
+        }
+    });
+}
+
+function getMedicationPriceAndAmount(pharmacy){
+	var medId = getUrlVars()["medId"];
+	$.ajax({
+		method: 'GET',
+        url: 'http://localhost:8080/findOneByPharmacyIdAndMedicationId/' + pharmacy.id + "/" + medId,
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
+		async: false,
+        complete: function (data) {
+        	$("#price").val(data.responseJSON.price);
+        	$("#amount").val(data.responseJSON.amount);
+        }
+	});
 }
 
 function getMedicationData(){
@@ -38,10 +67,8 @@ function getMedicationData(){
             	$("#dailyIntake").val(med.dailyIntake);
             	$("#sideEffects").val(med.sideEffects);
             	$("#composition").val(med.chemicalComposition);
-            	$("#price").val(med.price);
 				getMedicationTypes(med);
 				getAllMedications(med);
-				updateMedication(med);
             }else{
             	alert("Error!");
             	window.location.href = "index.html";
@@ -61,6 +88,8 @@ function getAdminPharmacy(admin){
         complete: function (data) {
         	if(data.status == 200){
         		removeMedicationFromPharmacy(data.responseJSON.id, medId);
+        		getMedicationPriceAndAmount(data.responseJSON);
+        		updateMedication(medId, data.responseJSON);
         	}else{
         		alert("Something went wrong!");
         	}
@@ -71,7 +100,6 @@ function getAdminPharmacy(admin){
 function removeMedicationFromPharmacy(pharmacyId, medId){
 	$("#removeMedication").click(function(event){
 		event.preventDefault();
-		
 		$.ajax({
 	        method: 'POST',
 	        url: 'http://localhost:8080/removeMedicationFromPharmacy/' + pharmacyId + "/" + medId,
@@ -136,18 +164,17 @@ function getAllMedications(med){
 	});
 }
 
-function updateMedication(med){
+function updateMedication(medId, pharmacy){
 	$("#save").click(function(event){
 		event.preventDefault();
 		
 		var data = {
-			"id": med.id,
+			"id": medId,
 			"name":	$("#name").val(),
             "code": $("#code").val(),
             "dailyIntake": $("#dailyIntake").val(),
             "sideEffects": $("#sideEffects").val(),
             "chemicalComposition": $("#composition").val(),
-            "price": $("#price").val(),
             "medicationType":  {
 				"id":	$("#type").children(":selected").attr("id"),
 				"name":	$("#type").val()
@@ -159,7 +186,7 @@ function updateMedication(med){
 		
 		$.ajax({
 	        method: 'PUT',
-	        url: 'http://localhost:8080/updateMedication/',
+	        url: 'http://localhost:8080/updateMedication',
 	        headers: {
 	   			Authorization: 'Bearer ' + $.cookie('token')
 			},
@@ -168,14 +195,43 @@ function updateMedication(med){
             data: transformedData,
 	        complete: function (data) {
 	        	if(data.status == 200){
-	        		alert("SUCCESS!");
-	        		window.location.href = "pharmacyMedications.html";
+	        		updateMedicationsInPharmacies(medId, pharmacy);
 	        	}else{
 	        		alert("Something went wrong!");
 	        	}
 	       	}
 		});
+	});
+}
 
+function updateMedicationsInPharmacies(medId, pharmacy){
+
+	var data = {
+			"price": $("#price").val(),
+			"amount": $("#amount").val(),
+			"pharmacy": {
+				"id": pharmacy.id
+			},
+			"medication": {
+				"id": medId
+			}
+		}
+		
+		var transformedData = JSON.stringify(data);
+		
+		$.ajax({
+	        method: 'PUT',
+	        url: 'http://localhost:8080/updateMedicationInPharmacy',
+	        headers: {
+	   			Authorization: 'Bearer ' + $.cookie('token')
+			},
+			contentType: 'application/json',
+            dataType: 'json',
+            data: transformedData,
+	        complete: function (data) {
+	        	alert("SUCCESS!");
+	        	window.location.href = "pharmacyMedications.html";
+	        }
 	});
 }
 

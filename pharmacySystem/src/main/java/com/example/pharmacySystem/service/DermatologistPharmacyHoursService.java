@@ -47,7 +47,6 @@ public class DermatologistPharmacyHoursService {
 	
 	public DermatologistPharmacyHours addDermatologistWorkingHours(DermatologistPharmacyHoursDto hours) {
 		Dermatologist dermatologist = dermatologistRepository.findOneById(hours.getDermatologist().getId());
-		System.out.println(hours.toString());
 		Pharmacy pharmacy = pharmacyRepository.findOneById(hours.getPharmacy().getId());
 		DermatologistPharmacyHours newHours = new DermatologistPharmacyHours();
 		newHours.setFrom(hours.getFrom());

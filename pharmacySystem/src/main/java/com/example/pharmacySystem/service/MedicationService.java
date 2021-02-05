@@ -5,11 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.pharmacySystem.dto.MedicationDto;
+import com.example.pharmacySystem.dto.MedicationsPharmaciesDto;
 import com.example.pharmacySystem.model.Medication;
 import com.example.pharmacySystem.model.MedicationType;
+import com.example.pharmacySystem.model.MedicationsPharmacies;
 import com.example.pharmacySystem.model.Pharmacy;
 import com.example.pharmacySystem.repository.MedicationRepository;
 import com.example.pharmacySystem.repository.MedicationTypeRepository;
+import com.example.pharmacySystem.repository.MedicationsPharmaciesRepository;
 import com.example.pharmacySystem.repository.PharmacyRepository;
 
 @Service
@@ -24,6 +27,9 @@ public class MedicationService {
 	@Autowired
 	private PharmacyRepository pharmacyRepository;
 	
+	@Autowired
+	private MedicationsPharmaciesRepository medicationsPharmaciesRepository;
+	
 	public List<Medication> findAll(){
 		List<Medication> allMeds = medicationRepository.findAll();
 		return allMeds;
@@ -34,8 +40,8 @@ public class MedicationService {
 		return medication;
 	}
 	
-	public List<Medication> findAllByName(String name){
-		return medicationRepository.findAllByName(name);
+	public Medication findOneByName(String name){
+		return medicationRepository.findOneByName(name);
 	}
 	
 	public Medication create(MedicationDto medication) {
@@ -52,42 +58,40 @@ public class MedicationService {
 		return medicationRepository.save(newMed);
 	}
 	
-	public List<Medication> medicationsNotInPharmacy(Long pharmacyId){
-		Pharmacy myPharmacy = pharmacyRepository.findOneById(pharmacyId);
-		List<Medication> pharmacyMeds = myPharmacy.getMedications();
-		List<Medication> allMeds = medicationRepository.findAll();
-		List<Medication> retVal = new ArrayList<Medication>();
-		List<Medication> helper = new ArrayList<Medication>();
+	public List<Medication> getPharmacyMedications(Long pharmacyId){
+		List<MedicationsPharmacies> allMedsInPharmacy = medicationsPharmaciesRepository.findAllByPharmacyId(pharmacyId);
+		List<Medication> ourMedications = new ArrayList<Medication>();
 		
-		retVal = allMeds;
-		retVal.removeAll(pharmacyMeds);
+		for(MedicationsPharmacies m : allMedsInPharmacy)
+			if(!m.isDeleted())
+				ourMedications.add(medicationRepository.findOneById(m.getMedication().getId()));
 		
-		//remove medications with same name 
-		for(Medication m2 : pharmacyMeds)
-			for(Medication m : retVal)
-				if(m.getName().toLowerCase().equals(m2.getName().toLowerCase()))
-					helper.add(m);	
-							
-		retVal.removeAll(helper);		
-		return retVal;
+		return ourMedications;
 	}
 	
-	public Medication addMedicationToPharmacy(Long pharmacyId, MedicationDto medDto) {
-		Pharmacy myPharmacy = pharmacyRepository.findOneById(pharmacyId);
-		Medication myMedication = medicationRepository.findOneById(medDto.getId());
+	public List<Medication> medicationsNotInPharmacy(Long pharmacyId){
+		List<Medication> pharmacyMeds = getPharmacyMedications(pharmacyId);
+		List<Medication> allMeds = medicationRepository.findAll();
+		allMeds.removeAll(pharmacyMeds);
 		
-		Medication newMedication = new Medication();
-		newMedication.setName(myMedication.getName());
-		newMedication.setChemicalComposition(myMedication.getChemicalComposition());
-		newMedication.setCode(myMedication.getCode());
-		newMedication.setDailyIntake(myMedication.getDailyIntake());
-		newMedication.setMedicationType(myMedication.getMedicationType());
-		newMedication.setSideEffects(myMedication.getSideEffects());
-		newMedication.setSubstitution(myMedication.getSubstitution());
-		newMedication.setPrice(medDto.getPrice());
-		myPharmacy.getMedications().add(newMedication);
-		
-		medicationRepository.save(newMedication);
+		return allMeds;
+	}
+	
+	public Medication addMedicationToPharmacy(MedicationsPharmaciesDto medPharmacies) {
+		Pharmacy myPharmacy = pharmacyRepository.findOneById(medPharmacies.getPharmacy().getId());
+		Medication myMedication = medicationRepository.findOneById(medPharmacies.getMedication().getId());
+		List<MedicationsPharmacies> allMedsInPharmacies = medicationsPharmaciesRepository.findAll();
+				
+		MedicationsPharmacies newMedInPharmacy = new MedicationsPharmacies();
+		newMedInPharmacy.setPrice(medPharmacies.getPrice());
+		newMedInPharmacy.setAmount(medPharmacies.getAmount());
+		newMedInPharmacy.setMedication(myMedication);
+		newMedInPharmacy.setPharmacy(myPharmacy);
+		newMedInPharmacy.setDeleted(false);
+		allMedsInPharmacies.add(newMedInPharmacy);
+		myPharmacy.getMedicationsInPharmacy().add(newMedInPharmacy);
+		myMedication.getMedicationsInPharmacy().add(newMedInPharmacy);
+		medicationRepository.save(myMedication);
 		return myMedication;
 	}
 	
@@ -95,7 +99,12 @@ public class MedicationService {
 		Pharmacy myPharmacy = pharmacyRepository.findOneById(pharmacyId);
 		Medication myMedication = medicationRepository.findOneById(medicationId);
 
-		myPharmacy.getMedications().remove(myMedication);
+		MedicationsPharmacies mp = medicationsPharmaciesRepository.findOneByPharmacyIdAndMedicationIdAndDeleted(pharmacyId, medicationId, false);
+		mp.setDeleted(true);
+		myPharmacy.getMedicationsInPharmacy().remove(mp);
+		myMedication.getMedicationsInPharmacy().remove(mp);
+		List<MedicationsPharmacies> allMp = medicationsPharmaciesRepository.findAll();
+		allMp.remove(mp);
 		medicationRepository.save(myMedication);
 		return myMedication;
 	}
@@ -104,7 +113,6 @@ public class MedicationService {
 		Medication myMedication = medicationRepository.findOneById(medDto.getId());
 		
 		myMedication.setName(medDto.getName());
-		myMedication.setPrice(medDto.getPrice());
 		myMedication.setChemicalComposition(medDto.getChemicalComposition());
 		myMedication.setCode(medDto.getCode());
 		myMedication.setDailyIntake(medDto.getDailyIntake());

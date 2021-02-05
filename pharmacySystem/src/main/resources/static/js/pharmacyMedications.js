@@ -62,11 +62,13 @@ function getPharmacyMedicationsPatient(){
                 "</td><td>" + meds[i].dailyIntake +
                 "</td><td>" + meds[i].sideEffects +
                 "</td><td>" + meds[i].price +
+                "</td><td>" + meds[i].amount +
                 "</td></tr>");
                 
                 $("#table").append(medsTable);
+                getMedicationPriceAndAmount(pharmacyId, meds[i]);
             }
-            searchMedicationsPatient(meds);
+            searchMedicationsPatient(meds, pharmacyId);
         }
     });
 }
@@ -113,7 +115,7 @@ function getMedicationsNotInPharmacy(pharmacyId){
 		            	}));
 	            	}
             	}
-            	removeDuplicateOptionTags();
+            //	removeDuplicateOptionTags();
             	checkFields(pharmacyId);
         	}else{
         		alert("Something went wrong!");
@@ -132,27 +134,34 @@ function checkFields(pharmacyId){
 		if($("#medPrice").val() == "")
 			$("#medPrice").css("background-color","red");
 			
-		if($("#availableMedications").val() != "" && $("#medPrice").val() != ""){
+		if($("#medAmount").val() == "")
+			$("#medAmount").css("background-color","red");
+			
+		if($("#availableMedications").val() != "" && $("#medPrice").val() != "" && $("#medAmount").val() != ""){
 			var id = $("#availableMedications").find('option:selected').attr('id');
 			addMedicationToPharmacy(id, pharmacyId);
 		}	
 	});
 }
 
-
 function addMedicationToPharmacy(medId, pharmacyId){
-	
 	var data = {
-		"id": medId,
-		"price": $("#medPrice").val()
+		"medication": {
+		 	"id": medId
+		 },
+		"price": $("#medPrice").val(),
+		"pharmacy": {
+			"id": pharmacyId
+		},
+		"amount": $("#medAmount").val()
 	}
 	
 	var transformedData = JSON.stringify(data);
-	
 	$.ajax({
-        url: 'http://localhost:8080/addMedicationToPharmacy/' + pharmacyId,
+        url: 'http://localhost:8080/addMedicationToPharmacy',
         type: 'POST',
         data: transformedData,
+        async: false,
         contentType: 'application/json',
         dataType: 'json',
         complete: function(data) {
@@ -185,10 +194,12 @@ function getPharmacyMedicationsAdmin(pharmacyId){
                 "</td><td>" + meds[i].dailyIntake +
                 "</td><td>" + meds[i].sideEffects +
                 "</td><td>" + meds[i].price +
+                "</td><td>" + meds[i].amount +
                 "</td></tr>");
                 
                 $("#table").append(medsTable);
-                chooseMedication(meds[i].id, data.responseJSON);
+                chooseMedication(meds[i].id);
+                 getMedicationPriceAndAmount(pharmacyId, meds[i]);
             }
             searchMedicationsAdmin(meds, pharmacyId);
         }
@@ -210,9 +221,11 @@ function searchMedicationsAdmin(meds, pharmacyId){
 	                "</td><td>" + meds[i].dailyIntake +
 	                "</td><td>" + meds[i].sideEffects +
 	                "</td><td>" + meds[i].price +
+	                 "</td><td>" + meds[i].amount +
 	                "</td></tr>");
 	
 	                $("#table").append(medsTable);
+	                 getMedicationPriceAndAmount(pharmacyId, meds[i]);
 				}
 			}
 		}else{
@@ -230,7 +243,7 @@ function getUrlVars() {
     return vars;
 }
 
-function searchMedicationsPatient(meds){
+function searchMedicationsPatient(meds, pharmacyId){
 	$("#search").on("input", function(){
 		if($("#search").val() != ""){
 			
@@ -245,9 +258,11 @@ function searchMedicationsPatient(meds){
 	                "</td><td>" + meds[i].dailyIntake +
 	                "</td><td>" + meds[i].sideEffects +
 	                "</td><td>" + meds[i].price +
+	                "</td><td>" + meds[i].amount +
 	                "</td></tr>");
 	
 	                $("#table").append(medsTable);
+	                getMedicationPriceAndAmount(pharmacyId, meds[i]);
 				}
 			}
 		}else{
@@ -256,11 +271,10 @@ function searchMedicationsPatient(meds){
 	});
 }
 
-function chooseMedication(medId, user){
+function chooseMedication(medId){
 	$("#" + medId).click(function(event){
 		event.preventDefault();
-		if(user.type == "ROLE_PHARMACY_ADMIN");
-			window.location.href = "editMedication.html?medId=" + medId;
+		window.location.href = "editMedication.html?medId=" + medId;
 	});
 }
 
@@ -274,6 +288,26 @@ function removeDuplicateOptionTags(){
 				test =true;		
 			if (test) 
 				$(this).remove();
+	});
+}
+
+function getMedicationPriceAndAmount(pharmacyId, medication){
+	$.ajax({
+        method: 'GET',
+        url: 'http://localhost:8080/findAllMedsByPharmacyId/' + pharmacyId,
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
+        complete: function (data) {
+        	var meds = data.responseJSON;
+  
+	        for(var i = 0; i < meds.length; i++){
+	        	if(meds[i].medication.id == medication.id){
+	        		$("#" + medication.id + " td:nth-child(5)").text(meds[i].price);
+	        		$("#" + medication.id + " td:nth-child(6)").text(meds[i].amount);
+	        	}
+	        }
+       	}
 	});
 }
 

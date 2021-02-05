@@ -8,10 +8,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Medication {
@@ -35,19 +39,17 @@ public class Medication {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@Column(name = "price", nullable = false)
-	private double price;
-	
 	@Column(name = "substitution", nullable = true)
 	private String substitution;
 	
 	@JsonIgnoreProperties("medications")
-	@ManyToMany(mappedBy = "medications")
-	private List<Pharmacy> pharmacies;
-	
-	@JsonIgnoreProperties("medications")
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private MedicationType medicationType;
+	
+	@JsonManagedReference(value = "medicationPharmacy-movement")
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy = "medication", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<MedicationsPharmacies> medicationsInPharmacy;
 
 	public Medication() {
 		super();
@@ -67,22 +69,6 @@ public class Medication {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-	public List<Pharmacy> getPharmacies() {
-		return pharmacies;
-	}
-
-	public void setPharmacies(List<Pharmacy> pharmacies) {
-		this.pharmacies = pharmacies;
 	}
 
 	public MedicationType getMedicationType() {
@@ -131,5 +117,13 @@ public class Medication {
 
 	public void setSubstitution(String substitution) {
 		this.substitution = substitution;
+	}
+
+	public List<MedicationsPharmacies> getMedicationsInPharmacy() {
+		return medicationsInPharmacy;
+	}
+
+	public void setMedicationsInPharmacy(List<MedicationsPharmacies> medicationsInPharmacy) {
+		this.medicationsInPharmacy = medicationsInPharmacy;
 	}
 }
