@@ -13,4 +13,6 @@ public interface PharmacyAdministratorRepository extends JpaRepository<PharmacyA
 	List<PharmacyAdministrator> findAll();
 	
 	PharmacyAdministrator findOneById(Long id);
+	
+	PharmacyAdministrator findOneByUserId(Long id);
 }

@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class PharmacyAdministrator {
@@ -18,11 +19,11 @@ public class PharmacyAdministrator {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonIgnoreProperties("pharmacyAdministrator")
+	@JsonIgnoreProperties("pharmacyAdministrators")
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Pharmacy pharmacy;
 	
-	@JsonIgnoreProperties("pharmacyAdministrator")
+	@JsonManagedReference(value = "pharmacyAdmin-movement")
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
 	

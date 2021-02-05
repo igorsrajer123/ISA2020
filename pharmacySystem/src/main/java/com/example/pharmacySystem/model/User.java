@@ -18,6 +18,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -61,26 +63,28 @@ public class User implements UserDetails{
 	@JoinTable(name = "userAuthority", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "authorityId", referencedColumnName = "id"))
 	private List<Authority> authorities;
 	
-	@JsonIgnoreProperties("user")
+	@JsonBackReference(value ="dermatologist-movement")
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Dermatologist dermatologist;
 	
+	@JsonBackReference(value = "pharmacist-movement")
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Pharmacist pharmacist;
 	
-	@JsonIgnoreProperties("user")
+	@JsonBackReference(value = "pharmacyAdmin-movement")
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private PharmacyAdministrator pharmacyAdministrator;
 	
-	@JsonIgnoreProperties("user")
+	@JsonBackReference(value = "systemAdmin-movement")
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private PharmacySystemAdministrator pharmacySystemAdministrator;
 	
 	@JsonIgnoreProperties("user")
+	//@JsonBackReference(value = "patient-movement")
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Patient patient;
 	
-	@JsonIgnoreProperties("user")
+	@JsonBackReference(value = "supplier-movement")
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Supplier supplier;
 	

@@ -80,8 +80,8 @@ INSERT INTO dermatologist(number_of_votes, rating, user_id) VALUES (5, 3.2, 6);
 INSERT INTO dermatologist(number_of_votes, rating, user_id) VALUES (11, 2.2, 7);
 INSERT INTO dermatologist(number_of_votes, rating, user_id) VALUES (7, 4.2, 10);
 
-INSERT INTO pharmacist(number_of_votes, rating, pharmacy_id, user_id) VALUES (12, 3.5, 1, 8);
-INSERT INTO pharmacist(number_of_votes, rating, pharmacy_id, user_id) VALUES (22, 2.9, 1, 9);
+INSERT INTO pharmacist(number_of_votes, deleted, working_from, working_to, rating, pharmacy_id, user_id) VALUES (12, false, 8, 16, 3.5, 1, 8);
+INSERT INTO pharmacist(number_of_votes, deleted, working_from, working_to,rating, pharmacy_id, user_id) VALUES (22, false, 8, 16, 2.9, 1, 9);
 
 INSERT INTO pharmacy_dermatologists(pharmacy_id, dermatologist_id) VALUES (1, 1);
 INSERT INTO pharmacy_dermatologists(pharmacy_id, dermatologist_id) VALUES (1, 2);

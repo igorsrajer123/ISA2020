@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Patient {
@@ -24,6 +25,7 @@ public class Patient {
 	private Long id;
 	
 	@JsonIgnoreProperties("patient")
+	//@JsonManagedReference(value = "patient-movement")
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
 

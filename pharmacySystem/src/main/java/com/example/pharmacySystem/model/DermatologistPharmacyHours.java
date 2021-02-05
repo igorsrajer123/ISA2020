@@ -20,12 +20,12 @@ public class DermatologistPharmacyHours {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonBackReference
+	@JsonBackReference(value = "dermatologistHours-movement")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Dermatologist dermatologist;
 	
-	@JsonBackReference
+	@JsonBackReference(value = "pharmacyHours-movement")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Pharmacy pharmacy;

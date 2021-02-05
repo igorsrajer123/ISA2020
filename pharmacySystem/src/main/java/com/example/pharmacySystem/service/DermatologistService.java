@@ -58,6 +58,8 @@ public class DermatologistService {
 		List<Authority> authorities = authorityService.findByName("ROLE_DERMATOLOGIST");
 		user.setAuthorities(authorities);
 		newDermatologist.setUser(user);
+		newDermatologist.setRating(0);
+		newDermatologist.setNumberOfVotes(0);
 		
 		return dermatologistRepository.save(newDermatologist);
 	}

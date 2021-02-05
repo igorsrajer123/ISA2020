@@ -39,6 +39,10 @@ public class PharmacyAdministratorService {
 		return pharmacyAdminRepository.findOneById(id);
 	}
 	
+	public PharmacyAdministrator findOneByUserId(Long id) {
+		return pharmacyAdminRepository.findOneByUserId(id);
+	}
+	
 	public PharmacyAdministrator create(PharmacyAdministrator admin){
 		User user = userRepository.findOneByEmail(admin.getUser().getEmail());
 		

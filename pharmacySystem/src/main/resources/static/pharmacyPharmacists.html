@@ -17,22 +17,39 @@
 	    <br/>
         <table  id="table">
 	        <thead id="header">
-	            <td id="firstName">First Name</td>
-	            <td id="lastName">Last Name</td>
-	            <td id="pharmacies">Employed In</td>
-	            <td id="rating">Rating</td>
+	            <td>First Name</td>
+	            <td>Last Name</td>
+	            <td>Employed In</td>
+	            <td>Working From</td>
+	            <td>Working To</td>
+	            <td>Rating</td>
 	        </thead>
 	        <tbody>
 	        </tbody>
     	</table>
     	<div id="addPharmacist">
-    	<h3>Available Pharmacists</h3>
-    	<select id="availablePharmacists">
-    		<option></option>
-    	</select>
-    	<br/><br/>
-    	<p>Price(RSD): <input type="text" id="workingTime"></p>
-    	<br/>
+    	<h3>New Pharmacist</h3>
+    	<p>Email:</p>
+            <input type="text" class="data" name="email" id="email" placeholder="Email">
+			<br/>
+			<p>Temporary Password:</p>
+            <input type="password" class="data" name="password" id="password" placeholder="Password">
+			<br/>
+            <p>First Name:</p>
+            <input type="text" class="data" name="firstName" id="firstName" placeholder="First Name">
+			<br/>
+            <p>Last Name:</p>
+            <input type="text" class="data" name="lastName" id="lastName" placeholder="Last Name">
+            <br/><br/>
+        </div>
+        <div id="workingHours">
+    	<h3>Working Hours</h3>
+    	<p>From: <select id="from">
+    				<option></option>
+    			</select>h</p>
+    	<p>To: <select id="to">
+    			<option></option>
+    			</select>h</p>
     	<button id="add">Add</button>
     	</div>
     </div>

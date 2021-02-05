@@ -21,8 +21,21 @@ function getCurrentUser(){
             	$("#addMedication").hide();
            	}else if(data.responseJSON.type == "ROLE_PHARMACY_ADMIN"){
            		$("#addMedication").show();
-           		getAdminsPharmacy(data.responseJSON.pharmacyAdministrator.id);
+           		getAdminFromUserId(data.responseJSON.id);
            	}
+        }
+    });
+}
+
+function getAdminFromUserId(userId){
+	$.ajax({
+        method: 'GET',
+        url: 'http://localhost:8080/getPharmacyAdminFromUserId/' + userId,
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
+        complete: function (data) {
+          getAdminsPharmacy(data.responseJSON.id);
         }
     });
 }

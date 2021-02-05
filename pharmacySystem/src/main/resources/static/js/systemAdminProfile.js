@@ -27,7 +27,7 @@ function getCurrentUser(){
 function saveUserProfile(user){
 	$("#save").click(function(event){
         event.preventDefault();
-
+		alert(user.pharmacySystemAdministrator);
         var data = {
         	"id": user.pharmacySystemAdministrator.id,
             "user": {

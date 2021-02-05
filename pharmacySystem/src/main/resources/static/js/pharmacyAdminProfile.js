@@ -18,6 +18,21 @@ function getCurrentUser(){
                 $("#firstName").val(data.responseJSON.firstName);
                 $("#lastName").val(data.responseJSON.lastName);
             }
+          //  saveUserProfile(data.responseJSON);
+          getAdminFromUserId(data.responseJSON.id);
+        }
+    });
+}
+
+function getAdminFromUserId(userId){
+	$.ajax({
+        method: 'GET',
+        url: 'http://localhost:8080/getPharmacyAdminFromUserId/' + userId,
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
+        complete: function (data) {
+            //getPharmacy(data.responseJSON.id);
             saveUserProfile(data.responseJSON);
         }
     });
@@ -28,7 +43,7 @@ function saveUserProfile(user){
         event.preventDefault();
 	
 		var data = {
-        	"id": user.pharmacyAdministrator.id,
+        	"id": user.id,
             "user": {
                 "email": $("#email").val(),
                 "firstName": $("#firstName").val(),

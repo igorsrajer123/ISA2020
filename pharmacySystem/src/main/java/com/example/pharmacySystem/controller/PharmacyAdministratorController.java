@@ -83,4 +83,15 @@ public class PharmacyAdministratorController {
 		
 		return new ResponseEntity<PharmacyAdministratorDto>(myAdminDto, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/getPharmacyAdminFromUserId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PharmacyAdministratorDto> getPharmacyAdminByUserId(@PathVariable("id") Long id) {
+		PharmacyAdministrator myAdmin = pharmacyAdminService.findOneByUserId(id);
+		
+		if(myAdmin == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		PharmacyAdministratorDto myAdminDto = new PharmacyAdministratorDto(myAdmin);
+		
+		return new ResponseEntity<PharmacyAdministratorDto>(myAdminDto, HttpStatus.OK);
+	}
 }

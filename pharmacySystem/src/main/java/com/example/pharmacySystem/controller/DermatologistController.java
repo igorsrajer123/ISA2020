@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.pharmacySystem.dto.DermatologistDto;
 import com.example.pharmacySystem.model.Dermatologist;
-import com.example.pharmacySystem.service.DermatologistPharmacyHoursService;
 import com.example.pharmacySystem.service.DermatologistService;
 
 @RestController
@@ -24,9 +23,6 @@ public class DermatologistController {
 
 	@Autowired
 	private DermatologistService dermatologistService;
-	
-	@Autowired
-	private DermatologistPharmacyHoursService service;
 	
 	@GetMapping(value = "/getAllDermatologists", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<DermatologistDto>> getAllDermatologists(){

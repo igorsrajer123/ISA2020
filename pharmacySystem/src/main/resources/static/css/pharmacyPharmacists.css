@@ -1,7 +1,11 @@
 body{
-    background: url(1.jpg) no-repeat;
+    background: url(4.jpg) no-repeat;
     margin: 0;
     padding: 0;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 *{
@@ -19,9 +23,9 @@ nav{
 }
 
 .mainDiv{
-    position: fixed;
+    position: absolute;
     left: 50%;
-    top: 50%;
+    top: 60%;
     transform: translate(-50%, -50%);
 }
 
@@ -91,7 +95,7 @@ button{
 	padding: 1px 1px;
 	font-size: 15px;
 	font-family: "Georgia", "Comic Sans", cursive;
-    margin: 2px;
+    margin: 5px;
     width: 125px;
     height: 25px;
 	cursor: pointer;
@@ -114,6 +118,24 @@ h3{
     color: white;
 }
 
+p{
+	font-family: "Rockwell", "Comic Sans", cursive;
+    font-weight: bold;
+    color: white;
+    width: 400px;
+}
+
+#from, #to{
+    width: 80px;
+    height: 20px;
+}
+
+.data{
+    font-size: 12px;
+    padding: 10px 10px;
+    outline: none;
+}
+
 select{
  	appearance: none;
     border: none;
@@ -130,15 +152,6 @@ select{
     height: 25px;
 }
 
-p{
-	font-family: "Rockwell", "Comic Sans", cursive;
-    font-weight: bold;
-    color: white;
-}
-
-#workingtime{
-	font-size: 15px;
-    padding: 10px 10px;
-    width: 80px;
-    height: 20px;
+#workingHours{
+	text-align: left;
 }

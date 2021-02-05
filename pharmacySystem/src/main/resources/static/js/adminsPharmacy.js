@@ -12,11 +12,24 @@ function getCurrentUser(){
 		},
         complete: function (data) {
             if(data.responseJSON != undefined && data.responseJSON.type == "ROLE_PHARMACY_ADMIN"){
-                getPharmacy(data.responseJSON.pharmacyAdministrator.id);
+                getAdminFromUserId(data.responseJSON.id);
             }else {
             	alert("You cannot access this page!");
                 window.location.href = "../index.html";
            	}
+        }
+    });
+}
+
+function getAdminFromUserId(userId){
+	$.ajax({
+        method: 'GET',
+        url: 'http://localhost:8080/getPharmacyAdminFromUserId/' + userId,
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
+        complete: function (data) {
+            getPharmacy(data.responseJSON.id);
         }
     });
 }
@@ -89,5 +102,6 @@ function redirectUser(){
 	
 	$("#pharmacyPharmacistsOptions").click(function(event){
 		event.preventDefault();
+		window.location.href = "pharmacyPharmacists.html"
 	});
 }

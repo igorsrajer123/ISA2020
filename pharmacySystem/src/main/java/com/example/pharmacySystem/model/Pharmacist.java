@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Pharmacist {
@@ -19,11 +20,11 @@ public class Pharmacist {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonIgnoreProperties(value = {"dermatologists"}, allowSetters = true)
+	@JsonIgnoreProperties("pharmacists")
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Pharmacy pharmacy;
 	
-	@JsonIgnoreProperties("pharmacist")
+	@JsonManagedReference(value = "pharmacist-movement")
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
 	
@@ -32,6 +33,15 @@ public class Pharmacist {
 	
 	@Column(name = "numberOfVotes")
 	private int numberOfVotes;
+	
+	@Column(name = "deleted")
+	private boolean deleted;
+	
+	@Column(name = "workingFrom")
+	private int from;
+	
+	@Column(name = "workingTo")
+	private int to;
 	
 	public Pharmacist() {
 		super();
@@ -49,6 +59,9 @@ public class Pharmacist {
 		this.user = pharmacist.user;
 		this.rating = pharmacist.rating;
 		this.numberOfVotes = pharmacist.numberOfVotes;
+		this.deleted = pharmacist.deleted;
+		this.from = pharmacist.from;
+		this.to = pharmacist.to;
 	}
 	
 	public Long getId() {
@@ -89,5 +102,29 @@ public class Pharmacist {
 
 	public void setNumberOfVotes(int numberOfVotes) {
 		this.numberOfVotes = numberOfVotes;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public int getFrom() {
+		return from;
+	}
+
+	public void setFrom(int from) {
+		this.from = from;
+	}
+
+	public int getTo() {
+		return to;
+	}
+
+	public void setTo(int to) {
+		this.to = to;
 	}
 }

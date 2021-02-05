@@ -29,11 +29,11 @@ public class Dermatologist {
 	@ManyToMany(mappedBy = "dermatologists")
 	private List<Pharmacy> pharmacies;
 	
-	@JsonIgnoreProperties("dermatologist")
+	@JsonManagedReference(value = "dermatologist-movement")
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
 	
-	@JsonManagedReference
+	@JsonManagedReference("dermatologistHours-movement")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@OneToMany(mappedBy = "dermatologist", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<DermatologistPharmacyHours> pharmacyHours;

@@ -44,7 +44,7 @@ public class Pharmacy {
 	@Column(name = "numberOfVotes")
 	private int numberOfVotes;
 	
-	@JsonIgnoreProperties(value = {"pharmacy"}, allowSetters = true)
+	@JsonIgnoreProperties("pharmacy")
 	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Pharmacist> pharmacists;
 	
@@ -62,7 +62,7 @@ public class Pharmacy {
 	@JoinTable(name = "pharmacyMedications", joinColumns = { @JoinColumn(name = "pharmacyId", referencedColumnName = "id")}, inverseJoinColumns = @JoinColumn(name = "medicationId", referencedColumnName = "id"))
 	private List<Medication> medications;
 	
-	@JsonManagedReference
+	@JsonManagedReference(value = "pharmacyHours-movement")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<DermatologistPharmacyHours> dermatologistHours;
