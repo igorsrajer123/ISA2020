@@ -17,6 +17,28 @@ function cancel(){
     })
 }
 
+function getPatientByUserId(userId){
+	$.ajax({
+        method: 'GET',
+        url: 'http://localhost:8080/getPatientByUserId/' + userId,
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
+        complete: function (data) {
+        	 	$("#email").val(data.responseJSON.user.email);
+                $("#password").val(data.responseJSON.user.password);
+                $("#firstName").val(data.responseJSON.user.firstName);
+                $("#lastName").val(data.responseJSON.user.lastName);
+                $("#address").val(data.responseJSON.address);
+                $("#phoneNumber").val(data.responseJSON.phoneNumber);
+                $("#country").val(data.responseJSON.country);
+                $("#city").val(data.responseJSON.city);
+                
+                saveUserProfile(data.responseJSON.id);
+        }
+	});
+}
+
 function getCurrentUser(){
     $.ajax({
         method: 'GET',
@@ -29,16 +51,8 @@ function getCurrentUser(){
                 alert("You cannot access this page!");
                 window.location.href = "../index.html";
             }else {
-                $("#email").val(data.responseJSON.email);
-                $("#password").val(data.responseJSON.password);
-                $("#firstName").val(data.responseJSON.firstName);
-                $("#lastName").val(data.responseJSON.lastName);
-                $("#address").val(data.responseJSON.patient.address);
-                $("#phoneNumber").val(data.responseJSON.patient.phoneNumber);
-                $("#country").val(data.responseJSON.patient.country);
-                $("#city").val(data.responseJSON.patient.city);
+               getPatientByUserId(data.responseJSON.id);
             }
-            saveUserProfile(data.responseJSON.id);
         }
     });
 }

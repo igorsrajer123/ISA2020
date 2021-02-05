@@ -28,6 +28,8 @@ public class PatientDto {
 		this.user = new UserDto(patient.getUser());
 		this.address = patient.getAddress();
 		this.phoneNumber = patient.getPhoneNumber();
+		this.city = patient.getCity();
+		this.country = patient.getCountry();
 	}
 	
 	public Long getId() {

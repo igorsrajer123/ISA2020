@@ -7,11 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.pharmacySystem.dto.PharmacyAdministratorDto;
 import com.example.pharmacySystem.dto.PharmacySystemAdministratorDto;
+import com.example.pharmacySystem.model.PharmacyAdministrator;
 import com.example.pharmacySystem.model.PharmacySystemAdministrator;
 import com.example.pharmacySystem.service.PharmacySystemAdministratorService;
 
@@ -46,5 +49,16 @@ public class PharmacySystemAdministratorController {
 		PharmacySystemAdministratorDto myAdminDto = new PharmacySystemAdministratorDto(myAdmin);
 		
 		return new ResponseEntity<PharmacySystemAdministratorDto>(myAdminDto, HttpStatus.CREATED);
+	}
+	
+	@GetMapping(value = "/getSystemAdminFromUserId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PharmacySystemAdministratorDto> getSystemAdminFromUserId(@PathVariable("id") Long id) {
+		PharmacySystemAdministrator myAdmin =  systemAdministratorService.findOneByUserId(id);
+		
+		if(myAdmin == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		PharmacySystemAdministratorDto myAdminDto = new PharmacySystemAdministratorDto(myAdmin);
+		
+		return new ResponseEntity<PharmacySystemAdministratorDto>(myAdminDto, HttpStatus.OK);
 	}
 }

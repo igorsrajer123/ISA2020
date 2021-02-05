@@ -79,8 +79,8 @@ public class User implements UserDetails{
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private PharmacySystemAdministrator pharmacySystemAdministrator;
 	
-	@JsonIgnoreProperties("user")
-	//@JsonBackReference(value = "patient-movement")
+	//@JsonIgnoreProperties("user")
+	@JsonBackReference(value = "patient-movement")
 	@OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Patient patient;
 	

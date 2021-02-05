@@ -24,8 +24,8 @@ public class Patient {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonIgnoreProperties("patient")
-	//@JsonManagedReference(value = "patient-movement")
+	//@JsonIgnoreProperties("patient")
+	@JsonManagedReference(value = "patient-movement")
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
 

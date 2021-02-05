@@ -104,6 +104,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/getPharmacyAdminFromUserId/*").permitAll()
 		.antMatchers("/removePharmacistFromPharmacy/*/*").permitAll()
 		.antMatchers("/removeDermatologistPharmacyWorkingHours/*/*").permitAll()
+		.antMatchers("/getSystemAdminFromUserId/*").permitAll()
+		.antMatchers("/getPatientByUserId/*").permitAll()
 		.antMatchers("/", "/*.html", "/favicon.ico","/*.js", "/*.css").permitAll()
 		.anyRequest().authenticated().and()
 		.cors().and()

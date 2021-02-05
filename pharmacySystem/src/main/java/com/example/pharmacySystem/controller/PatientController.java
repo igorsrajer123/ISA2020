@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.pharmacySystem.dto.PatientDto;
 import com.example.pharmacySystem.model.Patient;
 import com.example.pharmacySystem.service.PatientService;
 
@@ -45,5 +46,14 @@ public class PatientController {
 		Patient p = patientService.findOneById(id);
 		
 		return new ResponseEntity<Patient>(p, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getPatientByUserId/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Patient> getPatientByUserId(@PathVariable("id") Long id){
+		Patient patient = patientService.findOneByUserId(id);
+		
+		if(patient == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		return new ResponseEntity<Patient>(patient, HttpStatus.OK);		
 	}
 }
