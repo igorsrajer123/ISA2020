@@ -12,7 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Pharmacy {
@@ -56,6 +61,11 @@ public class Pharmacy {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "pharmacyMedications", joinColumns = { @JoinColumn(name = "pharmacyId", referencedColumnName = "id")}, inverseJoinColumns = @JoinColumn(name = "medicationId", referencedColumnName = "id"))
 	private List<Medication> medications;
+	
+	@JsonManagedReference
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<DermatologistPharmacyHours> dermatologistHours;
 	
 	public Pharmacy() {
 		super();
@@ -158,5 +168,13 @@ public class Pharmacy {
 	
 	public void setPharmacists(List<Pharmacist> pharmacists) {
 		this.pharmacists = pharmacists;
+	}
+
+	public List<DermatologistPharmacyHours> getDermatologistHours() {
+		return dermatologistHours;
+	}
+
+	public void setDermatologistHours(List<DermatologistPharmacyHours> dermatologistHours) {
+		this.dermatologistHours = dermatologistHours;
 	}
 }

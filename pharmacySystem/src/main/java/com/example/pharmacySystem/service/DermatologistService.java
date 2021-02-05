@@ -64,9 +64,35 @@ public class DermatologistService {
 	
 	public List<Dermatologist> getPharmacyDermatologists(Long pharmacyId){
 		Pharmacy myPharmacy = pharmacyRepository.findOneById(pharmacyId);
-		System.out.println(myPharmacy.getId());
 		List<Dermatologist> dermatologists = myPharmacy.getDermatologists();
-		System.out.println(dermatologists.size());
 		return dermatologists;
+	}
+	
+	public List<Dermatologist> getDermatologistsNotInPharmacy(Long pharmacyId){
+		Pharmacy myPharmacy = pharmacyRepository.findOneById(pharmacyId);
+		List<Dermatologist> dermatologists = myPharmacy.getDermatologists();
+		List<Dermatologist> allDermatologists = dermatologistRepository.findAll();
+		allDermatologists.removeAll(dermatologists);
+		return allDermatologists;
+	}
+	
+	public Dermatologist addDermatologistToPharmacy(Long dermatologistId, Long pharmacyId) {
+		Dermatologist dermatologist = dermatologistRepository.findOneById(dermatologistId);
+		Pharmacy pharmacy = pharmacyRepository.findOneById(pharmacyId);		
+		dermatologist.getPharmacies().add(pharmacy);
+		pharmacy.getDermatologists().add(dermatologist);
+		dermatologistRepository.save(dermatologist);
+		
+		return dermatologist;
+	}
+	
+	public Dermatologist removeDermatologistFromPharmacy(Long dermatologistId, Long pharmacyId) {
+		Dermatologist dermatologist = dermatologistRepository.findOneById(dermatologistId);
+		Pharmacy pharmacy = pharmacyRepository.findOneById(pharmacyId);
+		dermatologist.getPharmacies().remove(pharmacy);
+		pharmacy.getDermatologists().remove(dermatologist);
+		dermatologistRepository.save(dermatologist);
+		
+		return dermatologist;
 	}
 }

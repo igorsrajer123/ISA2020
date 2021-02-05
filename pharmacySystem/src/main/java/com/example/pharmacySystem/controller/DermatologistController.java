@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.pharmacySystem.dto.DermatologistDto;
 import com.example.pharmacySystem.model.Dermatologist;
+import com.example.pharmacySystem.service.DermatologistPharmacyHoursService;
 import com.example.pharmacySystem.service.DermatologistService;
 
 @RestController
@@ -22,6 +24,9 @@ public class DermatologistController {
 
 	@Autowired
 	private DermatologistService dermatologistService;
+	
+	@Autowired
+	private DermatologistPharmacyHoursService service;
 	
 	@GetMapping(value = "/getAllDermatologists", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<DermatologistDto>> getAllDermatologists(){
@@ -59,4 +64,50 @@ public class DermatologistController {
 		
 		return new ResponseEntity<List<DermatologistDto>>(dermatologistsDto, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/getDermatologistsNotInPHarmacy/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<DermatologistDto>> getDermatologistsNotInPharmacy(@PathVariable("pharmacyId") Long pharmacyId){
+		List<Dermatologist> myDermatologists = dermatologistService.getDermatologistsNotInPharmacy(pharmacyId);
+		
+		if(myDermatologists == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		List<DermatologistDto> dermatologistsDto = new ArrayList<DermatologistDto>();
+		for(Dermatologist d : myDermatologists)
+			dermatologistsDto.add(new DermatologistDto(d));
+		
+		return new ResponseEntity<List<DermatologistDto>>(dermatologistsDto, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/addDermatologistToPharmacy/{dermatologistId}/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<DermatologistDto> addDermatologistToPharmacy(@PathVariable("dermatologistId") Long dermatologistId, @PathVariable("pharmacyId") Long pharmacyId){
+		Dermatologist dermatologist = dermatologistService.addDermatologistToPharmacy(dermatologistId, pharmacyId);
+		
+		if(dermatologist == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		DermatologistDto dermaDto = new DermatologistDto(dermatologist);
+		
+		return new ResponseEntity<DermatologistDto>(dermaDto, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/removeDermatologistFromPharmacy/{dermatologistId}/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<DermatologistDto> removeDermatologistFromPharmacy(@PathVariable("dermatologistId") Long dermatologistId, @PathVariable("pharmacyId") Long pharmacyId){
+		Dermatologist dermatologist = dermatologistService.removeDermatologistFromPharmacy(dermatologistId, pharmacyId);
+		
+		if(dermatologist == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		DermatologistDto dermaDto = new DermatologistDto(dermatologist);
+		
+		return new ResponseEntity<DermatologistDto>(dermaDto, HttpStatus.OK);
+	}
+	/*
+	@DeleteMapping(value = "/removeDermatologistPharmacyWorkingHours/{dermatologistId}/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<DermatologistDto> removeDermatologistPharmacyWorkingHours(@PathVariable("dermatologistId") Long dermatologistId, @PathVariable("pharmacyId") Long pharmacyId){
+		Dermatologist dermatologist = dermatologistService.removeDermatologistWorkingHoursFromPharmacy(dermatologistId, pharmacyId);
+		
+		if(dermatologist == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		DermatologistDto dermaDto = new DermatologistDto(dermatologist);
+		
+		return new ResponseEntity<DermatologistDto>(dermaDto, HttpStatus.OK);
+	}*/
 }

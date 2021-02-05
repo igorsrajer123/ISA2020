@@ -134,11 +134,10 @@ p{
 	font-family: "Rockwell", "Comic Sans", cursive;
     font-weight: bold;
     color: white;
+    width: 400px;
 }
 
-#workingtime{
-	font-size: 15px;
-    padding: 10px 10px;
+#from, #to{
     width: 80px;
     height: 20px;
 }

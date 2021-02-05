@@ -9,9 +9,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Dermatologist {
@@ -27,6 +32,11 @@ public class Dermatologist {
 	@JsonIgnoreProperties("dermatologist")
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
+	
+	@JsonManagedReference
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@OneToMany(mappedBy = "dermatologist", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<DermatologistPharmacyHours> pharmacyHours;
 	
 	@Column(name = "rating")
 	private double rating;
@@ -90,5 +100,13 @@ public class Dermatologist {
 
 	public void setNumberOfVotes(int numberOfVotes) {
 		this.numberOfVotes = numberOfVotes;
+	}
+
+	public List<DermatologistPharmacyHours> getPharmacyHours() {
+		return pharmacyHours;
+	}
+
+	public void setPharmacyHours(List<DermatologistPharmacyHours> pharmacyHours) {
+		this.pharmacyHours = pharmacyHours;
 	}
 }
