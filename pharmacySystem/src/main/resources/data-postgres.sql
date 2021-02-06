@@ -101,6 +101,7 @@ INSERT INTO pharmacy_dermatologists(pharmacy_id, dermatologist_id) VALUES (1, 1)
 INSERT INTO pharmacy_dermatologists(pharmacy_id, dermatologist_id) VALUES (1, 2);
 INSERT INTO pharmacy_dermatologists(pharmacy_id, dermatologist_id) VALUES (1, 3);
 INSERT INTO pharmacy_dermatologists(pharmacy_id, dermatologist_id) VALUES (2, 4);
+INSERT INTO pharmacy_dermatologists(pharmacy_id, dermatologist_id) VALUES (1, 4);
 
 INSERT INTO pharmacy_administrator(pharmacy_id, user_id) VALUES (1, 3);
 INSERT INTO pharmacy_administrator(pharmacy_id, user_id) VALUES (2, 11);
@@ -118,3 +119,15 @@ INSERT INTO user_authority(user_id, authority_id) VALUES (10, 3);
 INSERT INTO user_authority(user_id, authority_id) VALUES (11, 5);
 
 INSERT INTO dermatologist_pharmacy_hours(working_from, deleted, working_to, dermatologist_id, pharmacy_id) VALUES (12, false, 16, 4, 2);
+INSERT INTO dermatologist_pharmacy_hours(working_from, deleted, working_to, dermatologist_id, pharmacy_id) VALUES (8, false, 13, 1, 1);
+INSERT INTO dermatologist_pharmacy_hours(working_from, deleted, working_to, dermatologist_id, pharmacy_id) VALUES (10, false, 14, 2, 1);
+INSERT INTO dermatologist_pharmacy_hours(working_from, deleted, working_to, dermatologist_id, pharmacy_id) VALUES (14, false, 15, 3, 2);
+INSERT INTO dermatologist_pharmacy_hours(working_from, deleted, working_to, dermatologist_id, pharmacy_id) VALUES (8, false, 11, 4, 1);
+
+INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2020-05-05', 1, 'FREE', '01:00', 1, null, 1, 155.0);
+INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2020-01-12', 1, 'FREE', '03:00', 1, null, 1, 155.0);
+INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2020-02-25', 1, 'ACTIVE', '02:00', 1, null, 1, 155.0);
+INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2020-06-30', 1, 'FREE', '04:00', 1, null, 1, 155.0);
+INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2021-12-02', 0.5, 'FREE', '08:00', 4, null, 1, 155.0);
+INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2021-12-02', 1, 'ACTIVE', '10:00', 4, null, 1, 155.0);
+

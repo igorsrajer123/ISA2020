@@ -67,6 +67,10 @@ public class Pharmacy {
 	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<MedicationsPharmacies> medicationsInPharmacy;
 	
+	@JsonManagedReference(value = "examinationPharmacy-movement")
+	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Examination> examinations;
+	
 	public Pharmacy() {
 		super();
 	}
@@ -176,5 +180,13 @@ public class Pharmacy {
 
 	public void setMedicationsInPharmacy(List<MedicationsPharmacies> medicationsInPharmacy) {
 		this.medicationsInPharmacy = medicationsInPharmacy;
+	}
+
+	public List<Examination> getExaminations() {
+		return examinations;
+	}
+
+	public void setExaminations(List<Examination> examinations) {
+		this.examinations = examinations;
 	}
 }

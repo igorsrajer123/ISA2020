@@ -12,9 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -24,7 +23,6 @@ public class Patient {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	//@JsonIgnoreProperties("patient")
 	@JsonManagedReference(value = "patient-movement")
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
@@ -47,6 +45,10 @@ public class Patient {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "patientAllergicOn", joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "medicationId", referencedColumnName = "id"))
 	private List<Medication> allergicOn;
+	
+	@JsonManagedReference(value = "examinationPatient-movement")
+	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Examination> examinations;
 	
 	public Patient() {
 		super();
@@ -114,5 +116,13 @@ public class Patient {
 
 	public void setAllergicOn(List<Medication> allergicOn) {
 		this.allergicOn = allergicOn;
+	}
+
+	public List<Examination> getExaminations() {
+		return examinations;
+	}
+
+	public void setExaminations(List<Examination> examinations) {
+		this.examinations = examinations;
 	}
 }

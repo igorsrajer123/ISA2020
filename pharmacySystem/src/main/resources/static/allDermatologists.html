@@ -1,0 +1,43 @@
+<html>
+<head>
+ <meta charset="utf-8" />
+    <title>All Dermatologists</title>
+    <link rel="stylesheet" href="css/allDermatologists.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/allDermatologists.js"></script>
+</head>
+<body> 
+	<nav>
+        
+    </nav>
+    
+    <div class="mainDiv">
+    	<div>
+	    	<p id="searchParagraph">Search Dermatologists:</p><input placeholder="Name" type="text" id="search"/><br/>
+	    	<button id="btnFilter">Filters</button>
+	    	<div id="filters">
+	    		<p id="cities" style="color:white;"><b>Pharmacies:</b></p>
+	    			    		
+	    		<p style="color:white;"><b>Ratings:</b></p>
+	    		<input type="checkbox" class="rating-list" value="1"/> <label>Less than 2.5</label>><br/>
+	    		<input type="checkbox" class="rating-list" value="2"/> <label>Between 2.5 and 3.5</label><br/>
+	    		<input type="checkbox" class="rating-list" value="3"/> <label>Between 3.5 and 4.5</label><br/>
+	    		<input type="checkbox" class="rating-list" value="4"/> <label>Between 4.5 and 5.0</label><br/>
+	    	</div>
+	    </div>
+	    <br/>
+        <table  id="table">
+        <thead id="header">
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Employed In</td>
+            <td>Rating</td>
+            <td></td>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    </div>
+</body>
+</html>

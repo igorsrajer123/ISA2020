@@ -15,4 +15,6 @@ public interface DermatologistPharmacyHoursRepository extends JpaRepository<Derm
 	DermatologistPharmacyHours findOneById(Long id);
 	
 	void deleteById(Long id);
+	
+	DermatologistPharmacyHours findOneByDermatologistIdAndPharmacyIdAndDeleted(Long dermatologistId, Long pharmacyId, boolean deleted);
 }

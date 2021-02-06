@@ -74,17 +74,19 @@ function getPharmacyDermatologistsPatient(){
                 "</td><td>" + dermatologists[i].user.lastName +
                 "</td><td>" + 
                 "</td><td>" + dermatologists[i].rating +
+                "</td><td><button id='" + dermatologists[i].id + dermatologists[i].id + "'>Available Examinations</button>" +
                 "</td></tr>");
                 
                 $("#table").append(dermatologistsTable);
                 getDermatologistPharmacies(dermatologists[i].id);
+                buttonClickedPatient(dermatologists[i].id, pharmacyId);
             }
-            searchDermatologistsPatient(dermatologists);
+            searchDermatologistsPatient(dermatologists, pharmacyId);
         }
     });
 }
 
-function searchDermatologistsPatient(dermatologists){
+function searchDermatologistsPatient(dermatologists, pharmacyId){
 	$("#search").on("input", function(){
 		if($("#search").val() != ""){
 			
@@ -98,10 +100,12 @@ function searchDermatologistsPatient(dermatologists){
 	                "</td><td>" + dermatologists[i].user.lastName +
 	                "</td><td>" + 
 	                "</td><td>" + dermatologists[i].rating +
+	                "</td><td><button id='" + dermatologists[i].id + dermatologists[i].id + "'>Available Examinations</button>" +
 	                "</td></tr>");
 	                
 	                $("#table").append(dermatologistsTable);
 	                getDermatologistPharmacies(dermatologists[i].id);
+	                buttonClickedPatient(dermatologists[i].id, pharmacyId);
 				}
 			}
 		}else{
@@ -167,11 +171,13 @@ function getPharmacyDermatologistsAdmin(pharmacyId){
 	                "</td><td>" + 
 	                "</td><td>" + dermatologists[i].rating +
 	                "</td><td><button style='color:red;background-color: #F1948A;' id='" + dermatologists[i].id + dermatologists[i].id +"'>Remove</button>" +
+	                "</td><td><button id='" + dermatologists[i].id + dermatologists[i].id + dermatologists[i].id + "'>Create Free Examination</button>" +
 	                "</td></tr>");
 	                
 	                $("#table").append(dermatologistsTable);
 	                getDermatologistPharmacies(dermatologists[i].id);
 	                removeDermatologistFromPharmacy(dermatologists[i], pharmacyId);
+	                buttonClickedAdmin(dermatologists[i].id, pharmacyId);
             }
            	getDermatologistsNotInPharmacy(pharmacyId);
             searchDermatologistsAdmin(dermatologists, pharmacyId);
@@ -197,11 +203,13 @@ function searchDermatologistsAdmin(dermatologists, pharmacyId){
 	                "</td><td>" + 
 	                "</td><td>" + dermatologists[i].rating +
 	                "</td><td><button style='color:red;background-color: #F1948A;' id='" + dermatologists[i].id + dermatologists[i].id + "'>Remove</button>" +
+	                "</td><td><button id='" + dermatologists[i].id + dermatologists[i].id +  + dermatologists[i].id + "'>Create Free Examination</button>" +
 	                "</td></tr>");
 	                
 	                $("#table").append(dermatologistsTable);
 	                getDermatologistPharmacies(dermatologists[i].id);
 	                removeDermatologistFromPharmacy(dermatologists[i], pharmacyId);
+	                buttonClickedAdmin(dermatologists[i].id, pharmacyId);
 				}
 			}
 			getDermatologistsNotInPharmacy(pharmacyId);
@@ -370,3 +378,18 @@ function getUrlVars() {
     });
     return vars;
 }
+
+function buttonClickedAdmin(id, pharmacyId){
+	$("#" + id + id + id).click(function(event){
+		event.preventDefault();
+		window.location.href = "dermatologistActivePharmacyExaminations.html?dermatologistId=" + id + "&pharmacyId=" + pharmacyId;
+	});
+}
+
+function buttonClickedPatient(id, pharmacyId){
+	$("#" + id + id).click(function(event){
+		event.preventDefault();
+		window.location.href = "dermatologistActivePharmacyExaminations.html?dermatologistId=" + id + "&pharmacyId=" + pharmacyId;
+	});
+}
+
