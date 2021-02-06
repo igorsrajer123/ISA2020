@@ -236,4 +236,36 @@ public class ExaminationService {
 		examinationRepository.save(ex);
 		return ex;
 	}
+	
+	public Examination cancellPatientExamination(Long patientId, Long examinationId) {
+		Examination ex = examinationRepository.findOneById(examinationId);
+		
+		if(ex.getStatus().equals("ACTIVE")) {
+			ex.setStatus("FREE");
+			ex.setPatient(null);
+			Patient p = patientRepository.findOneById(patientId);
+			p.getExaminations().remove(ex);
+			Dermatologist d = dermatologistRepository.findOneById(ex.getDermatologist().getId());
+			List<Examination> dermatologistExaminations = d.getExaminations();
+			examinationRepository.save(ex);
+			for(Examination examination : dermatologistExaminations)
+				if(examination.getId() == ex.getId()) {
+					examination.setStatus("FREE");
+					examination.setPatient(null);
+					examinationRepository.save(ex);
+				}
+		}		
+		return ex;
+	}
+	
+	public List<Examination> getPatientActiveExaminations(Long patientId){
+		Patient p = patientRepository.findOneById(patientId);
+		List<Examination> activeExaminations = new ArrayList<Examination>();
+		
+		for(Examination ex : p.getExaminations()) 
+			if(ex.getStatus().equals("ACTIVE"))
+				activeExaminations.add(ex);
+		
+		return activeExaminations;
+	}
 }

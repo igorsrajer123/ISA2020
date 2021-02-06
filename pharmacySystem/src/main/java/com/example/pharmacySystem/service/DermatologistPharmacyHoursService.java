@@ -63,11 +63,15 @@ public class DermatologistPharmacyHoursService {
 	
 	public DermatologistPharmacyHours removeDermatologistWorkingHoursFromPharmacy(Long dermatologistId, Long pharmacyId) {
 		List<DermatologistPharmacyHours> dermatologistsActiveHours = getDermatologistActiveWorkingHours(dermatologistId);
-				
+		Dermatologist d = dermatologistRepository.findOneById(dermatologistId);
+		Pharmacy p = pharmacyRepository.findOneById(pharmacyId);
+		
 		for(DermatologistPharmacyHours h : dermatologistsActiveHours) {
 			if(h.getPharmacy().getId() == pharmacyId && !h.isDeleted()) {
-				h.setDeleted(true);
 				DermatologistPharmacyHours hours = repository.findOneById(h.getId());
+				hours.setDeleted(true);
+				d.getPharmacyHours().remove(hours);
+				p.getDermatologistHours().remove(hours);
 				repository.save(hours);
 				return hours;
 			}

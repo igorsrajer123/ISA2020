@@ -129,5 +129,5 @@ INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_
 INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2020-02-25', 1, 'ACTIVE', '02:00', 1, null, 1, 155.0);
 INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2020-06-30', 1, 'FREE', '04:00', 1, null, 1, 155.0);
 INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2021-12-02', 0.5, 'FREE', '08:00', 4, null, 1, 155.0);
-INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2021-12-02', 1, 'ACTIVE', '10:00', 4, null, 1, 155.0);
+INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2021-12-02', 1, 'ACTIVE', '10:00', 4, 1, 1, 155.0);
 

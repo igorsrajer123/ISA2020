@@ -122,6 +122,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/getDermatologistByExaminationId/*").permitAll()
 		.antMatchers("/getPharmacyByExaminationId/*").permitAll()
 		.antMatchers("/reserveExaminationByPatient/*/*").permitAll()
+		.antMatchers("/cancellPatientExamination/*/*").permitAll()
+		.antMatchers("/getPatientActiveExaminations/*").permitAll()
 		.antMatchers("/", "/*.html", "/favicon.ico","/*.js", "/*.css").permitAll()
 		.anyRequest().authenticated().and()
 		.cors().and()

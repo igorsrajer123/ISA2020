@@ -96,9 +96,18 @@ public class DermatologistService {
 	public Dermatologist removeDermatologistFromPharmacy(Long dermatologistId, Long pharmacyId) {
 		Dermatologist dermatologist = dermatologistRepository.findOneById(dermatologistId);
 		Pharmacy pharmacy = pharmacyRepository.findOneById(pharmacyId);
-		dermatologist.getPharmacies().remove(pharmacy);
-		pharmacy.getDermatologists().remove(dermatologist);
-		dermatologistRepository.save(dermatologist);
+		
+		List<Examination> dermatologistExaminations = examinationRepository.findAllByStatusAndDermatologistIdAndPharmacyId("ACTIVE", dermatologistId, pharmacyId);
+		if(dermatologistExaminations.size() > 0) {
+			System.out.println(dermatologistExaminations.size());
+			Dermatologist d = new Dermatologist();
+			d.setId(Long.valueOf(-1));
+			return d;
+		}else {
+			dermatologist.getPharmacies().remove(pharmacy);
+			pharmacy.getDermatologists().remove(dermatologist);
+			dermatologistRepository.save(dermatologist);
+		}
 		
 		return dermatologist;
 	}

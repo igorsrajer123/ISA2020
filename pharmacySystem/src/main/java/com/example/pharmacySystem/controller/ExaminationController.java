@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -87,5 +88,19 @@ public class ExaminationController {
 		Examination ex = examinationService.reserveExaminationByPatient(examinationId, patientId);
 		
 		return new ResponseEntity<Examination>(ex, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/cancellPatientExamination/{patientId}/{examinationId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Examination> cancellPatientExamination(@PathVariable("examinationId") Long examinationId, @PathVariable("patientId") Long patientId){
+		Examination ex = examinationService.cancellPatientExamination(patientId, examinationId);
+		
+		return new ResponseEntity<Examination>(ex, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getPatientActiveExaminations/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Examination>> getPatientActiveExaminations(@PathVariable("patientId") Long id){
+		List<Examination> examinations = examinationService.getPatientActiveExaminations(id);
+		
+		return new ResponseEntity<List<Examination>>(examinations, HttpStatus.OK);
 	}
 }

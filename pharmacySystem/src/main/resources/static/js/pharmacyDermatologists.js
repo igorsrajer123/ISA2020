@@ -352,7 +352,11 @@ function removeDermatologistFromPharmacy(dermatologist, pharmacyId){
 	        contentType: 'application/json',
        	 dataType: 'json',
 	        complete: function (data) {
-	        	removeDermatologistActiveWorkingDays(dermatologist.id, pharmacyId);
+	        	if(data.status == 200){
+	        		removeDermatologistActiveWorkingDays(dermatologist.id, pharmacyId);
+	        	}else if(data.status == 403){
+	        		alert("Dermatologist has active examinations and so cannot be removed from pharmacy!");
+	        	}
 	        }
 		});
 	});

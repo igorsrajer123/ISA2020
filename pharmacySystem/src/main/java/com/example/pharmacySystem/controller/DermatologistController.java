@@ -91,21 +91,12 @@ public class DermatologistController {
 		
 		if(dermatologist == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
+		if(dermatologist.getId() == -1) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+		
 		DermatologistDto dermaDto = new DermatologistDto(dermatologist);
 		
 		return new ResponseEntity<DermatologistDto>(dermaDto, HttpStatus.OK);
 	}
-	/*
-	@DeleteMapping(value = "/removeDermatologistPharmacyWorkingHours/{dermatologistId}/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<DermatologistDto> removeDermatologistPharmacyWorkingHours(@PathVariable("dermatologistId") Long dermatologistId, @PathVariable("pharmacyId") Long pharmacyId){
-		Dermatologist dermatologist = dermatologistService.removeDermatologistWorkingHoursFromPharmacy(dermatologistId, pharmacyId);
-		
-		if(dermatologist == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		
-		DermatologistDto dermaDto = new DermatologistDto(dermatologist);
-		
-		return new ResponseEntity<DermatologistDto>(dermaDto, HttpStatus.OK);
-	}*/
 	
 	@GetMapping(value = "/getDermatologistByExaminationId/{examinationId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<DermatologistDto> getDermatologistByExaminationId(@PathVariable("examinationId") Long id){
