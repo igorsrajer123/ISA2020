@@ -97,4 +97,15 @@ public class PharmacyController {
 		
 		return new ResponseEntity<PharmacyDto>(pharmacyDto, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/getPharmacyByExaminationId/{examinationId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PharmacyDto> getPharmacyByExaminationId(@PathVariable("examinationId") Long id){
+		Pharmacy p = pharmacyService.getPharmacyByExaminationId(id);
+		
+		if(p == null ) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		PharmacyDto pharmacyDto = new PharmacyDto(p);
+		
+		return new ResponseEntity<PharmacyDto>(pharmacyDto, HttpStatus.OK);
+	}
 }

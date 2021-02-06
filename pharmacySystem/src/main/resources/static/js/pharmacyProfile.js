@@ -19,6 +19,7 @@ $(window).on('load', function(){
     pharmacyMeds(pharmacyId);
     pharmacyDermatologists(pharmacyId);
     pharmacyPharmacists(pharmacyId);
+    pharmacyExaminations(pharmacyId);
 });
 
 function getUrlVars() {
@@ -89,4 +90,12 @@ function pharmacyPharmacists(pharmacyId){
 		window.location.href="pharmacyPharmacists.html?pharmacyId=" + pharmacyId;
 	});
 }
+
+function pharmacyExaminations(pharmacyId){
+	$("#availableExaminations").click(function(event){
+		event.preventDefault();
+		window.location.href="pharmacyAvailableExaminations.html?pharmacyId=" + pharmacyId;
+	});
+}
+
 

@@ -5,18 +5,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import org.glassfish.jersey.internal.inject.ParamConverters.TypeValueOf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.pharmacySystem.model.Dermatologist;
 import com.example.pharmacySystem.model.DermatologistPharmacyHours;
 import com.example.pharmacySystem.model.Examination;
+import com.example.pharmacySystem.model.Patient;
 import com.example.pharmacySystem.model.Pharmacy;
 import com.example.pharmacySystem.repository.DermatologistPharmacyHoursRepository;
 import com.example.pharmacySystem.repository.DermatologistRepository;
 import com.example.pharmacySystem.repository.ExaminationRepository;
+import com.example.pharmacySystem.repository.PatientRepository;
 import com.example.pharmacySystem.repository.PharmacyRepository;
 
 @Service
@@ -33,6 +32,9 @@ public class ExaminationService {
 	
 	@Autowired
 	private DermatologistPharmacyHoursRepository dpRepository;
+	
+	@Autowired
+	private PatientRepository patientRepository;
 	
 	public List<Examination> findAll(){
 		return examinationRepository.findAll();
@@ -210,5 +212,28 @@ public class ExaminationService {
 	
 	public List<Examination> findAllByDermatologistIdAndPharmacyId(Long dermatologistId, Long pharmacyId){
 		return examinationRepository.findAllByDermatologistIdAndPharmacyId(dermatologistId, pharmacyId);
+	}
+	
+	public List<Examination> findAllByStatusAndDermatologistId(String status, Long dermatologistId){
+		return examinationRepository.findAllByStatusAndDermatologistId(status, dermatologistId);
+	}
+	
+	public List<Examination> findAllByPharmacyId(Long pharmacyId){
+		return examinationRepository.findAllByPharmacyId(pharmacyId);
+	}
+	
+	public List<Examination> findAllByPharmacyIdAndStatus(Long pharamcyId, String status){
+		return examinationRepository.findAllByPharmacyIdAndStatus(pharamcyId, status);
+	}
+	
+	public Examination reserveExaminationByPatient(Long examinationId, Long patientId) {
+		Examination ex = examinationRepository.findOneById(examinationId);
+		Patient p = patientRepository.findOneById(patientId);
+		
+		ex.setStatus("ACTIVE");
+		ex.setPatient(p);
+		p.getExaminations().add(ex);
+		examinationRepository.save(ex);
+		return ex;
 	}
 }

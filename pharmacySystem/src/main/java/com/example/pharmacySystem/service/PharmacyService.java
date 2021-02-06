@@ -7,10 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.pharmacySystem.dto.PharmacyDto;
 import com.example.pharmacySystem.model.Dermatologist;
+import com.example.pharmacySystem.model.Examination;
 import com.example.pharmacySystem.model.Pharmacist;
 import com.example.pharmacySystem.model.Pharmacy;
 import com.example.pharmacySystem.model.PharmacyAdministrator;
 import com.example.pharmacySystem.repository.DermatologistRepository;
+import com.example.pharmacySystem.repository.ExaminationRepository;
 import com.example.pharmacySystem.repository.PharmacistRepository;
 import com.example.pharmacySystem.repository.PharmacyAdministratorRepository;
 import com.example.pharmacySystem.repository.PharmacyRepository;
@@ -30,6 +32,9 @@ public class PharmacyService {
 	
 	@Autowired
 	private PharmacistRepository pharmacistRepository;
+	
+	@Autowired
+	private ExaminationRepository examinationRepository;
 	
 	public List<Pharmacy> findAll(){
 		List<Pharmacy> allPharmacies = pharmacyRepository.findAll();
@@ -84,5 +89,14 @@ public class PharmacyService {
 		Pharmacist pharmacist = pharmacistRepository.findOneById(pharmacistId);
 		Pharmacy pharmacy = pharmacist.getPharmacy();
 		return pharmacy;
+	}
+	
+	public Pharmacy getPharmacyByExaminationId(Long examinationId) {
+		Examination ex = examinationRepository.findOneById(examinationId);
+		
+		Long pharmacyId = ex.getPharmacy().getId();
+		
+		Pharmacy p = pharmacyRepository.findOneById(pharmacyId);
+		return p;
 	}
 }

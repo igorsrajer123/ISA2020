@@ -106,4 +106,16 @@ public class DermatologistController {
 		
 		return new ResponseEntity<DermatologistDto>(dermaDto, HttpStatus.OK);
 	}*/
+	
+	@GetMapping(value = "/getDermatologistByExaminationId/{examinationId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<DermatologistDto> getDermatologistByExaminationId(@PathVariable("examinationId") Long id){
+		Dermatologist myDermatologist = dermatologistService.getDermatologistByExaminationId(id);
+	
+	if(myDermatologist == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	
+	DermatologistDto dermatologistDto = new DermatologistDto(myDermatologist);
+	
+	
+	return new ResponseEntity<DermatologistDto>(dermatologistDto, HttpStatus.OK);
+	}
 }

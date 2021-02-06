@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -58,5 +59,33 @@ public class ExaminationController {
 		List<Examination> examinations = examinationService.findAllByStatusAndDermatologistIdAndPharmacyId(status, dermaId, pharmaId);
 		
 		return new ResponseEntity<List<Examination>>(examinations, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getByStatusAndDermatologistId/{status}/{dermatologistId}",  produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Examination>> getByStatusAndDermatologistId(@PathVariable("status") String status, @PathVariable("dermatologistId") Long dermatologistId){
+		List<Examination> examinations = examinationService.findAllByStatusAndDermatologistId(status, dermatologistId);
+		
+		return new ResponseEntity<List<Examination>>(examinations, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getAllPharmacyExaminations/{pharmacyId}",  produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Examination>> getAllPharmacyExaminations(@PathVariable("pharmacyId") Long id){
+		List<Examination> examinations = examinationService.findAllByPharmacyId(id);
+		
+		return new ResponseEntity<List<Examination>>(examinations, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getExaminationsByPharmacyIdAndStatus/{pharmacyId}/{status}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Examination>> getExaminationsByPharmacyIdAndStatus(@PathVariable("pharmacyId") Long id, @PathVariable("status") String status){
+		List<Examination> examinations = examinationService.findAllByPharmacyIdAndStatus(id, status);
+		
+		return new ResponseEntity<List<Examination>>(examinations, HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/reserveExaminationByPatient/{examinationId}/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Examination> reserveExaminationByPatient(@PathVariable("examinationId") Long examinationId, @PathVariable("patientId") Long patientId){
+		Examination ex = examinationService.reserveExaminationByPatient(examinationId, patientId);
+		
+		return new ResponseEntity<Examination>(ex, HttpStatus.OK);
 	}
 }

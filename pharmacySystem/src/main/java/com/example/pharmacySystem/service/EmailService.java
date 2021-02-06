@@ -8,8 +8,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.example.pharmacySystem.model.Examination;
 import com.example.pharmacySystem.model.Patient;
 import com.example.pharmacySystem.model.User;
+import com.example.pharmacySystem.repository.ExaminationRepository;
 
 @Service
 public class EmailService {
@@ -19,6 +21,9 @@ public class EmailService {
 	
 	@Autowired
 	private Environment environment;
+	
+	@Autowired
+	private ExaminationRepository examinationRepository;
 	
 	@Autowired
 	private UserService userService;
@@ -45,6 +50,20 @@ public class EmailService {
 		
 		javaMailSender.send(msg);
 		patientService.save(myPatient);
+		System.out.println("Email sent!");
+	}
+	
+	@Async
+	public void examinationScheduledNotification(Long id) {
+		Examination ex = examinationRepository.findOneById(id);
+		
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo("isapsw123@gmail.com");
+		msg.setFrom(environment.getProperty("spring.mail.username"));
+		msg.setSubject("Examination Scheduled");
+		msg.setText("Your examination has been scheduled for " + ex.getDate().toString() + " at " + ex.getTime());
+		
+		javaMailSender.send(msg);
 		System.out.println("Email sent!");
 	}
 }

@@ -104,4 +104,9 @@ function redirectUser(){
 		event.preventDefault();
 		window.location.href = "pharmacyPharmacists.html"
 	});
+	
+	$("#availableExaminations").click(function(event){
+		event.preventDefault();
+		window.location.href = "pharmacyAvailableExaminations.html";
+	});
 }

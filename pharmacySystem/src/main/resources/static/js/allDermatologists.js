@@ -114,6 +114,6 @@ function getDermatologistPharmacies(dermatologistId){
 function buttonClicked(id){
 	$("#" + id + id).click(function(event){
 		event.preventDefault();
-		//window.location.href = dermatologistAvailableExaminations.html?dermatologistId=" + id;
+		window.location.href = "dermatologistAllFreeExaminations.html?dermatologistId=" + id;
 	});
 }

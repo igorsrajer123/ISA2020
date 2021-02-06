@@ -21,7 +21,8 @@ function getCurrentUser(){
                 window.location.href = "../index.html";
             }else if(data.responseJSON.type == "ROLE_PATIENT"){
             	$("#addExamination").hide();
-            	getDermatologistExaminationsPatient();
+            	//getDermatologistExaminationsPatient();
+            	getPatientFromUserId(data.responseJSON.id);
            	}else if(data.responseJSON.type == "ROLE_PHARMACY_ADMIN"){
            		$("#addExamination").show();
            		getDermatologistExaminationsAdmin();
@@ -80,7 +81,7 @@ function getDermatologistExaminationsAdmin(){
 	});
 }
 
-function getDermatologistExaminationsPatient(){
+function getDermatologistExaminationsPatient(patientId){
 	var dermatologistId = getUrlVars()["dermatologistId"];
 	var pharmacyId = getUrlVars()["pharmacyId"];
 	
@@ -107,7 +108,7 @@ function getDermatologistExaminationsPatient(){
 	                "</td></tr>");
 	                
 	                $("#table").append(examinationsTable);
-	                reserveExamination(examinations[i].id);
+	                reserveExamination(examinations[i].id, patientId);
         		}else{
 	        		examinationsTable.append("<tr><td>" + examinations[i].price +    
 	                "</td><td>" + examinations[i].date +
@@ -118,7 +119,7 @@ function getDermatologistExaminationsPatient(){
 	                "</td></tr>");
 	                
 	                $("#table").append(examinationsTable);
-	                reserveExamination(examinations[i].id);
+	                reserveExamination(examinations[i].id, patientId);
         		}
         	}
        	}
@@ -192,8 +193,46 @@ function submitData(){
 	});
 }
 
-function reserveExamination(examinationId){
+function getPatientFromUserId(userId){
+	$.ajax({
+        method: 'GET',
+        url: 'http://localhost:8080/getPatientByUserId/' + userId,
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
+        complete: function (data) {
+            var patient = data.responseJSON;
+           	getDermatologistExaminationsPatient(patient.id);
+        }
+    });
+}
+
+function reserveExamination(examinationId, patientId){
 	$("#" + examinationId).click(function(event){
-		alert(examinationId);
+		event.preventDefault();
+		
+		$.ajax({
+			url: 'http://localhost:8080/reserveExaminationByPatient/' + examinationId + '/' + patientId,
+	        type: 'PUT',	        
+	        contentType: 'application/json',
+	        dataType: 'json',
+	        complete: function (data) {
+	       		if(data.status == 200){
+	       			$.ajax({
+							url: 'http://localhost:8080/examinationScheduled/' + examinationId,
+					        type: 'POST',	        
+					        contentType: 'application/json',
+					        dataType: 'json',
+					        complete: function (data) {
+					        	if(data.status == 200){
+					   				alert("Success!");
+	       							window.location.href = "allDermatologists.html";		
+					        	}
+					        }
+					   });
+	       		}else
+	       			alert("ERROR!");
+	       	}
+		});
 	});
 }

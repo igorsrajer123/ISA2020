@@ -19,4 +19,10 @@ public interface ExaminationRepository extends JpaRepository<Examination, Long>{
 	List<Examination> findAllByStatusAndDermatologistIdAndPharmacyId(String status, Long dermatologistId, Long pharmacyId);
 	
 	List<Examination> findAllByDermatologistIdAndPharmacyId(Long dermatologistId, Long pharmacyId);
+	
+	List<Examination> findAllByStatusAndDermatologistId(String status, Long dermatologistId);
+	
+	List<Examination> findAllByPharmacyId(Long pharmacyId);
+	
+	List<Examination> findAllByPharmacyIdAndStatus(Long pharmacyId, String status);
 }

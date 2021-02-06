@@ -49,4 +49,10 @@ public class EmailController {
 		myPatient = patientService.save(myPatient);
 		return new ResponseEntity<String>("Account successfully activated!", HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/examinationScheduled/{examinationId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> examinationScheduledNotification(@PathVariable("examinationId") Long id){
+		emailService.examinationScheduledNotification(id);
+		return new ResponseEntity<String>("Email sent.", HttpStatus.OK);
+	}
 }
