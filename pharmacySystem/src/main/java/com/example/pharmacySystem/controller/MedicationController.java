@@ -173,4 +173,15 @@ public class MedicationController {
 		
 		return new ResponseEntity<MedicationDto>(myMedDto, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/getMedicationFromReservation/{reservationId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MedicationDto> getMedicationFromReservation(@PathVariable("reservationId") Long id){
+		Medication med = medicationService.getMedicationFromMedicationReservation(id);
+		
+		if(med == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		MedicationDto myMedDto = new MedicationDto(med);
+		
+		return new ResponseEntity<MedicationDto>(myMedDto, HttpStatus.OK);
+	}
 }

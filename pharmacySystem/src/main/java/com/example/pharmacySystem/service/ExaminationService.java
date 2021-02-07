@@ -263,6 +263,10 @@ public class ExaminationService {
 		Date prr = java.sql.Date.valueOf(LocalDate.now());
 		Calendar calendar2 = Calendar.getInstance();
 		calendar2.setTime(prr);
+		calendar2.set(Calendar.HOUR_OF_DAY, LocalDateTime.now().getHour());
+		calendar2.set(Calendar.MINUTE, LocalDateTime.now().getMinute());
+		calendar2.set(Calendar.SECOND, 0);
+		calendar2.set(Calendar.MILLISECOND, 0);
 		Date date2 = calendar2.getTime();
 					
 		if(ex.getStatus().equals("ACTIVE")) {

@@ -1,5 +1,7 @@
 package com.example.pharmacySystem.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,11 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class MedicationsPharmacies {
@@ -36,6 +40,10 @@ public class MedicationsPharmacies {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Medication medication;
+	
+	@JsonManagedReference(value = "reservationMedication-movement")
+	@OneToMany(mappedBy = "medicationFromPharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<MedicationReservation> medicationReservations;
 	
 	@Column(name = "deleted")
 	private boolean deleted;
@@ -86,5 +94,13 @@ public class MedicationsPharmacies {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public List<MedicationReservation> getMedicationReservations() {
+		return medicationReservations;
+	}
+
+	public void setMedicationReservations(List<MedicationReservation> medicationReservations) {
+		this.medicationReservations = medicationReservations;
 	}
 }

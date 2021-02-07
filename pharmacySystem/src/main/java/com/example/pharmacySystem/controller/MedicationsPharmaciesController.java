@@ -35,6 +35,16 @@ public class MedicationsPharmaciesController {
 		return new ResponseEntity<List<MedicationsPharmaciesDto>>(asa, HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/getMedInPharmacyById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MedicationsPharmaciesDto> getMedInPharmacyById(@PathVariable("id") Long id){
+		MedicationsPharmacies mp = mpService.findOneById(id);
+		
+		MedicationsPharmaciesDto mpDto = new MedicationsPharmaciesDto(mp);
+		
+		return new ResponseEntity<MedicationsPharmaciesDto>(mpDto, HttpStatus.OK);
+	}
+	
+	
 	@GetMapping(value = "/findAllMedsByPharmacyId/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<MedicationsPharmaciesDto>> getMedicationsByPharmacyId(@PathVariable("pharmacyId") Long id){
 		List<MedicationsPharmacies> mp = mpService.findAllByPharmacyId(id);
@@ -60,6 +70,15 @@ public class MedicationsPharmaciesController {
 	@PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
 	public ResponseEntity<MedicationsPharmaciesDto> updateMedicationInPharmacy(@RequestBody MedicationsPharmaciesDto dto){
 		MedicationsPharmacies mp = mpService.updateMedicationInPharmacy(dto);
+		
+		MedicationsPharmaciesDto mpDto = new MedicationsPharmaciesDto(mp);
+		
+		return new ResponseEntity<MedicationsPharmaciesDto>(mpDto, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getMedicationInPharmacyFromReservation/{reservationId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<MedicationsPharmaciesDto> getMedicationInPharmacyFromReservation(@PathVariable("reservationId") Long id){
+		MedicationsPharmacies mp = mpService.getMedicationFromReservation(id);
 		
 		MedicationsPharmaciesDto mpDto = new MedicationsPharmaciesDto(mp);
 		

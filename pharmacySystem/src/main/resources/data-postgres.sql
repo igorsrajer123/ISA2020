@@ -88,6 +88,7 @@ INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, de
 INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (152, 999, 12, 1, false);
 INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (152, 870, 11, 1, false);
 INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (12, 1800, 10, 1, false);
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (2, 1300, 1, 4, false);
 
 INSERT INTO dermatologist(number_of_votes, rating, user_id) VALUES (2, 5, 5);
 INSERT INTO dermatologist(number_of_votes, rating, user_id) VALUES (5, 3.2, 6);

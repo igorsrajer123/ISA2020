@@ -17,7 +17,6 @@ function getCurrentUser(){
                 alert("You cannot access this page!");
                 window.location.href = "../index.html";
             }else if(data.responseJSON.type == "ROLE_PATIENT"){
-            //	getDermatologistFreeExaminations();
             	getPatientFromUserId(data.responseJSON.id);
            	}
         }

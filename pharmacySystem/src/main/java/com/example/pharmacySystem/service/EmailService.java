@@ -1,5 +1,7 @@
 package com.example.pharmacySystem.service;
 
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.MailException;
@@ -9,9 +11,11 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.example.pharmacySystem.model.Examination;
+import com.example.pharmacySystem.model.MedicationReservation;
 import com.example.pharmacySystem.model.Patient;
 import com.example.pharmacySystem.model.User;
 import com.example.pharmacySystem.repository.ExaminationRepository;
+import com.example.pharmacySystem.repository.MedicationReservationRepository;
 
 @Service
 public class EmailService {
@@ -24,6 +28,9 @@ public class EmailService {
 	
 	@Autowired
 	private ExaminationRepository examinationRepository;
+	
+	@Autowired
+	private MedicationReservationRepository reservationRepository;
 	
 	@Autowired
 	private UserService userService;
@@ -62,6 +69,22 @@ public class EmailService {
 		msg.setFrom(environment.getProperty("spring.mail.username"));
 		msg.setSubject("Examination Scheduled");
 		msg.setText("Your examination has been scheduled for " + ex.getDate().toString() + " at " + ex.getTime());
+		
+		javaMailSender.send(msg);
+		System.out.println("Email sent!");
+	}
+	
+	@Async
+	public void medicationReservedNotification(Long id) {
+		MedicationReservation mr = reservationRepository.findOneById(id);
+		Random rand = new Random();
+		
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo("isapsw123@gmail.com");
+		msg.setFrom(environment.getProperty("spring.mail.username"));
+		msg.setSubject("Medication Reserved");
+		msg.setText("You have reserved a medication and have to pick it up until " + mr.getPickUpDate() + 
+					"\n\nReservation number: " + mr.getId() +"" + rand.nextInt(10000));
 		
 		javaMailSender.send(msg);
 		System.out.println("Email sent!");

@@ -50,6 +50,7 @@ function userOptions(user){
 	    	$("#penalties").show();
 	    	$("#myPharmacies").show();
 	    	$("#myPharmacy").hide();
+	    	$("#reserveMed").show();
     	});
     
     	$(".sideBar").mouseout(function(){

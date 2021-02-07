@@ -85,7 +85,7 @@ nav{
 #counselingHistory, #examinationHistory,
 #activeExaminations, #activeCounselings,
 #penalties, #myPharmacies, #complaint,
-#loyalty, #complaints, #myPharmacy{
+#loyalty, #complaints, #myPharmacy, #reserveMed{
 	display: none;
 }
 

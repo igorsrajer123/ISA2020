@@ -1,0 +1,138 @@
+body{
+    background: url(4.jpg) no-repeat;
+    margin: 0;
+    padding: 0;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+nav{
+    font-family: "Georgia";
+    background: #1E90FF;
+    height: 80px;
+}
+
+.mainDiv{
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+}
+
+#searchParagraph{
+	font-size: 20px;
+	font-family: FreeMono, monospace;
+	color: white;
+}
+
+#search{
+	height: 45px;
+	width: 350px;
+	position: relative;
+	font-size: 20px;
+	font-family: FreeMono, monospace;
+	color: black;
+}
+
+table{
+	position: absolute;
+	z-index: -1;
+    overflow: auto;
+    display: block;
+    border-collapse: collapse;
+    width: 600px;
+    height: 400px;
+}
+
+tr{
+    transition:  all .2s ease-in;
+    cursor: pointer;
+}
+
+td, tr{
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody{
+    background-color: #fff;
+}
+
+#header{
+    position: sticky;
+    top: 0;
+    background-color: #1E90FF;
+    color: #fff;
+}
+
+tr:hover{
+    background-color: #f5f5f5;
+    transform: scale(1.02);
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
+    color:  #1E90FF;
+}
+
+@media only screen and (max-width: 768px){
+    table {
+        width: 90%;
+    }
+}
+
+table::-webkit-scrollbar {
+  display: none;
+}
+
+#searchBtn{
+	border: 2px solid  #1E90FF;
+	background: #00FF00;
+	padding: 1px 1px;
+	font-size: 15px;
+	font-family: "Georgia", "Comic Sans", cursive;
+    margin: 2px;
+    height: 45px;
+    width: 125px;
+	cursor: pointer;
+    transition: 0.8s;
+	position: hidden;
+    color: #1E90FF;
+    font-weight: bold;
+    border-radius: 50px;
+}
+
+#searchBtn:hover{
+    border: 2px solid #00FF00;
+	background: #1E90FF;
+	color: #00FF00;
+}
+
+.pretraga{
+	position: relative;
+	z-index: 1;
+}
+
+button{
+	border: 2px solid  #1E90FF;
+	background: #00FF00;
+	padding: 1px 1px;
+	font-size: 15px;
+	font-family: "Georgia", "Comic Sans", cursive;
+    margin: 2px;
+	cursor: pointer;
+    transition: 0.8s;
+	position: hidden;
+    color: #1E90FF;
+    font-weight: bold;
+}

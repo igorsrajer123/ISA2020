@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 import com.example.pharmacySystem.dto.MedicationDto;
 import com.example.pharmacySystem.dto.MedicationsPharmaciesDto;
 import com.example.pharmacySystem.model.Medication;
+import com.example.pharmacySystem.model.MedicationReservation;
 import com.example.pharmacySystem.model.MedicationType;
 import com.example.pharmacySystem.model.MedicationsPharmacies;
 import com.example.pharmacySystem.model.Pharmacy;
 import com.example.pharmacySystem.repository.MedicationRepository;
+import com.example.pharmacySystem.repository.MedicationReservationRepository;
 import com.example.pharmacySystem.repository.MedicationTypeRepository;
 import com.example.pharmacySystem.repository.MedicationsPharmaciesRepository;
 import com.example.pharmacySystem.repository.PharmacyRepository;
@@ -29,6 +31,9 @@ public class MedicationService {
 	
 	@Autowired
 	private MedicationsPharmaciesRepository medicationsPharmaciesRepository;
+	
+	@Autowired
+	private MedicationReservationRepository medicationReservationRepository;
 	
 	public List<Medication> findAll(){
 		List<Medication> allMeds = medicationRepository.findAll();
@@ -123,5 +128,12 @@ public class MedicationService {
 		medicationRepository.save(myMedication);
 		
 		return myMedication;
+	}
+	
+	public Medication getMedicationFromMedicationReservation(Long reservationId) {
+		MedicationReservation mr = medicationReservationRepository.findOneById(reservationId);
+		MedicationsPharmacies medInPharmacy = mr.getMedicationFromPharmacy();
+		Medication medication = medicationRepository.findOneById(medInPharmacy.getMedication().getId());
+		return medication;
 	}
 }

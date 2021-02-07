@@ -16,5 +16,5 @@ public interface MedicationsPharmaciesRepository extends JpaRepository<Medicatio
 	
 	List<MedicationsPharmacies> findAllByPharmacyId(Long id);
 	
-	MedicationsPharmacies findOneByPharmacyIdAndMedicationIdAndDeleted(Long pharmacyId, Long medicationId, boolean deleted);
+	MedicationsPharmacies findOneByPharmacyIdAndMedicationIdAndDeleted(Long pharmacyId, Long medicationId, boolean deleted);	
 }
