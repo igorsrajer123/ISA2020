@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,7 @@ public class DermatologistController {
 	}
 	
 	@PostMapping(value = "/addDermatologist", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_SYSTEM_ADMIN')")
 	public ResponseEntity<DermatologistDto> addDermatologist(@RequestBody Dermatologist dermatologist){
 		Dermatologist newDermatologist = dermatologistService.Create(dermatologist);
 		
@@ -75,6 +77,7 @@ public class DermatologistController {
 	}
 	
 	@PostMapping(value = "/addDermatologistToPharmacy/{dermatologistId}/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
 	public ResponseEntity<DermatologistDto> addDermatologistToPharmacy(@PathVariable("dermatologistId") Long dermatologistId, @PathVariable("pharmacyId") Long pharmacyId){
 		Dermatologist dermatologist = dermatologistService.addDermatologistToPharmacy(dermatologistId, pharmacyId);
 		
@@ -86,6 +89,7 @@ public class DermatologistController {
 	}
 	
 	@DeleteMapping(value = "/removeDermatologistFromPharmacy/{dermatologistId}/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
 	public ResponseEntity<DermatologistDto> removeDermatologistFromPharmacy(@PathVariable("dermatologistId") Long dermatologistId, @PathVariable("pharmacyId") Long pharmacyId){
 		Dermatologist dermatologist = dermatologistService.removeDermatologistFromPharmacy(dermatologistId, pharmacyId);
 		

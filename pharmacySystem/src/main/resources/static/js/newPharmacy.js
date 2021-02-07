@@ -72,6 +72,9 @@ function createNewPharmacy(){
         data: data,
         contentType: 'application/json',
         dataType: 'json',
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
         complete: function (data) {
        		if(data.status == 200){
        			alert("Success!");

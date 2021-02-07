@@ -31,7 +31,6 @@ public class MedicationController {
 	private PatientService patientService;
 	
 	@GetMapping(value = "/getAllMedications", produces = MediaType.APPLICATION_JSON_VALUE)
-	//@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<List<MedicationDto>> getAllMedications(){
 		List<Medication> allMedications = medicationService.findAll();
 		
@@ -46,7 +45,6 @@ public class MedicationController {
 	}
 	
 	@GetMapping(value = "/getPatientAllergicMedications/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE)
-//	@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<List<MedicationDto>> getPatientAllergicMedications(@PathVariable("patientId") Long id){
 		Patient myPatient = patientService.findOneById(id);
 		
@@ -60,7 +58,7 @@ public class MedicationController {
 	}
 	
 	@PostMapping(value = "/addPatientAllergicMedication/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-//	@PreAuthorize("hasRole('ROLE_PATIENT')")
+	@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<List<MedicationDto>> addPatientAllergicMedication(@PathVariable("patientId") Long id, @RequestBody MedicationDto medication){
 		Patient myPatient = patientService.addPatientAllergicMedication(id, medication);
 		
@@ -105,6 +103,7 @@ public class MedicationController {
 	}
 	
 	@PostMapping(value = "/addMedication", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_SYSTEM_ADMIN')")
 	public ResponseEntity<MedicationDto> addMed(@RequestBody MedicationDto medication){
 		Medication newMed = medicationService.create(medication);
 		
@@ -130,6 +129,7 @@ public class MedicationController {
 	}
 	
 	@PostMapping(value = "/addMedicationToPharmacy", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
 	public ResponseEntity<MedicationDto> addMedicationToPharmacy(@RequestBody MedicationsPharmaciesDto mp){
 		Medication med = medicationService.addMedicationToPharmacy(mp);
 		
@@ -151,6 +151,7 @@ public class MedicationController {
 	
 	
 	@PostMapping(value = "/removeMedicationFromPharmacy/{pharmacyId}/{medId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
 	public ResponseEntity<MedicationDto> removeMedicationFromPharmacy(@PathVariable("pharmacyId") Long id, @PathVariable("medId") Long medId){
 		Medication myMed = medicationService.removeMedicationFromPharmacy(id, medId);
 		
@@ -162,6 +163,7 @@ public class MedicationController {
 	}
 	
 	@PutMapping(value = "/updateMedication", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_SYSTEM_ADMIN')")
 	public ResponseEntity<MedicationDto> updateMedication(@RequestBody MedicationDto medDto){
 		Medication med = medicationService.updateMedication(medDto);
 		

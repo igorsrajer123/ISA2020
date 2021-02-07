@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,7 @@ public class DermatologistPharmacyHoursController {
 	}
 	
 	@PostMapping(value = "/addDermatologistWorkingHours", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
 	public ResponseEntity<DermatologistPharmacyHoursDto> addDermatologistWorkingHours(@RequestBody DermatologistPharmacyHoursDto newHours){
 		DermatologistPharmacyHours hours = dermatologistHoursService.addDermatologistWorkingHours(newHours);
 		
@@ -60,6 +62,7 @@ public class DermatologistPharmacyHoursController {
 	}
 	
 	@DeleteMapping(value = "/removeDermatologistPharmacyWorkingHours/{dermatologistId}/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
 	public ResponseEntity<DermatologistPharmacyHoursDto> removeDermatologistPharmacyWorkingHours(@PathVariable("dermatologistId") Long dermatologistId, @PathVariable("pharmacyId") Long pharmacyId){
 		DermatologistPharmacyHours a = dermatologistHoursService.removeDermatologistWorkingHoursFromPharmacy(dermatologistId, pharmacyId);
 		

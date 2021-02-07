@@ -119,6 +119,9 @@ function reserveExamination(examinationId, patientId){
 	        type: 'PUT',	        
 	        contentType: 'application/json',
 	        dataType: 'json',
+	        headers: {
+   				Authorization: 'Bearer ' + $.cookie('token')
+			},
 	        complete: function (data) {
 	       		if(data.status == 200){
 	       			$.ajax({

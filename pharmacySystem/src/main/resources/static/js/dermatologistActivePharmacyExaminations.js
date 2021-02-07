@@ -156,7 +156,7 @@ function submitData(){
 
 	var ourDate = $("#datepicker").val();
 	var parts = ourDate.split('/');
-	var sendingDate = parts[2] + "-" + parts[1] + "-" + parts[0];
+	var sendingDate = parts[2] + "-" + parts[0] + "-" + parts[1];
 	
 	var data = {
 		"time": $("#time").val(),
@@ -173,13 +173,16 @@ function submitData(){
 	}
 	
 	var transformedData = JSON.stringify(data);
-	
+	alert(transformedData);
 	$.ajax({
         url: 'http://localhost:8080/createExamination',
         type: 'POST',
         data: transformedData,
         contentType: 'application/json',
         dataType: 'json',
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
         complete: function (data) {
         	if(data.status == 200){
 	        	alert("Success!");
@@ -216,6 +219,9 @@ function reserveExamination(examinationId, patientId){
 	        type: 'PUT',	        
 	        contentType: 'application/json',
 	        dataType: 'json',
+	        headers: {
+   				Authorization: 'Bearer ' + $.cookie('token')
+			},
 	        complete: function (data) {
 	       		if(data.status == 200){
 	       			$.ajax({

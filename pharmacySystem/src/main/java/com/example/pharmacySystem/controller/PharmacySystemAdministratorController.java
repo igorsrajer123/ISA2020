@@ -6,15 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.example.pharmacySystem.dto.PharmacyAdministratorDto;
 import com.example.pharmacySystem.dto.PharmacySystemAdministratorDto;
-import com.example.pharmacySystem.model.PharmacyAdministrator;
 import com.example.pharmacySystem.model.PharmacySystemAdministrator;
 import com.example.pharmacySystem.service.PharmacySystemAdministratorService;
 
@@ -25,6 +23,7 @@ public class PharmacySystemAdministratorController {
 	private PharmacySystemAdministratorService systemAdministratorService;
 	
 	@PostMapping(value = "/updateSystemAdmin", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_SYSTEM_ADMIN')")
 	public ResponseEntity<PharmacySystemAdministrator> updateSystemAdministrator(@RequestBody PharmacySystemAdministrator admin){
 		PharmacySystemAdministrator myAdmin = systemAdministratorService.updateSystemAdministrator(admin);
 		
@@ -41,6 +40,7 @@ public class PharmacySystemAdministratorController {
 	}
 	
 	@PostMapping(value = "/addSystemAdmin", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_SYSTEM_ADMIN')")
 	public ResponseEntity<PharmacySystemAdministratorDto> addSystemAdmin(@RequestBody PharmacySystemAdministrator admin){
 		PharmacySystemAdministrator myAdmin = systemAdministratorService.create(admin);
 		

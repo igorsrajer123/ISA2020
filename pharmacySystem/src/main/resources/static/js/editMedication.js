@@ -1,5 +1,19 @@
 $(window).on("load", function(){
 	getCurrentUser();
+	$("#name").prop("disabled", true);
+	$("#name").css("color", "white");
+	$("#code").prop("disabled", true);
+	$("#code").css("color", "white");
+	$("#type").prop("disabled", true);
+	$("#type").css("color", "white");
+	$("#dailyIntake").prop("disabled", true);
+	$("#dailyIntake").css("color", "white");
+	$("#sideEffects").prop("disabled", true);
+	$("#sideEffects").css("color", "white");
+	$("#composition").prop("disabled", true);
+	$("#composition").css("color", "white");
+	$("#substitution").prop("disabled", true);
+	$("#substitution").css("color", "white");
 });
 
 function getCurrentUser(){
@@ -89,7 +103,8 @@ function getAdminPharmacy(admin){
         	if(data.status == 200){
         		removeMedicationFromPharmacy(data.responseJSON.id, medId);
         		getMedicationPriceAndAmount(data.responseJSON);
-        		updateMedication(medId, data.responseJSON);
+        	//	updateMedication(medId, data.responseJSON);
+        		updateMedicationsInPharmacies(medId, data.responseJSON);
         	}else{
         		alert("Something went wrong!");
         	}
@@ -164,61 +179,22 @@ function getAllMedications(med){
 	});
 }
 
-function updateMedication(medId, pharmacy){
+function updateMedicationsInPharmacies(medId, pharmacy){
 	$("#save").click(function(event){
 		event.preventDefault();
 		
 		var data = {
-			"id": medId,
-			"name":	$("#name").val(),
-            "code": $("#code").val(),
-            "dailyIntake": $("#dailyIntake").val(),
-            "sideEffects": $("#sideEffects").val(),
-            "chemicalComposition": $("#composition").val(),
-            "medicationType":  {
-				"id":	$("#type").children(":selected").attr("id"),
-				"name":	$("#type").val()
-			},
-            "substitution": $("#substitution").val()
-		}
-		
-		var transformedData = JSON.stringify(data);
-		
-		$.ajax({
-	        method: 'PUT',
-	        url: 'http://localhost:8080/updateMedication',
-	        headers: {
-	   			Authorization: 'Bearer ' + $.cookie('token')
-			},
-			contentType: 'application/json',
-            dataType: 'json',
-            data: transformedData,
-	        complete: function (data) {
-	        	if(data.status == 200){
-	        		updateMedicationsInPharmacies(medId, pharmacy);
-	        	}else{
-	        		alert("Something went wrong!");
-	        	}
-	       	}
-		});
-	});
-}
-
-function updateMedicationsInPharmacies(medId, pharmacy){
-
-	var data = {
-			"price": $("#price").val(),
-			"amount": $("#amount").val(),
-			"pharmacy": {
-				"id": pharmacy.id
-			},
-			"medication": {
-				"id": medId
+				"price": $("#price").val(),
+				"amount": $("#amount").val(),
+				"pharmacy": {
+					"id": pharmacy.id
+				},
+				"medication": {
+					"id": medId
+				}
 			}
-		}
-		
+			
 		var transformedData = JSON.stringify(data);
-		
 		$.ajax({
 	        method: 'PUT',
 	        url: 'http://localhost:8080/updateMedicationInPharmacy',
@@ -232,6 +208,7 @@ function updateMedicationsInPharmacies(medId, pharmacy){
 	        	alert("SUCCESS!");
 	        	window.location.href = "pharmacyMedications.html";
 	        }
+		});
 	});
 }
 

@@ -277,6 +277,9 @@ function submitData(pharmacyId){
         data: transformedData,
         contentType: 'application/json',
         dataType: 'json',
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
         complete: function (data) {
         	alert("Success!");
         	window.location.href = "pharmacyPharmacists.html";
@@ -291,6 +294,9 @@ function removePharmacistFromPharmacy(pharmacist, pharmacyId){
 	        type: 'DELETE',
 	        contentType: 'application/json',
        	 	dataType: 'json',
+       	 	headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+			},
 	        complete: function (data) {
 	        	window.location.href = "pharmacyPharmacists.html";
 	        }

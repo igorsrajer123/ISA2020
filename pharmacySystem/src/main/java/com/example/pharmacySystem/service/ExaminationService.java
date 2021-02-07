@@ -1,6 +1,6 @@
 package com.example.pharmacySystem.service;
-
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -240,21 +240,52 @@ public class ExaminationService {
 	public Examination cancellPatientExamination(Long patientId, Long examinationId) {
 		Examination ex = examinationRepository.findOneById(examinationId);
 		
+		LocalDate examinationStartDate = ex.getDate();
+		String examinationStartTime = ex.getTime();
+		
+		String[] parts = examinationStartTime.split(":");
+		String examinationStartHour = parts[0];
+		double examinationStartHourDouble = Double.parseDouble(examinationStartHour);
+		int examinationStartHourInt = (int) examinationStartHourDouble;
+		
+		Date examinationDate = java.sql.Date.valueOf(examinationStartDate);
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(examinationDate);
+		calendar.set(Calendar.HOUR_OF_DAY, examinationStartHourInt);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		Date date1 = calendar.getTime();
+		long MILLIS_PER_DAY = 24 * 60 * 60 * 1000L;
+		
+		LocalDateTime.now();
+		Date prr = java.sql.Date.valueOf(LocalDate.now());
+		Calendar calendar2 = Calendar.getInstance();
+		calendar2.setTime(prr);
+		Date date2 = calendar2.getTime();
+					
 		if(ex.getStatus().equals("ACTIVE")) {
-			ex.setStatus("FREE");
-			ex.setPatient(null);
-			Patient p = patientRepository.findOneById(patientId);
-			p.getExaminations().remove(ex);
-			Dermatologist d = dermatologistRepository.findOneById(ex.getDermatologist().getId());
-			List<Examination> dermatologistExaminations = d.getExaminations();
-			examinationRepository.save(ex);
-			for(Examination examination : dermatologistExaminations)
-				if(examination.getId() == ex.getId()) {
-					examination.setStatus("FREE");
-					examination.setPatient(null);
-					examinationRepository.save(ex);
-				}
-		}		
+			if(Math.abs(date2.getTime() - date1.getTime()) >= MILLIS_PER_DAY) {
+				System.out.println("Examination can be cancelled!");
+				ex.setStatus("FREE");
+				ex.setPatient(null);
+				Patient p = patientRepository.findOneById(patientId);
+				p.getExaminations().remove(ex);
+				Dermatologist d = dermatologistRepository.findOneById(ex.getDermatologist().getId());
+				List<Examination> dermatologistExaminations = d.getExaminations();
+				examinationRepository.save(ex);
+				for(Examination examination : dermatologistExaminations)
+					if(examination.getId() == ex.getId()) {
+						examination.setStatus("FREE");
+						examination.setPatient(null);
+						examinationRepository.save(ex);
+					}									
+			}else {
+				System.out.println("Examination cannot be cancelled!");
+				return null;
+			}	
+		}
 		return ex;
 	}
 	
@@ -267,5 +298,12 @@ public class ExaminationService {
 				activeExaminations.add(ex);
 		
 		return activeExaminations;
+	}
+	
+	public Examination updateExaminationPrice(Long id, double price) {
+		Examination ex = examinationRepository.findOneById(id);
+		ex.setPrice(price);
+		examinationRepository.save(ex);
+		return ex;
 	}
 }

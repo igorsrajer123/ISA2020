@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,6 +51,7 @@ public class PharmacistController {
 	}
 	
 	@PostMapping(value = "/addPharmacist", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
 	public ResponseEntity<PharmacistDto> addPharmacist(@RequestBody Pharmacist pharmacist){
 		Pharmacist newPharmacist = pharmacistService.create(pharmacist);
 		
@@ -61,6 +63,7 @@ public class PharmacistController {
 	}
 	
 	@DeleteMapping(value = "/removePharmacistFromPharmacy/{pharmacistId}/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
 	public ResponseEntity<PharmacistDto> removePharmacistFromPharmacy(@PathVariable("pharmacistId") Long pharmacistId, @PathVariable("pharmacyId") Long pharmacyId){
 		Pharmacist pharmacist = pharmacistService.removePharmacistFromPharmacy(pharmacistId, pharmacyId);
 		

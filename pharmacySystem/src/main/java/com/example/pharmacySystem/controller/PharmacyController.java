@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +47,7 @@ public class PharmacyController {
 	}
 	
 	@PostMapping(value = "/addPharmacy", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_SYSTEM_ADMIN')")
 	public ResponseEntity<PharmacyDto> addPharmacy(@RequestBody PharmacyDto pharmacy){
 		Pharmacy myPharmacy = pharmacyService.create(pharmacy);
 		
@@ -65,6 +67,7 @@ public class PharmacyController {
 	}
 	
 	@PostMapping(value = "/updatePharmacy", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
 	public ResponseEntity<PharmacyDto> updatePharmacy(@RequestBody PharmacyDto pharmacyDto){
 		Pharmacy myPharmacy = pharmacyService.updatePharmacy(pharmacyDto);
 		

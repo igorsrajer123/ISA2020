@@ -1,11 +1,9 @@
 package com.example.pharmacySystem.controller;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +18,7 @@ public class SupplierController {
 	private SupplierService supplierService;
 	
 	@PostMapping(value = "/addSupplier", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_SYSTEM_ADMIN')")
 	public ResponseEntity<SupplierDto> addSupplier(@RequestBody Supplier supplier){
 		Supplier newSupplier = supplierService.create(supplier);
 		

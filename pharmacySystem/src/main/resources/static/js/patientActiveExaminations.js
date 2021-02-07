@@ -52,6 +52,21 @@ function getExaminationsDermatologist(examinationId){
     });
 }
 
+function getExaminationsPharmacies(examinationId){
+	$.ajax({
+        method: 'GET',
+        url: 'http://localhost:8080/getPharmacyByExaminationId/' + examinationId,
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
+        complete: function (data) {
+            
+            var  pharmacy = data.responseJSON;
+            $("#" + examinationId + " td:nth-child(2)").text(pharmacy.name);
+        }
+    });
+}
+
 function getPatientActiveExaminations(patientId){
 	console.log(patientId);
 	$.ajax({
@@ -80,6 +95,7 @@ function getPatientActiveExaminations(patientId){
 	                
 	                $("#table").append(examinationsTable);
 	                getExaminationsDermatologist(examinations[i].id);
+	                getExaminationsPharmacies(examinations[i].id);
 	                cancelExamination(examinations[i].id, patientId);
         		}else{
 	        		examinationsTable.append("<tr id='" + examinations[i].id + "'><td>" +
@@ -94,6 +110,7 @@ function getPatientActiveExaminations(patientId){
 	                
 	                $("#table").append(examinationsTable);
 	                getExaminationsDermatologist(examinations[i].id);
+	                getExaminationsPharmacies(examinations[i].id);
 	                cancelExamination(examinations[i].id, patientId);
         		}
         	}
@@ -110,12 +127,15 @@ function cancelExamination(examinationId, patientId){
 	        type: 'DELETE',	        
 	        contentType: 'application/json',
 	        dataType: 'json',
+	        headers: {
+   				Authorization: 'Bearer ' + $.cookie('token')
+			},
 	        complete: function (data) {
 	       		if(data.status == 200){	     
 					alert("Success!");
 					location.reload();
-	       		}else
-	       			alert("ERROR!");
+	       		}else if(data.status == 404)
+	       			alert("Examination cannot be cancelled 24hrs before its start date!");
 	       	}
 		});
 	});

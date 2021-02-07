@@ -142,6 +142,9 @@ function addMedication(){
         data: transformedData,
         contentType: 'application/json',
         dataType: 'json',
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
         complete: function (data) {
             if (data.status == 201){
                 alert("Success!");

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -57,73 +58,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.authorizeRequests().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 		.antMatchers("/register").permitAll().antMatchers("/login").permitAll()
 		.antMatchers("/getUser").permitAll().antMatchers("/h2-console/**").permitAll()
-		.antMatchers("/getUserRole").permitAll().antMatchers("/sendAccountConfirmation").permitAll()
-		.antMatchers("/activateAccount/*").permitAll()
-		.antMatchers("/getAllPharmacies").permitAll()
-		.antMatchers("/getPharmacy/*").permitAll()
-		.antMatchers("/getPharmacyMedications/*").permitAll()
-		.antMatchers("/changePassword").permitAll()
-		.antMatchers("/updateSystemAdmin").permitAll()
-		.antMatchers("/getAllSystemAdmins").permitAll()
-		.antMatchers("/getAllPatients").permitAll()
-		.antMatchers("/getAllUsers").permitAll()
-		.antMatchers("/getAllPharmacyAdmins").permitAll()
-		.antMatchers("/addPharmacyAdmin").permitAll()
-		.antMatchers("/addSystemAdmin").permitAll()
-		.antMatchers("/getPharmacyAdmin/*").permitAll()
-		.antMatchers("/addPharmacy").permitAll()
-		.antMatchers("/getAllDermatologists").permitAll()
-		.antMatchers("/addDermatologist").permitAll()
-		.antMatchers("/addSupplier").permitAll()
-		.antMatchers("/getAllMedicationTypes").permitAll()
-		.antMatchers("/addMedication").permitAll()
-		.antMatchers("/getAllMedications").permitAll()
-		.antMatchers("/addPatientAllergicMedication/*").permitAll()
-		.antMatchers("/updatePharmacyAdmin").permitAll()
-		.antMatchers("/getAdminsPharmacy/*").permitAll()
-		.antMatchers("/updatePharmacy").permitAll()
-		.antMatchers("/getMedicationsNotInPharmacy/*").permitAll()
-		.antMatchers("/addMedicationToPharmacy").permitAll()
-		.antMatchers("/findMedicationsByName/*").permitAll()
-		.antMatchers("/getPatientAllergicMedications/*").permitAll()
-		.antMatchers("/getMedicationById/*").permitAll()
-		.antMatchers("/removeMedicationFromPharmacy/*/*").permitAll()
-		.antMatchers("/updateMedication").permitAll()
-		.antMatchers("/getPharmacyDermatologists/*").permitAll()
-		.antMatchers("/getDermatologistPharmacies/*").permitAll()
-		.antMatchers("/getAllPharmacists").permitAll()
-		.antMatchers("/getPharmacyPharmacists/*").permitAll()
-		.antMatchers("/getPharmacistPharmacy/*").permitAll()
-		.antMatchers("/getDermatologistsNotInPHarmacy/*").permitAll()
-		.antMatchers("/addDermatologistWorkingHours").permitAll()
-		.antMatchers("/getAllDermatologistWorkingHours").permitAll()
-		.antMatchers("/getOneDermatologistActiveWorkingHours/*").permitAll()
-		.antMatchers("/addDermatologistToPharmacy/*/*").permitAll()
-		.antMatchers("/removeDermatologistFromPharmacy/*/*").permitAll()
-		.antMatchers("/addPharmacist").permitAll()
-		.antMatchers("/getPharmacyAdminFromUserId/*").permitAll()
-		.antMatchers("/removePharmacistFromPharmacy/*/*").permitAll()
-		.antMatchers("/removeDermatologistPharmacyWorkingHours/*/*").permitAll()
-		.antMatchers("/getSystemAdminFromUserId/*").permitAll()
-		.antMatchers("/getPatientByUserId/*").permitAll()
-		.antMatchers("/getAllMedicationsInPharmacies").permitAll()
-		.antMatchers("/findAllMedsByPharmacyId/*").permitAll()
-		.antMatchers("/findOneByPharmacyIdAndMedicationId/*/*").permitAll()
-		.antMatchers("/updateMedicationInPharmacy").permitAll()
-		.antMatchers("/getAllExaminations").permitAll()
-		.antMatchers("/createExamination").permitAll()
-		.antMatchers("/getAllDermatologistExaminations/*").permitAll()
-		.antMatchers("/getDermatologistPharmacyExaminations/*/*").permitAll()
-		.antMatchers("/getDermatologistPharmacyExaminationsByStatus/*/*/*").permitAll()
-		.antMatchers("/examinationScheduled/*").permitAll()
-		.antMatchers("/getByStatusAndDermatologistId/*/*").permitAll()
-		.antMatchers("/getAllPharmacyExaminations/*").permitAll()
-		.antMatchers("/getExaminationsByPharmacyIdAndStatus/*/*").permitAll()
-		.antMatchers("/getDermatologistByExaminationId/*").permitAll()
-		.antMatchers("/getPharmacyByExaminationId/*").permitAll()
-		.antMatchers("/reserveExaminationByPatient/*/*").permitAll()
-		.antMatchers("/cancellPatientExamination/*/*").permitAll()
-		.antMatchers("/getPatientActiveExaminations/*").permitAll()
 		.antMatchers("/", "/*.html", "/favicon.ico","/*.js", "/*.css").permitAll()
 		.anyRequest().authenticated().and()
 		.cors().and()
@@ -137,5 +71,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	public void configure(WebSecurity web) {
 	
+		web.ignoring().antMatchers(HttpMethod.POST, "/sendAccountConfirmation", "/examinationScheduled/*", "/changePassword");
+		
+		web.ignoring().antMatchers(HttpMethod.GET, "/activateAccount/*", "/getAllPharmacies", "getPharmacy/*", "/getPharmacyMedications/*",
+									"/getAllPharmacists", "/getPharmacyPharmacists/*", "/getUserByEmail/*", "/getAllUsers", "/getAllSystemAdmins",
+									"/getSystemAdminFromUserId/*", "/getPatientByUserId/*", "/getPatientById/*", "/getAllPatients", "/getPharmacy/*",
+									"/getAdminsPharmacy/*", "/getDermatologistPharmacies/*", "/getAllPharmacyAdmins", "/getPharmacyAdmin/*", "/getAllDermatologists",
+									"/getAllMedicationTypes", "/getPharmacistPharmacy/*", "/getPharmacyByExaminationId/*", "/getAllMedications",
+									"/getMedicationsNotInPharmacy/*", "/getMedicationById/*", "/findMedicationsByName/*", "/getPharmacyDermatologists/*",
+									"/getDermatologistsNotInPHarmacy/*", "/getPatientAllergicMedications/*", "/getAllDermatologistWorkingHours",
+									"/getOneDermatologistActiveWorkingHours/*", "/getPharmacyAdminFromUserId/*", "/getAllPharmacyExaminations/*",
+									"/getAllMedicationsInPharmacies", "/getAllExaminations", "/findAllMedsByPharmacyId/*", "/findOneByPharmacyIdAndMedicationId/*/*",
+									"/getAllDermatologistExaminations/*", "/getDermatologistPharmacyExaminations/*/*", "/getDermatologistPharmacyExaminationsByStatus/*/*/*",
+									"/getByStatusAndDermatologistId/*/*", "/getExaminationsByPharmacyIdAndStatus/*/*", "/getDermatologistByExaminationId/*",
+									"/getPatientActiveExaminations/*", "/getExaminationById/*");
 	}
 }

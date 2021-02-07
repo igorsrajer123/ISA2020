@@ -311,6 +311,9 @@ function addDermatologistToPharmacy(dermatologistId, pharmacyId){
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
         complete: function (data) {
         	addDermatologistWorkingHours(dermatologistId, pharmacyId);
         }
@@ -337,6 +340,9 @@ function addDermatologistWorkingHours(dermatologistId, pharmacyId){
         data: transformedData,
         contentType: 'application/json',
         dataType: 'json',
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
         complete: function (data) {
         	alert("Success!");
         	window.location.href = "pharmacyDermatologists.html";
@@ -350,7 +356,10 @@ function removeDermatologistFromPharmacy(dermatologist, pharmacyId){
 	        url: 'http://localhost:8080/removeDermatologistFromPharmacy/' + dermatologist.id + "/" + pharmacyId,
 	        type: 'DELETE',
 	        contentType: 'application/json',
-       	 dataType: 'json',
+       	 	dataType: 'json',
+       	 	headers: {
+   				Authorization: 'Bearer ' + $.cookie('token')
+			},
 	        complete: function (data) {
 	        	if(data.status == 200){
 	        		removeDermatologistActiveWorkingDays(dermatologist.id, pharmacyId);
@@ -368,6 +377,9 @@ function removeDermatologistActiveWorkingDays(dermatologistId, pharmacyId){
 	        type: 'DELETE',
 	        contentType: 'application/json',
         	dataType: 'json',
+        	headers: {
+   				Authorization: 'Bearer ' + $.cookie('token')
+			},
 	        complete: function (data) {
 	        	alert("Success!");
 	        	window.location.href = "pharmacyDermatologists.html";

@@ -33,10 +33,9 @@ public class MedicationsPharmaciesService {
 	
 	public MedicationsPharmacies updateMedicationInPharmacy(MedicationsPharmaciesDto mpDto) {
 		MedicationsPharmacies asd = findOneByPharmacyIdAndMedicationIdAndDeleted(mpDto.getPharmacy().getId(), mpDto.getMedication().getId(), false);
-		System.out.println(asd.getId());
 		asd.setAmount(mpDto.getAmount());
 		asd.setPrice(mpDto.getPrice());
 		medicationsPharmaciesRepository.save(asd);
-				return asd;		
+		return asd;		
 	}
 }

@@ -168,6 +168,7 @@ function getAllPharmacyExaminations(pharmacyId){
 	                
 	                $("#table").append(examinationsTable);
 	                getExaminationsDermatologist(examinations[i].id);
+	                editExaminationPrice(examinations[i].id);
         		}else{
 	        		examinationsTable.append("<tr id='" + examinations[i].id + "'><td>" + 
 	        		"</td><td>" + examinations[i].price +          
@@ -179,6 +180,7 @@ function getAllPharmacyExaminations(pharmacyId){
 	                
 	                $("#table").append(examinationsTable);
 	                 getExaminationsDermatologist(examinations[i].id);
+	                 editExaminationPrice(examinations[i].id);
         		}
         	}
         	}else{
@@ -197,6 +199,9 @@ function reserveExamination(examinationId, patientId){
 	        type: 'PUT',	        
 	        contentType: 'application/json',
 	        dataType: 'json',
+	        headers: {
+   				Authorization: 'Bearer ' + $.cookie('token')
+			},
 	        complete: function (data) {
 	       		if(data.status == 200){
 		       		$.ajax({
@@ -215,5 +220,12 @@ function reserveExamination(examinationId, patientId){
 	       			alert("ERROR!");
 	       	}
 		});
+	});
+}
+
+function editExaminationPrice(examinationId){
+	$("#" + examinationId).click(function(event){
+		event.preventDefault();
+		window.location.href = "editExamination.html?examinationId=" + examinationId;
 	});
 }

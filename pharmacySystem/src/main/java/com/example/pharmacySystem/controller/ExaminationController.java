@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ public class ExaminationController {
 	}
 	
 	@PostMapping(value = "/createExamination", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
 	public ResponseEntity<Examination> createExamination(@RequestBody Examination e){
 		Examination ex = examinationService.createExamination(e);
 		
@@ -84,6 +86,7 @@ public class ExaminationController {
 	}
 	
 	@PutMapping(value = "/reserveExaminationByPatient/{examinationId}/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<Examination> reserveExaminationByPatient(@PathVariable("examinationId") Long examinationId, @PathVariable("patientId") Long patientId){
 		Examination ex = examinationService.reserveExaminationByPatient(examinationId, patientId);
 		
@@ -91,9 +94,11 @@ public class ExaminationController {
 	}
 	
 	@DeleteMapping(value = "/cancellPatientExamination/{patientId}/{examinationId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<Examination> cancellPatientExamination(@PathVariable("examinationId") Long examinationId, @PathVariable("patientId") Long patientId){
 		Examination ex = examinationService.cancellPatientExamination(patientId, examinationId);
 		
+		if(ex == null) return new ResponseEntity<>(ex, HttpStatus.NOT_FOUND);
 		return new ResponseEntity<Examination>(ex, HttpStatus.OK);
 	}
 	
@@ -102,5 +107,20 @@ public class ExaminationController {
 		List<Examination> examinations = examinationService.getPatientActiveExaminations(id);
 		
 		return new ResponseEntity<List<Examination>>(examinations, HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/updateExaminationPrice/{examinationId}/{price}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PHARMACY_ADMIN')")
+	public ResponseEntity<Examination> updateExaminationPrice(@PathVariable("examinationId") Long examinationId, @PathVariable("price") double price){
+		Examination ex = examinationService.updateExaminationPrice(examinationId, price);
+		
+		return new ResponseEntity<Examination>(ex, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getExaminationById/{examinationId}",  produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Examination> getExaminationById(@PathVariable("examinationId") Long examinationId){
+		Examination ex = examinationService.findOneById(examinationId);
+		
+		return new ResponseEntity<Examination>(ex, HttpStatus.OK);
 	}
 }
