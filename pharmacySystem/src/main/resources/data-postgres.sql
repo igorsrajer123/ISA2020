@@ -46,7 +46,7 @@ INSERT INTO user_entity(email, password, first_name, last_name, type, activated,
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('derma4@gmail.com', '$2a$10$hnftkRIbDohiKU/DioxxTuuAT435oXq3Lj2sobLJ7bco/UsIqfMlK', 'Keba', 'Kraba', 'ROLE_DERMATOLOGIST', true, true, true);
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('phadmin2@gmail.com', '$2a$10$/tn3byVZBK1iDkiiH7Qj.uj6nWIlAib7SHI5cASgAbj5dob33aOgK', 'Bosko', 'Buha', 'ROLE_PHARMACY_ADMIN', true, true, true);
 
-INSERT INTO patient(address, phone_number, city, country, processed, user_id) VALUES ('adresica','1234567890', 'zrenjanin', 'serbia', true, 1);
+INSERT INTO patient(address, phone_number, city, country, processed, user_id, penalties) VALUES ('adresica','1234567890', 'zrenjanin', 'serbia', true, 1, 0);
 
 INSERT INTO pharmacy_system_administrator(user_id) VALUES (2);
 
@@ -96,7 +96,7 @@ INSERT INTO dermatologist(number_of_votes, rating, user_id) VALUES (11, 2.2, 7);
 INSERT INTO dermatologist(number_of_votes, rating, user_id) VALUES (7, 4.2, 10);
 
 INSERT INTO pharmacist(number_of_votes, deleted, working_from, working_to, rating, pharmacy_id, user_id) VALUES (12, false, 8, 16, 3.5, 1, 8);
-INSERT INTO pharmacist(number_of_votes, deleted, working_from, working_to,rating, pharmacy_id, user_id) VALUES (22, false, 8, 16, 2.9, 1, 9);
+INSERT INTO pharmacist(number_of_votes, deleted, working_from, working_to,rating, pharmacy_id, user_id) VALUES (22, false, 8, 13, 2.9, 1, 9);
 
 INSERT INTO pharmacy_dermatologists(pharmacy_id, dermatologist_id) VALUES (1, 1);
 INSERT INTO pharmacy_dermatologists(pharmacy_id, dermatologist_id) VALUES (1, 2);
@@ -133,8 +133,11 @@ INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_
 INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2021-02-7', 1, 'ACTIVE', '10:00', 4, 1, 1, 155.0);
 
 INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'ACTIVE', 10, 11, 1, 1);
-INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'ACTIVE', 11, 13, 1, 1);
-INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'ACTIVE', 13, 15, 1, 1);
-INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'CANCELLED', 8, 10, 1, 2);
-INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'CANCELLED', 11, 14, 1, 2);
+INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'ACTIVE', 11, 12, 1, 1);
+INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'ACTIVE', 16, 17, 1, 1);
+INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-05', 'CANCELLED', 8, 10, 1, 2);
+INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-07', 'ACTIVE', 11, 14, 1, 2);
 
+INSERT INTO medication_reservation(pick_up_date, status, medication_from_pharmacy_id, patient_id) VALUES ('2021-02-07', 'ACTIVE', 1, 1);
+
+INSERT INTO patient_pharmacy_subscriptions(patient_id, pharmacy_id) VALUES (1, 1);

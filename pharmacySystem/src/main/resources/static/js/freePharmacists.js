@@ -66,6 +66,7 @@ function getAvailablePharmacists(pharmacyId, time, date, patientId){
 		    	$("#table").append(pharmacistsTable);
 		    	scheduleCounseling(pharmacists[i].id, patientId);
    			}
+   			sortByRating(pharmacists, patientId);
    		}
    	});
 }
@@ -134,4 +135,49 @@ function getUrlVars() {
         vars[key] = value;
     });
     return vars;
+}
+
+function sortByRating(pharmacists, patientId){
+	var rising = false;
+	$("#rating").click(function(){
+		if(rising){
+			var mojNiz = pharmacists.sort(function(a, b){
+							return a.rating - b.rating;
+						});
+			
+			var pharmacistsTable = $("#table tbody");
+			pharmacistsTable.empty();
+                    
+			for(var i = 0; i < mojNiz.length; i++){
+				pharmacistsTable.append("<tr><td>" + mojNiz[i].user.firstName +   
+		 		"</td><td>" + mojNiz[i].user.lastName +
+		    	"</td><td>" + mojNiz[i].rating +
+		   		"</td><td><button id='" + mojNiz[i].id + "' style='font-weight:bold;'>Schedule Counseling!</button>" +
+		    	"</td></tr>");
+		    	
+		    	$("#table").append(pharmacistsTable);
+		    	scheduleCounseling(pharmacists[i].id, patientId);
+   			}
+			rising = false;
+		}else{
+			var mojNiz = pharmacists.sort(function(a, b){
+							return b.rating - a.rating;
+							});
+							
+			var pharmacistsTable = $("#table tbody");
+			pharmacistsTable.empty();
+                    
+			for(var i = 0; i < pharmacists.length; i++){
+				pharmacistsTable.append("<tr><td>" + mojNiz[i].user.firstName +   
+		 		"</td><td>" + mojNiz[i].user.lastName +
+		    	"</td><td>" + mojNiz[i].rating +
+		   		"</td><td><button id='" + mojNiz[i].id + "' style='font-weight:bold;'>Schedule Counseling!</button>" +
+		    	"</td></tr>");
+		    	
+		    	$("#table").append(pharmacistsTable);
+		    	scheduleCounseling(mojNiz[i].id, patientId);
+   			}
+			rising = true;
+		}			
+	});
 }

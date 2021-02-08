@@ -74,6 +74,16 @@ public class Pharmacy {
 	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Examination> examinations;
 	
+	
+	@JsonIgnoreProperties(value = {"subscriptions"}, allowSetters = true)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "patientPharmacySubscriptions", joinColumns = { @JoinColumn(name = "pharmacyId", referencedColumnName = "id")}, inverseJoinColumns = @JoinColumn(name = "patientId", referencedColumnName = "id"))
+	private List<Patient> subscriptions;
+	
+	@JsonManagedReference(value = "promotion-movement")
+	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Promotion> promotions;
+	
 	public Pharmacy() {
 		super();
 	}
@@ -200,5 +210,21 @@ public class Pharmacy {
 
 	public void setCounselingPrice(double counselingPrice) {
 		this.counselingPrice = counselingPrice;
+	}
+
+	public List<Patient> getSubscriptions() {
+		return subscriptions;
+	}
+
+	public void setSubscriptions(List<Patient> subscriptions) {
+		this.subscriptions = subscriptions;
+	}
+
+	public List<Promotion> getPromotions() {
+		return promotions;
+	}
+
+	public void setPromotions(List<Promotion> promotions) {
+		this.promotions = promotions;
 	}
 }

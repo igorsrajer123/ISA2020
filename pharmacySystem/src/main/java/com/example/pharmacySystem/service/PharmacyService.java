@@ -13,11 +13,13 @@ import com.example.pharmacySystem.dto.PharmacyDto;
 import com.example.pharmacySystem.model.Counseling;
 import com.example.pharmacySystem.model.Dermatologist;
 import com.example.pharmacySystem.model.Examination;
+import com.example.pharmacySystem.model.Patient;
 import com.example.pharmacySystem.model.Pharmacist;
 import com.example.pharmacySystem.model.Pharmacy;
 import com.example.pharmacySystem.model.PharmacyAdministrator;
 import com.example.pharmacySystem.repository.DermatologistRepository;
 import com.example.pharmacySystem.repository.ExaminationRepository;
+import com.example.pharmacySystem.repository.PatientRepository;
 import com.example.pharmacySystem.repository.PharmacistRepository;
 import com.example.pharmacySystem.repository.PharmacyAdministratorRepository;
 import com.example.pharmacySystem.repository.PharmacyRepository;
@@ -40,6 +42,9 @@ public class PharmacyService {
 	
 	@Autowired
 	private ExaminationRepository examinationRepository;
+	
+	@Autowired
+	private PatientRepository patientRepository;
 	
 	public List<Pharmacy> findAll(){
 		List<Pharmacy> allPharmacies = pharmacyRepository.findAll();
@@ -147,5 +152,32 @@ public class PharmacyService {
 		}
 		retVal = retVal.stream().distinct().collect(Collectors.toList());
 		return retVal;
+	}
+	
+	public List<Pharmacy> getPatientSubscriptions(Long patientId){
+		Patient p = patientRepository.findOneById(patientId);
+		return p.getSubscriptions();
+	}
+	
+	@Transactional(readOnly = false)
+	public Pharmacy subscribeToPharmacy(Long patientId, Long pharmacyId) {
+		Patient patient = patientRepository.findOneById(patientId);
+		Pharmacy pharmacy = pharmacyRepository.findOneById(pharmacyId);
+		patient.getSubscriptions().add(pharmacy);
+		pharmacy.getSubscriptions().add(patient);
+		pharmacyRepository.save(pharmacy);
+		patientRepository.save(patient);
+		return pharmacy;
+	}
+	
+	@Transactional(readOnly = false)
+	public Pharmacy unsubscribeFromPharmacy(Long patientId, Long pharmacyId) {
+		Patient patient = patientRepository.findOneById(patientId);
+		Pharmacy pharmacy = pharmacyRepository.findOneById(pharmacyId);
+		patient.getSubscriptions().remove(pharmacy);
+		pharmacy.getSubscriptions().remove(patient);
+		pharmacyRepository.save(pharmacy);
+		patientRepository.save(patient);
+		return pharmacy;
 	}
 }

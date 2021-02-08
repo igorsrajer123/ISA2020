@@ -65,6 +65,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/getPharmacistFromCounseling/*").permitAll()
 		.antMatchers("/cancelCounseling/*").permitAll()
 		.antMatchers("/getPharmacistCounselings/*").permitAll()
+		.antMatchers("/getPatientSubscriptions/*").permitAll()
+		.antMatchers("/subscribeToPharmacy/*/*").permitAll()
+		.antMatchers("/unsubscribeFromPharmacy/*/*").permitAll()
+		.antMatchers("/getPharmacyPromotions/*").permitAll()
+		.antMatchers("/createPromotion").permitAll()
 		
 		.antMatchers("/", "/*.html", "/favicon.ico","/*.js", "/*.css").permitAll()
 		.anyRequest().authenticated().and()

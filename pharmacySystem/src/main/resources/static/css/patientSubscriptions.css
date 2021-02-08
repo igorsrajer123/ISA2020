@@ -1,0 +1,51 @@
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+body{
+    background: url(1.jpg) repeat;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+nav{
+    font-family: "Georgia";
+    background: #1E90FF;
+    height: 80px;
+}
+
+::-webkit-scrollbar {
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
+#content{
+    overflow: auto;
+    display: block;
+    border-collapse: collapse;
+    height: 500px;
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+   	box-sizing: border-box;
+}
+
+td, tr{
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody{
+    background-color: #fff;
+}
+
+#header{
+    position: sticky;
+    top: 0;
+    background-color: #1E90FF;
+    color: #fff;
+}

@@ -87,6 +87,8 @@ function searchPharmacies(){
 	                $("#table").append(pharmaciesTable);
 	                choosePharmacyForCounseling(pharmacies[i].id);
            		}
+           		sortByCounselingPrice(pharmacies);
+           		sortByRating(pharmacies);
             }else{
             	$("#chooseDate").show();
             	$("#table").hide();
@@ -117,6 +119,104 @@ function choosePharmacyForCounseling(pharmacyId){
 	$("#" + pharmacyId).click(function(event){
 		event.preventDefault();
 		window.location.href = "freePharmacists.html?pharmacyId=" + pharmacyId + "&time=" + $("#time").val() + "&date=" + sendingDate;
+	});
+}
+
+function sortByRating(){
+
+}
+
+function sortByRating(allPharmacies){
+	var rising = false;
+	$("#pharmacyRating").click(function(){
+		if(rising){
+			var mojNiz = allPharmacies.sort(function(a, b){
+							return a.rating - b.rating;
+						});
+			
+			var pharmaciesTable = $("#table tbody");
+            pharmaciesTable.empty();
+                    
+            for(var i = 0; i < mojNiz.length; i++){
+	            pharmaciesTable.append("<tr id='" + mojNiz[i].id + "'><td>" + mojNiz[i].name +   
+	            "</td><td>" + mojNiz[i].address +
+	            "</td><td>" + mojNiz[i].city +
+	            "</td><td>" + mojNiz[i].rating +
+	            "</td><td>" + mojNiz[i].counselingPrice +
+	            "</td></tr>");
+				
+	            $("#table").append(pharmaciesTable);
+	            choosePharmacyForCounseling(mojNiz[i].id);
+			}
+			rising = false;
+		}else{
+			var mojNiz = allPharmacies.sort(function(a, b){
+							return b.rating - a.rating;
+							});
+							
+			var pharmaciesTable = $("#table tbody");
+            pharmaciesTable.empty();
+                    
+            for(var i = 0; i < mojNiz.length; i++){
+	            pharmaciesTable.append("<tr id='" + mojNiz[i].id + "'><td>" + mojNiz[i].name +   
+	            "</td><td>" + mojNiz[i].address +
+	            "</td><td>" + mojNiz[i].city +
+	            "</td><td>" + mojNiz[i].rating +
+	            "</td><td>" + mojNiz[i].counselingPrice +
+	            "</td></tr>");
+				
+	            $("#table").append(pharmaciesTable);
+	            choosePharmacyForCounseling(mojNiz[i].id);
+			}
+			rising = true;
+		}			
+	});
+}
+
+function sortByCounselingPrice(allPharmacies){
+	var rising = false;
+	$("#pharmacyCounselingPrice").click(function(){
+		if(rising){
+			var mojNiz = allPharmacies.sort(function(a, b){
+							return a.counselingPrice - b.counselingPrice;
+						});
+			
+			var pharmaciesTable = $("#table tbody");
+            pharmaciesTable.empty();
+                    
+            for(var i = 0; i < mojNiz.length; i++){
+	            pharmaciesTable.append("<tr id='" + mojNiz[i].id + "'><td>" + mojNiz[i].name +   
+	            "</td><td>" + mojNiz[i].address +
+	            "</td><td>" + mojNiz[i].city +
+	            "</td><td>" + mojNiz[i].rating +
+	            "</td><td>" + mojNiz[i].counselingPrice +
+	            "</td></tr>");
+				
+	            $("#table").append(pharmaciesTable);
+	            choosePharmacyForCounseling(mojNiz[i].id);
+			}
+			rising = false;
+		}else{
+			var mojNiz = allPharmacies.sort(function(a, b){
+							return b.counselingPrice - a.counselingPrice;
+							});
+							
+			var pharmaciesTable = $("#table tbody");
+            pharmaciesTable.empty();
+                    
+            for(var i = 0; i < mojNiz.length; i++){
+	            pharmaciesTable.append("<tr id='" + mojNiz[i].id + "'><td>" + mojNiz[i].name +   
+	            "</td><td>" + mojNiz[i].address +
+	            "</td><td>" + mojNiz[i].city +
+	            "</td><td>" + mojNiz[i].rating +
+	            "</td><td>" + mojNiz[i].counselingPrice +
+	            "</td></tr>");
+				
+	            $("#table").append(pharmaciesTable);
+	            choosePharmacyForCounseling(mojNiz[i].id);
+			}
+			rising = true;
+		}			
 	});
 }
 

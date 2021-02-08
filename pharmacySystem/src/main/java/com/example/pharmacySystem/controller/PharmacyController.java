@@ -124,4 +124,39 @@ public class PharmacyController {
 		
 		return new ResponseEntity<List<PharmacyDto>>(myPharmacies, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/getPatientSubscriptions/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<PharmacyDto>> getPatientSubscriptions(@PathVariable("patientId") Long id){
+		List<Pharmacy> pharmacies = pharmacyService.getPatientSubscriptions(id);
+		
+		if(pharmacies == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		List<PharmacyDto> myPharmacies = new ArrayList<PharmacyDto>();
+		for(Pharmacy p : pharmacies)
+			myPharmacies.add(new PharmacyDto(p));
+		
+		return new ResponseEntity<List<PharmacyDto>>(myPharmacies, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/subscribeToPharmacy/{patientId}/{pharmacyId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PharmacyDto> subscribeToPharmacy(@PathVariable("patientId") Long patientId, @PathVariable("pharmacyId") Long pharmacyId){
+		Pharmacy pharmacy = pharmacyService.subscribeToPharmacy(patientId, pharmacyId);
+		
+		if(pharmacy == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		PharmacyDto pharmacyDto = new PharmacyDto(pharmacy);
+		
+		return new ResponseEntity<PharmacyDto>(pharmacyDto, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/unsubscribeFromPharmacy/{patientId}/{pharmacyId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PharmacyDto> unsubscribeFromPharmacy(@PathVariable("patientId") Long patientId, @PathVariable("pharmacyId") Long pharmacyId){
+		Pharmacy pharmacy = pharmacyService.unsubscribeFromPharmacy(patientId, pharmacyId);
+		
+		if(pharmacy == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		PharmacyDto pharmacyDto = new PharmacyDto(pharmacy);
+		
+		return new ResponseEntity<PharmacyDto>(pharmacyDto, HttpStatus.OK);
+	}
 }

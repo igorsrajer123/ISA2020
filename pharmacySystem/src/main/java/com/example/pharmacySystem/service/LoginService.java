@@ -54,6 +54,7 @@ public class LoginService implements UserDetailsService{
 		patient.getUser().setEnabled(true);
 		patient.getUser().setActivated(false);
 		patient.setProcessed(false);
+		patient.setPenalties(0);
 		patient.getUser().setType("ROLE_PATIENT");
 		List<Authority> authorities = authorityService.findByName("ROLE_PATIENT");
 		patient.getUser().setAuthorities(authorities);

@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -42,6 +44,9 @@ public class Patient {
 	@Column(name = "processed", nullable = false)
 	private boolean processed;
 	
+	@Column(name = "penalties")
+	private int penalties;
+	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "patientAllergicOn", joinColumns = @JoinColumn(name = "patientId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "medicationId", referencedColumnName = "id"))
 	private List<Medication> allergicOn;
@@ -57,6 +62,10 @@ public class Patient {
 	@JsonManagedReference(value = "counselingPatient-movement")
 	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Counseling> counselings;
+	
+	@JsonIgnoreProperties(value = {"subscriptions"}, allowSetters = true)
+	@ManyToMany(mappedBy = "subscriptions")
+	private List<Pharmacy> subscriptions;
 	
 	public Patient() {
 		super();
@@ -148,5 +157,21 @@ public class Patient {
 
 	public void setCounselings(List<Counseling> counselings) {
 		this.counselings = counselings;
+	}
+
+	public int getPenalties() {
+		return penalties;
+	}
+
+	public void setPenalties(int penalties) {
+		this.penalties = penalties;
+	}
+
+	public List<Pharmacy> getSubscriptions() {
+		return subscriptions;
+	}
+
+	public void setSubscriptions(List<Pharmacy> subscriptions) {
+		this.subscriptions = subscriptions;
 	}
 }

@@ -10,6 +10,7 @@ public class PatientDto {
 	private String phoneNumber;
 	private String city;
 	private String country;
+	private int penalties;
 	
 	public PatientDto() {
 		super();
@@ -30,6 +31,7 @@ public class PatientDto {
 		this.phoneNumber = patient.getPhoneNumber();
 		this.city = patient.getCity();
 		this.country = patient.getCountry();
+		this.setPenalties(patient.getPenalties());
 	}
 	
 	public Long getId() {
@@ -78,5 +80,13 @@ public class PatientDto {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	public int getPenalties() {
+		return penalties;
+	}
+
+	public void setPenalties(int penalties) {
+		this.penalties = penalties;
 	}
 }

@@ -1,0 +1,86 @@
+body{
+    background: url(4.jpg) no-repeat;
+    margin: 0;
+    padding: 0;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+nav{
+    font-family: "Georgia";
+    background: #1E90FF;
+    height: 80px;
+}
+
+.ui-datepicker-week-end {
+    display:none
+}
+
+.form{
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    width: 650px;
+    position: relative;
+    text-align: center;
+}
+
+button{
+    border: 2px solid yellow;
+	background: black;
+	padding: 1px 1px;
+	font-size: 15px;
+	font-family: "Georgia", "Comic Sans", cursive;
+    margin: 7px;
+    width: 245px;
+	cursor: pointer;
+    transition: 0.8s;
+	position: hidden;
+    color: yellow;
+    border-radius: 7px;
+    height: 50px;
+    font-weight: bold;
+}
+
+button:hover{
+    border: 1px solid black;
+	background: yellow;
+	color: black;
+}
+
+p{
+    font-size: 30px;
+    margin: 5px 0;
+    color: yellow;
+    padding: 10px;
+    font-weight: bold;
+    display: inline
+}
+
+input{
+	font-size: 20px;
+    outline: none;
+    height: 20px;
+    font-family: "Georgia", "Comic Sans", cursive;
+    color: black;
+    background-color: yellow;
+}
+
+textarea{
+	width: 600px;
+	height: 120px;
+	border: 3px solid #cccccc;
+	padding: 5px;
+	font-family: Tahoma, sans-serif;
+	background-color: yellow;
+}
