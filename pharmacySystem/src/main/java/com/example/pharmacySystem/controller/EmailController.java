@@ -59,7 +59,13 @@ public class EmailController {
 	@PostMapping(value = "/medicationReservationMade/{reservationId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> reservationScheduledNotification(@PathVariable("reservationId") Long id){
 		emailService.medicationReservedNotification(id);
-		return new ResponseEntity<String>("Email sent", HttpStatus.OK);
+		return new ResponseEntity<String>("Email sent.", HttpStatus.OK);
 		
+	}
+	
+	@PostMapping(value = "/counselingScheduled/{counselingId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> counselingScheduledNotification(@PathVariable("counselingId") Long id){
+		emailService.counselingScheduledNotification(id);
+		return new ResponseEntity<String>("Email sent.", HttpStatus.OK);
 	}
 }

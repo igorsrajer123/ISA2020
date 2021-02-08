@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ public class MedicationReservationController {
 	private MedicationReservationService medicationReservationService;
 	
 	@PostMapping(value = "/createMedicationReservation", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<MedicationReservation> createMedicationReservation(@RequestBody MedicationReservation mr){
 		MedicationReservation medReservation = medicationReservationService.create(mr);
 		
@@ -46,6 +48,7 @@ public class MedicationReservationController {
 	}
 	
 	@PutMapping(value = "/cancelMedicationReservation/{patientId}/{reservationId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<MedicationReservation> cancelMedicationReservation(@PathVariable("patientId") Long patientId, @PathVariable("reservationId") Long reservationId){
 		MedicationReservation medReservations = medicationReservationService.cancelReservation(patientId, reservationId);
 		

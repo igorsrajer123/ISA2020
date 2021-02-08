@@ -1,0 +1,48 @@
+<html>
+ <meta charset="utf-8" />
+    <title>Schedule Counseling</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/scheduleCounseling.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.cookie.js"></script> 
+    <script src="js/scheduleCounseling.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<body>
+	
+	<nav>
+
+    </nav>
+    
+	<div class="form">
+        <form id="chooseDate">
+        	<div>
+	            <p>Choose your counseling date and time:</p>
+	            <br/><br/>
+	            <input type="text" class="datepicker" id="datepicker"/>
+	            <br/><br/>
+				<select id=time>
+					<option></option>
+				</select>
+			</div>
+			<br/>
+			<button id="submit">Submit</button>
+			<br/>			
+        </form>		
+        <p id="notify" style="color:red;font-weight:bold;font-size:18px;">Choose one of the following pharmacies to schedule a counseling</p>
+        <table  id="table">
+	        <thead id="header">
+	            <td>Pharmacy Name</td>
+	            <td>Address</td>
+	            <td>City</td>
+	            <td>Rating</td>
+	            <td>Counseling Price(RSD)</td>
+	        </thead>
+	        <tbody>
+	        </tbody>
+	    </table>
+	    <button id="cancel">Cancel Search</button>
+		<br/>	
+    </div>
+
+</body>
+</html>

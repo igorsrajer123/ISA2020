@@ -11,12 +11,13 @@ public class PharmacyDto {
 	private String description;
 	private double rating;
 	private int numberOfVotes;
+	private double counselingPrice;
 	
 	public PharmacyDto() {
 		super();
 	}
 	
-	public PharmacyDto(Long id, String name, String address, String city, String description, double rating, int numberOfVotes) {
+	public PharmacyDto(Long id, String name, String address, String city, String description, double rating, int numberOfVotes, double counselingPrice) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -25,6 +26,7 @@ public class PharmacyDto {
 		this.rating = rating;
 		this.numberOfVotes = numberOfVotes;
 		this.description = description;
+		this.counselingPrice = counselingPrice;
 	}
 	
 	public PharmacyDto(Pharmacy pharmacy) {
@@ -35,6 +37,7 @@ public class PharmacyDto {
 		this.rating = pharmacy.getRating();		
 		this.numberOfVotes = pharmacy.getNumberOfVotes();
 		this.description = pharmacy.getDescription();
+		this.counselingPrice = pharmacy.getCounselingPrice();
 	}
 	
 	public Long getId() {
@@ -91,5 +94,13 @@ public class PharmacyDto {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public double getCounselingPrice() {
+		return counselingPrice;
+	}
+
+	public void setCounselingPrice(double counselingPrice) {
+		this.counselingPrice = counselingPrice;
 	}
 }

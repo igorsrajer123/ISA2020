@@ -36,6 +36,10 @@ function checkFields(){
 		if($("#city").val() == ""){
 			$("#city").css("background-color","red");
 		}
+		
+		if($("#counselingPrice").val() == ""){
+			$("#counselingPrice").css("background-color","red");
+		}
 	});
 }
 
@@ -43,10 +47,11 @@ function submitData(){
 	$("#save").click(function(){
 		event.preventDefault();
 		
-		if($("#name").val() != "" && $("#address").val() != "" && $("#city").val() != "" ){
+		if($("#name").val() != "" && $("#address").val() != "" && $("#city").val() != "" &&  $("#counselingPrice").val() != ""){
 			$("#name").css("background-color","white");
 			$("#address").css("background-color","white");
 			$("#city").css("background-color","white");
+			$("#counselingPrice").css("background-color","white");
 			createNewPharmacy();
 		}
 		else{
@@ -60,6 +65,7 @@ function createNewPharmacy(){
 		"name": $("#name").val(),
 		"address": $("#address").val(),
 		"city": $("#city").val(),
+		"counselingPrice": $("#counselingPrice").val(),
 		"rating": 0,
 		"numberOfVotes": 0,
 	}

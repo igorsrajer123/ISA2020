@@ -163,13 +163,13 @@ function getPharmacyPharmacistsAdmin(pharmacyId){
             	pharmacistsTable.empty();
             	
             	for(var i = 0; i < pharmacists.length; i++){
-	            	pharmacistsTable.append("<tr><td>" + pharmacists[i].user.firstName +    
+	            	pharmacistsTable.append("<tr id='" + pharmacists[i].id + "'><td>" + pharmacists[i].user.firstName +    
 	                "</td><td>" + pharmacists[i].user.lastName +
 	                "</td><td>" + 
 	                "</td><td>" + pharmacists[i].from + "h" +
 	                "</td><td>" + pharmacists[i].to + "h" +
 	                "</td><td>" + pharmacists[i].rating +
-	                 "</td><td><button id='" + pharmacists[i].id + "' style='color:red;background-color: #F1948A;'>Remove</button>" +
+	                 "</td><td><button id='" + pharmacists[i].id + pharmacists[i].id +"' style='color:red;background-color: #F1948A;'>Remove</button>" +
 	                "</td></tr>");
 	                
 	                $("#table").append(pharmacistsTable);
@@ -195,13 +195,13 @@ function searchPharmacistsAdmin(pharmacists, pharmacyId){
 			for(var i = 0; i < pharmacists.length; i++){
 				if(pharmacists[i].user.firstName.toLowerCase().includes($("#search").val().toLowerCase()) ||
 					pharmacists[i].user.lastName.toLowerCase().includes($("#search").val().toLowerCase())){
-					 pharmacistsTable.append("<tr><td>" +  pharmacists[i].user.firstName +
+					 pharmacistsTable.append("<tr id='" + pharmacists[i].id + "'><td>" +  pharmacists[i].user.firstName +
 	                "</td><td>" + pharmacists[i].user.lastName +
 	                "</td><td>" + 
 	                "</td><td>" + pharmacists[i].from + "h" +
 	                "</td><td>" + pharmacists[i].to + "h" +
 	                "</td><td>" + pharmacists[i].rating +
-	                 "</td><td><button id='" + pharmacists[i].id + "' style='color:red;background-color: #F1948A;'>Remove</button>" +
+	                 "</td><td><button id='" + pharmacists[i].id + pharmacists[i].id + "' style='color:red;background-color: #F1948A;'>Remove</button>" +
 	                "</td></tr>");
 	                
 	                $("#table").append(pharmacistsTable);
@@ -288,7 +288,8 @@ function submitData(pharmacyId){
 }
 
 function removePharmacistFromPharmacy(pharmacist, pharmacyId){
-	$("#" + pharmacist.id).click(function(event){
+	$("#" + pharmacist.id + pharmacist.id).click(function(event){
+		event.preventDefault();
 		$.ajax({
 	        url: 'http://localhost:8080/removePharmacistFromPharmacy/' + pharmacist.id + "/" + pharmacyId,
 	        type: 'DELETE',
@@ -298,7 +299,12 @@ function removePharmacistFromPharmacy(pharmacist, pharmacyId){
    			Authorization: 'Bearer ' + $.cookie('token')
 			},
 	        complete: function (data) {
-	        	window.location.href = "pharmacyPharmacists.html";
+	        	if(data.status == 200){
+	        		alert("Success!");
+	        		location.reload();
+	        	}else if(data.status == 404){
+	        		alert("This pharmacist has active counselings and cannot be removed yet!");
+	        	}
 	        }
 		});
 	});

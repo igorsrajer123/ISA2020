@@ -127,8 +127,8 @@ function removeMedicationFromPharmacy(pharmacyId, medId){
 	        	if(data.status == 200){
 	        		alert("SUCCESS!");
 	        		window.location.href = "pharmacyMedications.html";
-	        	}else{
-	        		alert("Something went wrong!");
+	        	}else if(data.status == 404){
+	        		alert("This medication is reserved by a patient!");
 	        	}
 	       	}
 		});

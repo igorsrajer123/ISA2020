@@ -69,11 +69,11 @@ INSERT INTO medication(name, code, daily_intake, side_effects, chemical_composit
 INSERT INTO medication(name, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Xanax', '#121', 100, 'Bluish lips or face', 'diklofenak-kalium 50 mg', 3);
 INSERT INTO medication(name, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Omeprazole', '#662', 100, 'Inability to wake or stay awake', 'silicium-dioxide E', 2);
 
-INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description) VALUES ('Apoteka Jankovic', 'Mileticeva 57', 'Zrenjanin', 2.5, 55, 'Opis apoteke 1');
-INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description) VALUES ('Apoteka Sveti Jovan', 'Apatinska 21', 'Novi Sad', 3.2, 21, 'Opis apoteke 2');
-INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description) VALUES ('Apoteka Jankovic', 'Rumunski Drum 11', 'Beograd', 3.6, 11, 'Opis apoteke 3');
-INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description) VALUES ('Apoteka Sveti Petar', 'Mise Dimitrijevica 26', 'Novi Sad', 4.2, 101, 'Opis apoteke 4');
-INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description) VALUES ('Apoteka Crveni Krst', 'Vojvode Petra Bojovica 1B', 'Beograd', 3.9, 2, 'Opis apoteke 5');
+INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description, counseling_price) VALUES ('Apoteka Jankovic', 'Mileticeva 57', 'Zrenjanin', 2.5, 55, 'Opis apoteke 1', 1000);
+INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description, counseling_price) VALUES ('Apoteka Sveti Jovan', 'Apatinska 21', 'Novi Sad', 3.2, 21, 'Opis apoteke 2', 3000);
+INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description, counseling_price) VALUES ('Apoteka Jankovic', 'Rumunski Drum 11', 'Beograd', 3.6, 11, 'Opis apoteke 3', 800);
+INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description, counseling_price) VALUES ('Apoteka Sveti Petar', 'Mise Dimitrijevica 26', 'Novi Sad', 4.2, 101, 'Opis apoteke 4', 490);
+INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description, counseling_price) VALUES ('Apoteka Crveni Krst', 'Vojvode Petra Bojovica 1B', 'Beograd', 3.9, 2, 'Opis apoteke 5', 1500);
 
 INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (200, 1000, 1, 1, false);
 INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (152, 700, 2, 1, false);
@@ -131,4 +131,10 @@ INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_
 INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2020-06-30', 1, 'FREE', '04:00', 1, null, 1, 155.0);
 INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2021-12-02', 0.5, 'FREE', '08:00', 4, null, 1, 155.0);
 INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2021-02-7', 1, 'ACTIVE', '10:00', 4, 1, 1, 155.0);
+
+INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'ACTIVE', 10, 11, 1, 1);
+INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'ACTIVE', 11, 13, 1, 1);
+INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'ACTIVE', 13, 15, 1, 1);
+INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'CANCELLED', 8, 10, 1, 2);
+INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'CANCELLED', 11, 14, 1, 2);
 

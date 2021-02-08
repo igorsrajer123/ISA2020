@@ -10,10 +10,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import com.example.pharmacySystem.model.Counseling;
 import com.example.pharmacySystem.model.Examination;
 import com.example.pharmacySystem.model.MedicationReservation;
 import com.example.pharmacySystem.model.Patient;
 import com.example.pharmacySystem.model.User;
+import com.example.pharmacySystem.repository.CounselingRepository;
 import com.example.pharmacySystem.repository.ExaminationRepository;
 import com.example.pharmacySystem.repository.MedicationReservationRepository;
 
@@ -31,6 +33,9 @@ public class EmailService {
 	
 	@Autowired
 	private MedicationReservationRepository reservationRepository;
+	
+	@Autowired
+	private CounselingRepository counselingRepository;
 	
 	@Autowired
 	private UserService userService;
@@ -85,6 +90,20 @@ public class EmailService {
 		msg.setSubject("Medication Reserved");
 		msg.setText("You have reserved a medication and have to pick it up until " + mr.getPickUpDate() + 
 					"\n\nReservation number: " + mr.getId() +"" + rand.nextInt(10000));
+		
+		javaMailSender.send(msg);
+		System.out.println("Email sent!");
+	}
+	
+	@Async
+	public void counselingScheduledNotification(Long id) {
+		Counseling c = counselingRepository.findOneById(id);
+		
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo("isapsw123@gmail.com");
+		msg.setFrom(environment.getProperty("spring.mail.username"));
+		msg.setSubject("Counseling Scheduled");
+		msg.setText("Your counseling with pharmacist has been scheduled for " + c.getDate() + " at " + c.getFrom());
 		
 		javaMailSender.send(msg);
 		System.out.println("Email sent!");

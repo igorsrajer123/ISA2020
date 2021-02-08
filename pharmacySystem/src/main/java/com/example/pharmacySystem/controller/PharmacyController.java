@@ -111,4 +111,17 @@ public class PharmacyController {
 		
 		return new ResponseEntity<PharmacyDto>(pharmacyDto, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/getPharmaciesWithAvailablePharmacists/{time}/{date}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<PharmacyDto>> getPharmaciesWithAvailablePharmacists(@PathVariable("time") String time, @PathVariable("date") String date){
+		List<Pharmacy> pharmacies = pharmacyService.getPharmaciesWithAvailablePharmacists(time, date);
+		
+		if(pharmacies == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		List<PharmacyDto> myPharmacies = new ArrayList<PharmacyDto>();
+		for(Pharmacy p : pharmacies)
+			myPharmacies.add(new PharmacyDto(p));
+		
+		return new ResponseEntity<List<PharmacyDto>>(myPharmacies, HttpStatus.OK);
+	}
 }

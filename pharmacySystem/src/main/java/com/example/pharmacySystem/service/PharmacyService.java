@@ -1,11 +1,16 @@
 package com.example.pharmacySystem.service;
-
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.pharmacySystem.dto.PharmacyDto;
+import com.example.pharmacySystem.model.Counseling;
 import com.example.pharmacySystem.model.Dermatologist;
 import com.example.pharmacySystem.model.Examination;
 import com.example.pharmacySystem.model.Pharmacist;
@@ -57,6 +62,7 @@ public class PharmacyService {
 		newPharmacy.setName(pharmacy.getName());
 		newPharmacy.setAddress(pharmacy.getAddress());
 		newPharmacy.setCity(pharmacy.getCity());
+		newPharmacy.setCounselingPrice(pharmacy.getCounselingPrice());
 		pharmacyRepository.save(newPharmacy);
 		return newPharmacy;
 	}
@@ -74,6 +80,7 @@ public class PharmacyService {
 		myPharmacy.setAddress(pharmacyDto.getAddress());
 		myPharmacy.setCity(pharmacyDto.getCity());
 		myPharmacy.setDescription(pharmacyDto.getDescription());
+		myPharmacy.setCounselingPrice(pharmacyDto.getCounselingPrice());
 		pharmacyRepository.save(myPharmacy);
 		System.out.println(myPharmacy.getName());
 		return myPharmacy;
@@ -98,5 +105,47 @@ public class PharmacyService {
 		
 		Pharmacy p = pharmacyRepository.findOneById(pharmacyId);
 		return p;
+	}
+	
+	public List<Pharmacy> getPharmaciesWithAvailablePharmacists(String preferencedTime, String date){
+		List<Pharmacy> allPharmacies = pharmacyRepository.findAll();
+		List<Pharmacy> retVal = new ArrayList<Pharmacy>();
+		
+		int time = Integer.parseInt(preferencedTime);
+		LocalDate d1 = LocalDate.parse(date);
+		Date ourDate = java.sql.Date.valueOf(d1);
+		
+		for(Pharmacy p : allPharmacies) {
+			if(p.getPharmacists().size() > 0) {
+				for(Pharmacist pharmacist : p.getPharmacists()) {
+					if(!pharmacist.isDeleted()) {
+						if(time >= pharmacist.getFrom() && time <= pharmacist.getTo()) {
+							System.out.println("Termin upada!!!");
+							List<Counseling> pharmacistCounselings = pharmacist.getCounselings();
+							int flag = 0;
+							for(Counseling counseling : pharmacistCounselings) {
+								LocalDate cDate = counseling.getDate();
+								Date counselingDate = java.sql.Date.valueOf(cDate);
+								
+								if(ourDate.equals(counselingDate)) {
+									if(time == counseling.getFrom() || (time < counseling.getTo() && time > counseling.getFrom())) {
+										if(counseling.getStatus().equals("ACTIVE")) {
+											flag++;
+											System.out.println(flag);
+											continue;
+										}
+									}
+								}
+							}
+							
+							if(flag == 0) 
+								retVal.add(p);	
+						}
+					}
+				}
+			}
+		}
+		retVal = retVal.stream().distinct().collect(Collectors.toList());
+		return retVal;
 	}
 }

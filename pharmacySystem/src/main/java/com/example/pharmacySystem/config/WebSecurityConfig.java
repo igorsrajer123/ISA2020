@@ -58,15 +58,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.authorizeRequests().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 		.antMatchers("/register").permitAll().antMatchers("/login").permitAll()
 		.antMatchers("/getUser").permitAll().antMatchers("/h2-console/**").permitAll()
-		.antMatchers("/createMedicationReservation").permitAll()
-		.antMatchers("/getPatientMedicationReservations/*").permitAll()
-		.antMatchers("/medicationReservationMade/*").permitAll()
-		.antMatchers("/getMedInPharmacyById/*").permitAll()
-		.antMatchers("/findPatientActiveMedicationReservations/*/*").permitAll()
-		.antMatchers("/getMedicationFromReservation/*").permitAll()
-		.antMatchers("/getMedicationInPharmacyFromReservation/*").permitAll()
-		.antMatchers("/cancelMedicationReservation/*").permitAll()
-		.antMatchers("/cancelMedicationReservation/*/*").permitAll()
+		
+		//.antMatchers("/cancelMedicationReservation/*").permitAll()
+		.antMatchers("/createCounseling").permitAll()
+		.antMatchers("/getPatientActiveCounselings/*").permitAll()
+		.antMatchers("/getPharmacistFromCounseling/*").permitAll()
+		.antMatchers("/cancelCounseling/*").permitAll()
+		.antMatchers("/getPharmacistCounselings/*").permitAll()
+		
 		.antMatchers("/", "/*.html", "/favicon.ico","/*.js", "/*.css").permitAll()
 		.anyRequest().authenticated().and()
 		.cors().and()
@@ -80,7 +79,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	public void configure(WebSecurity web) {
 	
-		web.ignoring().antMatchers(HttpMethod.POST, "/sendAccountConfirmation", "/examinationScheduled/*", "/changePassword");
+		web.ignoring().antMatchers(HttpMethod.POST, "/sendAccountConfirmation", "/examinationScheduled/*", "/changePassword", "/medicationReservationMade/*",
+									"/counselingScheduled/*");
 		
 		web.ignoring().antMatchers(HttpMethod.GET, "/activateAccount/*", "/getAllPharmacies", "getPharmacy/*", "/getPharmacyMedications/*",
 									"/getAllPharmacists", "/getPharmacyPharmacists/*", "/getUserByEmail/*", "/getAllUsers", "/getAllSystemAdmins",
@@ -93,6 +93,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 									"/getAllMedicationsInPharmacies", "/getAllExaminations", "/findAllMedsByPharmacyId/*", "/findOneByPharmacyIdAndMedicationId/*/*",
 									"/getAllDermatologistExaminations/*", "/getDermatologistPharmacyExaminations/*/*", "/getDermatologistPharmacyExaminationsByStatus/*/*/*",
 									"/getByStatusAndDermatologistId/*/*", "/getExaminationsByPharmacyIdAndStatus/*/*", "/getDermatologistByExaminationId/*",
-									"/getPatientActiveExaminations/*", "/getExaminationById/*");
+									"/getPatientActiveExaminations/*", "/getExaminationById/*", "/getMedicationInPharmacyFromReservation/*", "/getMedicationFromReservation/*",
+									"/getMedInPharmacyById/*", "/findPatientActiveMedicationReservations/*/*", "/getPatientMedicationReservations/*", "/getPharmaciesWithAvailablePharmacists/*/*",
+									"/getAvailablePharmacists/*/*/*");
 	}
 }

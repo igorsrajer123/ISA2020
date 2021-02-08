@@ -1,5 +1,7 @@
 package com.example.pharmacySystem.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -42,6 +45,10 @@ public class Pharmacist {
 	
 	@Column(name = "workingTo")
 	private int to;
+	
+	@JsonManagedReference(value = "counselingPharmacist-movement")
+	@OneToMany(mappedBy = "pharmacist", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Counseling> counselings;
 	
 	public Pharmacist() {
 		super();
@@ -126,5 +133,13 @@ public class Pharmacist {
 
 	public void setTo(int to) {
 		this.to = to;
+	}
+
+	public List<Counseling> getCounselings() {
+		return counselings;
+	}
+
+	public void setCounselings(List<Counseling> counselings) {
+		this.counselings = counselings;
 	}
 }

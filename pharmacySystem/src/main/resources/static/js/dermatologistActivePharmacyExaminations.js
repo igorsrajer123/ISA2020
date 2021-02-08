@@ -2,7 +2,7 @@ $(window).on("load", function(){
 	
 	getCurrentUser();
  	$("#datepicker").datepicker({minDate:0});
- 	$("#datepicker").datepicker({ beforeShowDay: $.datepicker.noWeekends })
+ 	$("#datepicker").datepicker({ beforeShowDay: $.datepicker.noWeekends });
 });
 
 function getCurrentUser(){
@@ -43,6 +43,7 @@ function getUrlVars() {
 function getDermatologistExaminationsAdmin(){
 	var dermatologistId = getUrlVars()["dermatologistId"];
 	var pharmacyId = getUrlVars()["pharmacyId"];
+	getDermatologistWorkingHours(dermatologistId, pharmacyId);
 	
 	$.ajax({
         method: 'GET',
@@ -84,7 +85,7 @@ function getDermatologistExaminationsAdmin(){
 function getDermatologistExaminationsPatient(patientId){
 	var dermatologistId = getUrlVars()["dermatologistId"];
 	var pharmacyId = getUrlVars()["pharmacyId"];
-	
+	getDermatologistWorkingHours(dermatologistId, pharmacyId);
 	$.ajax({
         method: 'GET',
         url: 'http://localhost:8080/getDermatologistPharmacyExaminationsByStatus/' + 'FREE/' + dermatologistId + "/" + pharmacyId,
@@ -241,4 +242,22 @@ function reserveExamination(examinationId, patientId){
 	       	}
 		});
 	});
+}
+
+function getDermatologistWorkingHours(dermatologistId, pharmacyId){
+	$.ajax({
+        method: 'GET',
+        url: 'http://localhost:8080/getOneDermatologistActiveWorkingHours/' + dermatologistId,
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
+        complete: function (data) {
+            var dermatologistTime = data.responseJSON;
+            for(var i = 0; i < dermatologistTime.length; i++){
+            	if(dermatologistTime[i].pharmacy.id == pharmacyId){
+            			$("#workingTimeDerma").append(dermatologistTime[i].from + "h - " + dermatologistTime[i].to + "h");	
+            	}
+            }
+        }
+    });
 }

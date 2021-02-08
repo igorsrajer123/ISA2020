@@ -48,6 +48,7 @@ function getPharmacy(adminId){
         		$("#address").val(data.responseJSON.address);
         		$("#rating").text(data.responseJSON.rating);
         		$("#description").val(data.responseJSON.description);
+        		$("#counselingPrice").val(data.responseJSON.counselingPrice);
         		saveData(data.responseJSON.id);
         	}else{
         		alert("Something went wrong!");
@@ -64,7 +65,8 @@ function saveData(pharmacyId){
             "name": $("#name").val(),
             "city": $("#city").val(),
             "address": $("#address").val(),
-            "description": $("#description").val()
+            "description": $("#description").val(),
+            "counselingPrice": $("#counselingPrice").val()
         }
 
         var transformedData = JSON.stringify(data);

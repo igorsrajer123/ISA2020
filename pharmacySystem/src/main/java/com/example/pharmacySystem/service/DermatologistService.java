@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.pharmacySystem.model.Authority;
 import com.example.pharmacySystem.model.Dermatologist;
 import com.example.pharmacySystem.model.Examination;
@@ -44,6 +46,7 @@ public class DermatologistService {
 		return dermatologistRepository.findOneById(id);
 	}
 	
+	@Transactional(readOnly = false)
 	public Dermatologist Create(Dermatologist dermatologist) {
 		User user = userRepository.findOneByEmail(dermatologist.getUser().getEmail());
 		
@@ -82,7 +85,7 @@ public class DermatologistService {
 		allDermatologists.removeAll(dermatologists);
 		return allDermatologists;
 	}
-	
+
 	public Dermatologist addDermatologistToPharmacy(Long dermatologistId, Long pharmacyId) {
 		Dermatologist dermatologist = dermatologistRepository.findOneById(dermatologistId);
 		Pharmacy pharmacy = pharmacyRepository.findOneById(pharmacyId);		
@@ -92,18 +95,31 @@ public class DermatologistService {
 		
 		return dermatologist;
 	}
-	
+
 	public Dermatologist removeDermatologistFromPharmacy(Long dermatologistId, Long pharmacyId) {
 		Dermatologist dermatologist = dermatologistRepository.findOneById(dermatologistId);
 		Pharmacy pharmacy = pharmacyRepository.findOneById(pharmacyId);
 		
 		List<Examination> dermatologistExaminations = examinationRepository.findAllByStatusAndDermatologistIdAndPharmacyId("ACTIVE", dermatologistId, pharmacyId);
 		if(dermatologistExaminations.size() > 0) {
-			System.out.println(dermatologistExaminations.size());
 			Dermatologist d = new Dermatologist();
 			d.setId(Long.valueOf(-1));
 			return d;
 		}else {
+			
+			//uklanjamo sve preglede koje dermatolog ima za tu konkretnu apoteku
+			List<Examination> dermatologistExaminations2 = dermatologist.getExaminations();
+			Examination examination3 = null;
+			for(Examination exam : dermatologistExaminations2) {
+				if(exam.getPharmacy().getId() == pharmacyId) {
+					//dermatologist.getExaminations().remove(exam);
+					examination3 = exam;
+					Examination examination = examinationRepository.findOneById(exam.getId());
+					examination.setStatus("DELETED");
+				}
+			}
+			System.out.println(examination3);
+			dermatologist.getExaminations().remove(examination3);
 			dermatologist.getPharmacies().remove(pharmacy);
 			pharmacy.getDermatologists().remove(dermatologist);
 			dermatologistRepository.save(dermatologist);

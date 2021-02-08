@@ -73,4 +73,28 @@ public class PharmacistController {
 		
 		return new ResponseEntity<PharmacistDto>(pharmacistDto, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/getAvailablePharmacists/{pharmacyId}/{time}/{date}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<PharmacistDto>> getAvailablePharmacists(@PathVariable("pharmacyId") Long pharmacyId, @PathVariable("time") String time, @PathVariable("date") String date){
+		List<Pharmacist> pharmacists = pharmacistService.getAvailablePharmacists(pharmacyId, time, date);
+		
+		if(pharmacists == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		List<PharmacistDto> pharmacistsDto = new ArrayList<PharmacistDto>();
+		for(Pharmacist p : pharmacists)
+			pharmacistsDto.add(new PharmacistDto(p));
+		
+		return new ResponseEntity<List<PharmacistDto>>(pharmacistsDto, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getPharmacistFromCounseling/{counselingId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PharmacistDto> getPharmacistFromCounseling(@PathVariable("counselingId") Long id){
+		Pharmacist p = pharmacistService.getPharmacistFromCounseling(id);
+		
+		if(p == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		PharmacistDto pDto = new PharmacistDto(p);
+		
+		return new ResponseEntity<PharmacistDto>(pDto, HttpStatus.OK);
+	}
 }

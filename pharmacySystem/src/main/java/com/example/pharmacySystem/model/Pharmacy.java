@@ -44,6 +44,9 @@ public class Pharmacy {
 	@Column(name = "numberOfVotes")
 	private int numberOfVotes;
 	
+	@Column(name = "counselingPrice")
+	private double counselingPrice;
+	
 	@JsonIgnoreProperties("pharmacy")
 	@OneToMany(mappedBy = "pharmacy", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Pharmacist> pharmacists;
@@ -75,7 +78,7 @@ public class Pharmacy {
 		super();
 	}
 	
-	public Pharmacy(Long id, String name, String address, String city, String description, double rating, int numberOfVotes) {
+	public Pharmacy(Long id, String name, String address, String city, String description, double rating, int numberOfVotes, double counselingPrice) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -84,6 +87,7 @@ public class Pharmacy {
 		this.numberOfVotes = numberOfVotes;
 		this.city = city;
 		this.description = description;
+		this.counselingPrice = counselingPrice;
 	}
 	
 	public Long getId() {
@@ -188,5 +192,13 @@ public class Pharmacy {
 
 	public void setExaminations(List<Examination> examinations) {
 		this.examinations = examinations;
+	}
+
+	public double getCounselingPrice() {
+		return counselingPrice;
+	}
+
+	public void setCounselingPrice(double counselingPrice) {
+		this.counselingPrice = counselingPrice;
 	}
 }

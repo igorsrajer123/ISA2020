@@ -105,6 +105,13 @@ public class MedicationService {
 		Medication myMedication = medicationRepository.findOneById(medicationId);
 
 		MedicationsPharmacies mp = medicationsPharmaciesRepository.findOneByPharmacyIdAndMedicationIdAndDeleted(pharmacyId, medicationId, false);
+		List<MedicationReservation> medicationReservations = mp.getMedicationReservations();
+		for(MedicationReservation m : medicationReservations) {
+			if(m.getStatus().equals("ACTIVE")) {
+				return null;
+			}
+		}
+		
 		mp.setDeleted(true);
 		myPharmacy.getMedicationsInPharmacy().remove(mp);
 		myMedication.getMedicationsInPharmacy().remove(mp);
