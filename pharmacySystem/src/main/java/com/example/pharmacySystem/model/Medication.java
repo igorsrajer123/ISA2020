@@ -50,6 +50,10 @@ public class Medication {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@OneToMany(mappedBy = "medication", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<MedicationsPharmacies> medicationsInPharmacy;
+	
+	@JsonManagedReference(value = "orderMedication-movement")
+	@OneToMany(mappedBy = "medication", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<MedicationsToOrder> orderLists;
 
 	public Medication() {
 		super();
@@ -125,5 +129,13 @@ public class Medication {
 
 	public void setMedicationsInPharmacy(List<MedicationsPharmacies> medicationsInPharmacy) {
 		this.medicationsInPharmacy = medicationsInPharmacy;
+	}
+
+	public List<MedicationsToOrder> getOrderLists() {
+		return orderLists;
+	}
+
+	public void setOrderLists(List<MedicationsToOrder> orderLists) {
+		this.orderLists = orderLists;
 	}
 }

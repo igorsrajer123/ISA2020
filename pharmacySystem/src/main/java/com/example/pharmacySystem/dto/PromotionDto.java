@@ -9,6 +9,7 @@ public class PromotionDto {
 	private String text;
 	private LocalDate untilDate;
 	private PharmacyDto pharmacy;
+	private boolean deleted;
 	
 	public PromotionDto() {
 		super();
@@ -19,6 +20,7 @@ public class PromotionDto {
 		this.text = p.getText();
 		this.untilDate = p.getUntilDate();
 		this.pharmacy = new PharmacyDto(p.getPharmacy());
+		this.setDeleted(p.isDeleted());
 	}
 	
 	public String getText() {
@@ -51,5 +53,13 @@ public class PromotionDto {
 	
 	public void setPharmacy(PharmacyDto pharmacy) {
 		this.pharmacy = pharmacy;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }

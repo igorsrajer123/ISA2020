@@ -68,4 +68,10 @@ public class EmailController {
 		emailService.counselingScheduledNotification(id);
 		return new ResponseEntity<String>("Email sent.", HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/notifyAllSubscribers/{promotionId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> notifyAllSubscribers(@PathVariable("promotionId") Long id){
+		emailService.notifyAllSubscribers(id);
+		return new ResponseEntity<String>("Email sent.", HttpStatus.OK);
+	}
 }

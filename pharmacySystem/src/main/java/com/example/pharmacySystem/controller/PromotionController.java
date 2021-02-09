@@ -24,7 +24,7 @@ public class PromotionController {
 	
 	@GetMapping(value = "/getPharmacyPromotions/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PromotionDto>> getPharmacyPromotions(@PathVariable("pharmacyId") Long pharmacyId) {
-		List<Promotion> pharmacyPromos = promotionService.findAllByPharmacyId(pharmacyId);
+		List<Promotion> pharmacyPromos = promotionService.findAllByPharmacyIdAndDeleted(pharmacyId, false);
 		
 		if(pharmacyPromos == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		

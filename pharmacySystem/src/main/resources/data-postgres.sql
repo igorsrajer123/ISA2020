@@ -141,3 +141,5 @@ INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacis
 INSERT INTO medication_reservation(pick_up_date, status, medication_from_pharmacy_id, patient_id) VALUES ('2021-02-07', 'ACTIVE', 1, 1);
 
 INSERT INTO patient_pharmacy_subscriptions(patient_id, pharmacy_id) VALUES (1, 1);
+
+INSERT INTO promotion(text, until_date, pharmacy_id, deleted) VALUES ('PROMOTION FOR FERVEX: -80% DISCOUNT', '2021-02-27', 1, false);	

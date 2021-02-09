@@ -1,5 +1,6 @@
 package com.example.pharmacySystem.service;
 
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,14 @@ import com.example.pharmacySystem.model.Counseling;
 import com.example.pharmacySystem.model.Examination;
 import com.example.pharmacySystem.model.MedicationReservation;
 import com.example.pharmacySystem.model.Patient;
+import com.example.pharmacySystem.model.Pharmacy;
+import com.example.pharmacySystem.model.Promotion;
 import com.example.pharmacySystem.model.User;
 import com.example.pharmacySystem.repository.CounselingRepository;
 import com.example.pharmacySystem.repository.ExaminationRepository;
 import com.example.pharmacySystem.repository.MedicationReservationRepository;
+import com.example.pharmacySystem.repository.PharmacyRepository;
+import com.example.pharmacySystem.repository.PromotionRepository;
 
 @Service
 public class EmailService {
@@ -36,6 +41,12 @@ public class EmailService {
 	
 	@Autowired
 	private CounselingRepository counselingRepository;
+	
+	@Autowired
+	private PharmacyRepository pharmacyRepository;
+	
+	@Autowired
+	private PromotionRepository promotionRepository;
 	
 	@Autowired
 	private UserService userService;
@@ -107,5 +118,25 @@ public class EmailService {
 		
 		javaMailSender.send(msg);
 		System.out.println("Email sent!");
+	}
+	
+	@Async
+	public void notifyAllSubscribers(Long promotionId) {
+		Promotion promotion = promotionRepository.findOneById(promotionId);	
+		Pharmacy pharmacy = pharmacyRepository.findOneById(promotion.getPharmacy().getId());
+		List<Patient> allPharmacySubscribers = pharmacy.getSubscriptions();
+		
+		SimpleMailMessage msg = new SimpleMailMessage();
+		
+		for(Patient p : allPharmacySubscribers) {
+			msg.setTo("isapasw123@gmail.com"); //p.getEmail()
+			msg.setFrom(environment.getProperty("spring.mail.username"));
+			msg.setSubject("New Promotion");
+			msg.setText("Pharmacy " + pharmacy.getName() + "(" + pharmacy.getCity() + ")" + " you are subscribed to has a new discount:\n\n" +
+						promotion.getText() + " until " + promotion.getUntilDate() + "!");
+			
+			javaMailSender.send(msg);
+			System.out.println("Email sent to " + p.getUser().getEmail() + ".");
+		}
 	}
 }

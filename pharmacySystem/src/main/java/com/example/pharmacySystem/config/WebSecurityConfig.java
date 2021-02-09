@@ -70,6 +70,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/unsubscribeFromPharmacy/*/*").permitAll()
 		.antMatchers("/getPharmacyPromotions/*").permitAll()
 		.antMatchers("/createPromotion").permitAll()
+		.antMatchers("/createOrder").permitAll()
+		.antMatchers("/getPharmacyAdminOrders/*").permitAll()
+		.antMatchers("/createOrderItem").permitAll()
+		.antMatchers("/getOrderItems/*").permitAll()
 		
 		.antMatchers("/", "/*.html", "/favicon.ico","/*.js", "/*.css").permitAll()
 		.anyRequest().authenticated().and()
@@ -85,7 +89,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	public void configure(WebSecurity web) {
 	
 		web.ignoring().antMatchers(HttpMethod.POST, "/sendAccountConfirmation", "/examinationScheduled/*", "/changePassword", "/medicationReservationMade/*",
-									"/counselingScheduled/*");
+									"/counselingScheduled/*", "/notifyAllSubscribers/*");
 		
 		web.ignoring().antMatchers(HttpMethod.GET, "/activateAccount/*", "/getAllPharmacies", "getPharmacy/*", "/getPharmacyMedications/*",
 									"/getAllPharmacists", "/getPharmacyPharmacists/*", "/getUserByEmail/*", "/getAllUsers", "/getAllSystemAdmins",

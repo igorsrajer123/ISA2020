@@ -1,7 +1,5 @@
 package com.example.pharmacySystem.model;
 
-import java.time.LocalDate;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,30 +8,30 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class Promotion {
+public class MedicationsToOrder {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "text", nullable = false)
-	private String text;
+	@Column(name = "amount")
+	private int amount;
 	
-	@Column(name = "untilDate")
-	private LocalDate untilDate;
-	
-	@JsonBackReference(value = "promotion-movement")
+	@JsonBackReference(value = "orderMedication-movement")
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Pharmacy pharmacy;
+	private Medication medication;
+	
+	@JsonBackReference(value = "orderForm-movement")
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private OrderForm orderForm;
 	
 	@Column(name = "deleted")
 	private boolean deleted;
 
-	public Promotion() {
+	public MedicationsToOrder() {
 		super();
 	}
 	
@@ -45,28 +43,28 @@ public class Promotion {
 		this.id = id;
 	}
 
-	public String getText() {
-		return text;
+	public int getAmount() {
+		return amount;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 
-	public LocalDate getUntilDate() {
-		return untilDate;
+	public Medication getMedication() {
+		return medication;
 	}
 
-	public void setUntilDate(LocalDate untilDate) {
-		this.untilDate = untilDate;
+	public void setMedication(Medication medication) {
+		this.medication = medication;
 	}
 
-	public Pharmacy getPharmacy() {
-		return pharmacy;
+	public OrderForm getOrderForm() {
+		return orderForm;
 	}
 
-	public void setPharmacy(Pharmacy pharmacy) {
-		this.pharmacy = pharmacy;
+	public void setOrderForm(OrderForm orderForm) {
+		this.orderForm = orderForm;
 	}
 
 	public boolean isDeleted() {

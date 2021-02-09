@@ -84,8 +84,23 @@ function createPromotion(pharmacyId){
         },
         complete: function (data) {
             if (data.status == 201){
-                alert("Success!");
-                window.location.href = "index.html";
+		    	$.ajax({
+			        url: 'http://localhost:8080/notifyAllSubscribers/' + data.responseJSON.id,
+			        type: 'POST',
+			        contentType: 'application/json',
+			        dataType: 'json',
+			        headers: {
+			           Authorization: 'Bearer ' + $.cookie('token')
+			        },
+			        complete: function (data) {
+			            if (data.status == 200){
+			                alert("Promotion created!");
+			                window.location.href = "index.html";
+			            }
+			            else 
+			                alert("Error!");
+			        }
+		    	});
             }
             else 
                 alert("Error!");

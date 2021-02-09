@@ -27,8 +27,8 @@ public class PromotionService {
 		return promotionRepository.findOneById(id);
 	}
 	
-	public List<Promotion> findAllByPharmacyId(Long id){
-		return promotionRepository.findAllByPharmacyId(id);
+	public List<Promotion> findAllByPharmacyIdAndDeleted(Long id, boolean deleted){
+		return promotionRepository.findAllByPharmacyIdAndDeleted(id, deleted);
 	}
 	
 	public Promotion createPromotion(PromotionDto promotion) {
@@ -36,6 +36,7 @@ public class PromotionService {
 		newPromo.setText(promotion.getText());
 		newPromo.setUntilDate(promotion.getUntilDate());
 		newPromo.setPharmacy(pharmacyRepository.findOneById(promotion.getPharmacy().getId()));
+		newPromo.setDeleted(false);
 		promotionRepository.save(newPromo);
 		return newPromo;
 	}

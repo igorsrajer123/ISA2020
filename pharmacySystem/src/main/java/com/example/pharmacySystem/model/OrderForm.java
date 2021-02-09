@@ -1,6 +1,7 @@
 package com.example.pharmacySystem.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,30 +11,33 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Promotion {
+public class OrderForm {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "text", nullable = false)
-	private String text;
-	
 	@Column(name = "untilDate")
 	private LocalDate untilDate;
 	
-	@JsonBackReference(value = "promotion-movement")
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Pharmacy pharmacy;
+	@JsonManagedReference(value = "orderMedication-movement")
+	@OneToMany(mappedBy = "orderForm", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<MedicationsToOrder> medicationsToOrder;
 	
 	@Column(name = "deleted")
 	private boolean deleted;
+	
+	@JsonBackReference(value = "orderAdmin-movement")
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private PharmacyAdministrator pharmacyAdministrator;
 
-	public Promotion() {
+	public OrderForm() {
 		super();
 	}
 	
@@ -45,14 +49,6 @@ public class Promotion {
 		this.id = id;
 	}
 
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
 	public LocalDate getUntilDate() {
 		return untilDate;
 	}
@@ -61,12 +57,12 @@ public class Promotion {
 		this.untilDate = untilDate;
 	}
 
-	public Pharmacy getPharmacy() {
-		return pharmacy;
+	public List<MedicationsToOrder> getMedicationsToOrder() {
+		return medicationsToOrder;
 	}
 
-	public void setPharmacy(Pharmacy pharmacy) {
-		this.pharmacy = pharmacy;
+	public void setMedicationsToOrder(List<MedicationsToOrder> medicationsToOrder) {
+		this.medicationsToOrder = medicationsToOrder;
 	}
 
 	public boolean isDeleted() {
@@ -75,5 +71,13 @@ public class Promotion {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public PharmacyAdministrator getPharmacyAdministrator() {
+		return pharmacyAdministrator;
+	}
+
+	public void setPharmacyAdministrator(PharmacyAdministrator pharmacyAdministrator) {
+		this.pharmacyAdministrator = pharmacyAdministrator;
 	}
 }

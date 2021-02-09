@@ -14,5 +14,5 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long>{
 	
 	Promotion findOneById(Long id);
 	
-	List<Promotion> findAllByPharmacyId(Long id);
+	List<Promotion> findAllByPharmacyIdAndDeleted(Long id, boolean deleted);
 }

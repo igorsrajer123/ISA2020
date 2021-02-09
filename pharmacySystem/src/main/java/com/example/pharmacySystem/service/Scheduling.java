@@ -13,10 +13,12 @@ import com.example.pharmacySystem.model.Counseling;
 import com.example.pharmacySystem.model.Examination;
 import com.example.pharmacySystem.model.MedicationReservation;
 import com.example.pharmacySystem.model.Patient;
+import com.example.pharmacySystem.model.Promotion;
 import com.example.pharmacySystem.repository.CounselingRepository;
 import com.example.pharmacySystem.repository.ExaminationRepository;
 import com.example.pharmacySystem.repository.MedicationReservationRepository;
 import com.example.pharmacySystem.repository.PatientRepository;
+import com.example.pharmacySystem.repository.PromotionRepository;
 
 @Component
 public class Scheduling {
@@ -32,6 +34,9 @@ public class Scheduling {
 	
 	@Autowired
 	private PatientRepository patientRepository;
+	
+	@Autowired
+	private PromotionRepository promotionRepository;
 	
 	@Scheduled(initialDelay = 5000L, fixedDelay = 10000L)
 	void patientCounselingsDone() {
@@ -89,6 +94,18 @@ public class Scheduling {
 			for(Patient p : allPatients) {			
 				p.setPenalties(0);
 				patientRepository.save(p);
+			}
+	}
+	
+	@Scheduled(initialDelay = 5000L, fixedDelay = 5000L)
+	void deleteExpiredPromotions() {
+		List<Promotion> allPromotions = promotionRepository.findAll();
+		
+		for(Promotion p : allPromotions)
+			if(java.sql.Date.valueOf(p.getUntilDate()).before(java.sql.Date.valueOf(LocalDate.now()))) {
+				System.out.println("Promotion deleted!");
+				p.setDeleted(true);
+				promotionRepository.save(p);
 			}
 	}
 
