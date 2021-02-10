@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.example.pharmacySystem.model.Counseling;
 import com.example.pharmacySystem.model.Examination;
 import com.example.pharmacySystem.model.MedicationReservation;
+import com.example.pharmacySystem.model.Offer;
 import com.example.pharmacySystem.model.Patient;
 import com.example.pharmacySystem.model.Pharmacy;
 import com.example.pharmacySystem.model.Promotion;
@@ -21,6 +22,7 @@ import com.example.pharmacySystem.model.User;
 import com.example.pharmacySystem.repository.CounselingRepository;
 import com.example.pharmacySystem.repository.ExaminationRepository;
 import com.example.pharmacySystem.repository.MedicationReservationRepository;
+import com.example.pharmacySystem.repository.OfferRepository;
 import com.example.pharmacySystem.repository.PharmacyRepository;
 import com.example.pharmacySystem.repository.PromotionRepository;
 
@@ -47,6 +49,9 @@ public class EmailService {
 	
 	@Autowired
 	private PromotionRepository promotionRepository;
+	
+	@Autowired
+	private OfferRepository offerRepository;
 	
 	@Autowired
 	private UserService userService;
@@ -138,5 +143,19 @@ public class EmailService {
 			javaMailSender.send(msg);
 			System.out.println("Email sent to " + p.getUser().getEmail() + ".");
 		}
+	}
+	
+	@Async
+	public void notifySupplier(Long offerId) {
+		Offer offer = offerRepository.findOneById(offerId);
+		
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo("isapsw123@gmail.com"); //suppliers mail here 
+		msg.setFrom(environment.getProperty("spring.mail.username"));
+		msg.setSubject("Offer Accepted");
+		msg.setText("Your offer for pharmacy order has been accepted!\n\n Date of delivery is:" + offer.getDateOfDelivery());
+		
+		javaMailSender.send(msg);
+		System.out.println("Email sent!");
 	}
 }

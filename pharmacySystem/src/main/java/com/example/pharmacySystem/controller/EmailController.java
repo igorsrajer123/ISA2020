@@ -74,4 +74,10 @@ public class EmailController {
 		emailService.notifyAllSubscribers(id);
 		return new ResponseEntity<String>("Email sent.", HttpStatus.OK);
 	}
+	
+	@PostMapping(value = "/offerAccepted/{offerId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> offerAccepted(@PathVariable("offerId") Long id){
+		emailService.notifySupplier(id);
+		return new ResponseEntity<String>("Email sent.", HttpStatus.OK);
+	}
 }

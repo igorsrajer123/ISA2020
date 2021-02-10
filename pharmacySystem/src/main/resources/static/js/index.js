@@ -53,6 +53,7 @@ function userOptions(user){
 	    	$("#reserveMed").show();
 	    	$("#createPromotion").hide();
 	    	$("#createOrderList").hide();
+	    	$("#viewOrders").hide();
     	});
     
     	$(".sideBar").mouseout(function(){
@@ -84,6 +85,7 @@ function userOptions(user){
 	    	$("#myPharmacy").hide();
 	    	$("#createPromotion").hide();
 	    	$("#createOrderList").hide();
+	    	$("#viewOrders").hide();
     	});
     
     	$(".sideBar").mouseout(function(){
@@ -116,6 +118,7 @@ function userOptions(user){
 	    	$("#myPharmacy").show();
 	    	$("#createPromotion").show();
 	    	$("#createOrderList").show();
+	    	$("#viewOrders").show();
     	});
     
     	$(".sideBar").mouseout(function(){

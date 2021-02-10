@@ -26,7 +26,7 @@ public class OrderForm {
 	@Column(name = "untilDate")
 	private LocalDate untilDate;
 	
-	@JsonManagedReference(value = "orderMedication-movement")
+	@JsonManagedReference(value = "orderForm-movement")
 	@OneToMany(mappedBy = "orderForm", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<MedicationsToOrder> medicationsToOrder;
 	
@@ -36,6 +36,10 @@ public class OrderForm {
 	@JsonBackReference(value = "orderAdmin-movement")
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private PharmacyAdministrator pharmacyAdministrator;
+	
+	@JsonManagedReference(value = "offers-movement")
+	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Offer> offers;
 
 	public OrderForm() {
 		super();
@@ -79,5 +83,13 @@ public class OrderForm {
 
 	public void setPharmacyAdministrator(PharmacyAdministrator pharmacyAdministrator) {
 		this.pharmacyAdministrator = pharmacyAdministrator;
+	}
+
+	public List<Offer> getOffers() {
+		return offers;
+	}
+
+	public void setOffers(List<Offer> offers) {
+		this.offers = offers;
 	}
 }

@@ -1,0 +1,46 @@
+<html>
+<head>
+ <meta charset="utf-8" />
+    <title>Order Offers</title>
+    <link rel="stylesheet" href="css/offers.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/offers.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body> 
+	<nav>
+        
+    </nav>
+    
+    <div class="mainDiv">
+    	<p style="color:red;font-weight:bold;" id="notification">*There are still no active offers for this order list!</p>
+        <table  id="offers" class="tables">
+        <thead id="header">
+            <td>Supplier</td>
+            <td>Date of Delivery</td>
+            <td>Price(RSD)</td>
+            <td>Status</td>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+      <br/><br/>
+    <button id="submit">Save</button>
+    <button id="delete" style="color:red;">Delete Order</button>
+    <br/><br/>
+    <p style="color:white;font-weight:bold;">Expiration date: <input type="text" class="datepicker" id="datepicker"/>	</p>	
+    <br/><br/>
+    <table  id="table" class="tables">
+        <thead id="header">
+            <td>?</td>
+            <td>Medication</td>
+            <td>Amount</td>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    </div>
+</body>
+</html>

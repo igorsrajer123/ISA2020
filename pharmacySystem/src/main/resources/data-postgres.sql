@@ -34,6 +34,8 @@ INSERT INTO medication_type(name) VALUES ('Antitoxin');
 --pharmacist 2 password: pharma2
 --dermatologist 4 password: derma4
 --pharmacy admin2 password: phadmin2
+--supplier 2 password: supp2
+--supplier 3 password: supp3
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('isapsw1234@gmail.com', '$2a$10$M3.YOtEuBCSNbgzJ3hkQv.ZgOMGNSTataYMx1UU7OnqMrlC6Osgzm', 'Misa', 'Dimitrijevic', 'ROLE_PATIENT', true, true, false);
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('admin@gmail.com', '$2a$10$cQSdC5wh2L6oZ2QFGNyD.OhnZ7akIGf7FEx0lmQ4RK6RiHyqz7cOC', 'Nikola', 'Stankovic', 'ROLE_PHARMACY_SYSTEM_ADMIN', true, true, true);
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('phadmin@gmail.com', '$2a$10$n8yxFV7zy7PDResCzemMLOhcPcbwLuF7Npn5lHhxVg6pKkFOi8PE2', 'Sima', 'Savic', 'ROLE_PHARMACY_ADMIN', true, true, true);
@@ -45,12 +47,16 @@ INSERT INTO user_entity(email, password, first_name, last_name, type, activated,
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('pharma2@gmail.com', '$2a$10$RcH9987wE/Ki5A9Jcy4WxOjwO.f/Lg7qb0l3AC3a/.kYxSEDAauKO', 'Boro', 'Drljaca', 'ROLE_PHARMACIST', true, true, true);
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('derma4@gmail.com', '$2a$10$hnftkRIbDohiKU/DioxxTuuAT435oXq3Lj2sobLJ7bco/UsIqfMlK', 'Keba', 'Kraba', 'ROLE_DERMATOLOGIST', true, true, true);
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('phadmin2@gmail.com', '$2a$10$/tn3byVZBK1iDkiiH7Qj.uj6nWIlAib7SHI5cASgAbj5dob33aOgK', 'Bosko', 'Buha', 'ROLE_PHARMACY_ADMIN', true, true, true);
+INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('supp2@gmail.com', '$2a$10$04z7VrBpCTgxsbZQw8/2teNFBcbyYXziBt.NGwYCRKJOvEKf7LF7a', 'Mustafa', 'Golubic', 'ROLE_SUPPLIER', true, true, true);
+INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('supp3@gmail.com', '$2a$10$04z7VrBpCTgxsbZQw8/2teNFBcbyYXziBt.NGwYCRKJOvEKf7LF7a', 'Miroslav', 'Ilic', 'ROLE_SUPPLIER', true, true, true);
 
 INSERT INTO patient(address, phone_number, city, country, processed, user_id, penalties) VALUES ('adresica','1234567890', 'zrenjanin', 'serbia', true, 1, 0);
 
 INSERT INTO pharmacy_system_administrator(user_id) VALUES (2);
 
 INSERT INTO supplier(user_id) VALUES (5);
+INSERT INTO supplier(user_id) VALUES (12);
+INSERT INTO supplier(user_id) VALUES (13);
 
 INSERT INTO medication(name, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Rivotril', '#123', 100, 'Caughing Blood', 'diklofenak-kalium 50 mg', 17);
 INSERT INTO medication(name, code, daily_intake, side_effects, chemical_composition, medication_type_id) VALUES ('Acetaminophen', '#222', 50, 'Coryza', 'silicium-dioxide', 16);
@@ -105,19 +111,21 @@ INSERT INTO pharmacy_dermatologists(pharmacy_id, dermatologist_id) VALUES (2, 4)
 INSERT INTO pharmacy_dermatologists(pharmacy_id, dermatologist_id) VALUES (1, 4);
 
 INSERT INTO pharmacy_administrator(pharmacy_id, user_id) VALUES (1, 3);
-INSERT INTO pharmacy_administrator(pharmacy_id, user_id) VALUES (2, 11);
+INSERT INTO pharmacy_administrator(pharmacy_id, user_id) VALUES (1, 11);
 
 INSERT INTO user_authority(user_id, authority_id) VALUES (1, 1);
 INSERT INTO user_authority(user_id, authority_id) VALUES (2, 6);
 INSERT INTO user_authority(user_id, authority_id) VALUES (3, 5);
+INSERT INTO user_authority(user_id, authority_id) VALUES (4, 4);
 INSERT INTO user_authority(user_id, authority_id) VALUES (5, 3);
-INSERT INTO user_authority(user_id, authority_id) VALUES (5, 4);
 INSERT INTO user_authority(user_id, authority_id) VALUES (6, 3);
 INSERT INTO user_authority(user_id, authority_id) VALUES (7, 3);
 INSERT INTO user_authority(user_id, authority_id) VALUES (8, 2);
 INSERT INTO user_authority(user_id, authority_id) VALUES (9, 2);
 INSERT INTO user_authority(user_id, authority_id) VALUES (10, 3);
 INSERT INTO user_authority(user_id, authority_id) VALUES (11, 5);
+INSERT INTO user_authority(user_id, authority_id) VALUES (12, 4);
+INSERT INTO user_authority(user_id, authority_id) VALUES (13, 4);
 
 INSERT INTO dermatologist_pharmacy_hours(working_from, deleted, working_to, dermatologist_id, pharmacy_id) VALUES (12, false, 16, 4, 2);
 INSERT INTO dermatologist_pharmacy_hours(working_from, deleted, working_to, dermatologist_id, pharmacy_id) VALUES (8, false, 13, 1, 1);
@@ -143,3 +151,14 @@ INSERT INTO medication_reservation(pick_up_date, status, medication_from_pharmac
 INSERT INTO patient_pharmacy_subscriptions(patient_id, pharmacy_id) VALUES (1, 1);
 
 INSERT INTO promotion(text, until_date, pharmacy_id, deleted) VALUES ('PROMOTION FOR FERVEX: -80% DISCOUNT', '2021-02-27', 1, false);	
+
+INSERT INTO order_form(deleted, until_date, pharmacy_administrator_id) VALUES (false, '2021-02-09', 1);
+INSERT INTO order_form(deleted, until_date, pharmacy_administrator_id) VALUES (false, '2021-02-5', 1);
+
+INSERT INTO medications_to_order(amount, deleted, medication_id, order_form_id) VALUES (111, false, 1, 1);
+INSERT INTO medications_to_order(amount, deleted, medication_id, order_form_id) VALUES (23, false, 2, 2);
+INSERT INTO medications_to_order(amount, deleted, medication_id, order_form_id) VALUES (32, false, 3, 2);
+
+INSERT INTO offer(date_of_delivery, price, status, order_id, supplier_id) VALUES ('2021-03-03', 1555, 'ACTIVE', 1, 1);
+INSERT INTO offer(date_of_delivery, price, status, order_id, supplier_id) VALUES ('2021-03-02', 1700, 'ACTIVE', 1, 2);
+INSERT INTO offer(date_of_delivery, price, status, order_id, supplier_id) VALUES ('2021-03-07', 1800, 'ACTIVE', 1, 3);

@@ -14,5 +14,5 @@ public interface OrderFormRepository extends JpaRepository<OrderForm, Long>{
 	
 	OrderForm findOneById(Long id);
 	
-	List<OrderForm> findAllByPharmacyAdministratorId(Long id);
+	List<OrderForm> findAllByPharmacyAdministratorIdAndDeleted(Long id, boolean deleted);
 }

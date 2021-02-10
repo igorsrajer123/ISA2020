@@ -1,10 +1,8 @@
 package com.example.pharmacySystem.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.pharmacySystem.dto.MedicationsToOrderDto;
 import com.example.pharmacySystem.model.Medication;
 import com.example.pharmacySystem.model.MedicationsPharmacies;
@@ -48,8 +46,8 @@ public class MedicationsToOrderService {
 		return medsToOrderRepository.findOneById(id);
 	}
 	
-	public List<MedicationsToOrder> findAllByOrderFormId(Long id){
-		return medsToOrderRepository.findAllByOrderFormId(id);
+	public List<MedicationsToOrder> findAllByOrderFormIdAndDeleted(Long id, boolean deleted){
+		return medsToOrderRepository.findAllByOrderFormIdAndDeleted(id, false);
 	}
 	
 	public MedicationsToOrder createOrderItem(MedicationsToOrderDto orderItem) {
@@ -66,7 +64,6 @@ public class MedicationsToOrderService {
 			}
 		}
 		
-		System.out.println(foundIt);
 		if(!foundIt) {
 			MedicationsPharmacies newMedPharmacy = new MedicationsPharmacies();
 			newMedPharmacy.setAmount(0);
@@ -77,8 +74,6 @@ public class MedicationsToOrderService {
 			ourPharmacy.getMedicationsInPharmacy().add(newMedPharmacy);
 			ourMed.getMedicationsInPharmacy().add(newMedPharmacy);
 			medsInPharmacies.save(newMedPharmacy);
-		//	pharmacyRepository.save(ourPharmacy);
-		//	medicationRepository.save(ourMed);
 		}
 		
 		MedicationsToOrder newOrderItem = new MedicationsToOrder();
@@ -89,5 +84,4 @@ public class MedicationsToOrderService {
 		medsToOrderRepository.save(newOrderItem);
 		return newOrderItem;
 	}
-	
 }

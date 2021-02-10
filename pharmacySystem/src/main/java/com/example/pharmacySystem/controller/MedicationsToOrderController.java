@@ -35,7 +35,7 @@ public class MedicationsToOrderController {
 	
 	@GetMapping(value = "/getOrderItems/{formId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<MedicationsToOrderDto>> getOrderItems(@PathVariable("formId") Long id){
-		List<MedicationsToOrder> items = medsToOrderService.findAllByOrderFormId(id);
+		List<MedicationsToOrder> items = medsToOrderService.findAllByOrderFormIdAndDeleted(id, false);
 		
 		if(items == null) return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		

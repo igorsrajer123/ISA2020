@@ -86,7 +86,8 @@ nav{
 #activeExaminations, #activeCounselings,
 #penalties, #myPharmacies, #complaint,
 #loyalty, #complaints, #myPharmacy, #reserveMed,
-#createPromotion, #createOrderList{
+#createPromotion, #createOrderList,
+#viewOrders{
 	display: none;
 }
 

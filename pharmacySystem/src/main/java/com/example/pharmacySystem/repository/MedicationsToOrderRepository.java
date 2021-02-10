@@ -13,5 +13,5 @@ public interface MedicationsToOrderRepository extends JpaRepository<MedicationsT
 	
 	MedicationsToOrder findOneById(Long id);
 	
-	List<MedicationsToOrder> findAllByOrderFormId(Long id);
+	List<MedicationsToOrder> findAllByOrderFormIdAndDeleted(Long id, boolean deleted);
 }
