@@ -87,7 +87,7 @@ nav{
 #penalties, #myPharmacies, #complaint,
 #loyalty, #complaints, #myPharmacy, #reserveMed,
 #createPromotion, #createOrderList,
-#viewOrders{
+#viewOrders, #holidays{
 	display: none;
 }
 

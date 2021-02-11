@@ -22,8 +22,8 @@
         </ul>
     </nav>
     
-    <div id="modal" class="modal">
-  		<p id="warning" style="color:red;">Please change your password in order to continue!</p>
+    <div id="modal" class="modal" data-backdrop="static" data-keyboard="false">
+  		<p id="warning" style="color:red;" data-backdrop="static" data-keyboard="false">Please change your password in order to continue!</p>
 	</div>
 	
     <nav class="sideBar">
@@ -49,6 +49,11 @@
     		
     		<li class="nav-item" id="viewOrders">
     			<a href="viewOrders.html" class="nav-link">View Active Orders</a>
+    			<hr class="lines"/>
+    		</li>
+    		
+    		<li class="nav-item" id="holidays">
+    			<a href="holidaysRequests.html" class="nav-link">Absence Requests</a>
     			<hr class="lines"/>
     		</li>
     		
@@ -123,7 +128,7 @@
     		</li>
     		
     		<li class="nav-item" id="complaints">
-    			<a href="#" class="nav-link">View Patient Complaints</a>
+    			<a href="#" class="nav-link">Patient Complaints</a>
     			<hr class="lines"/>
     		</li>
     		

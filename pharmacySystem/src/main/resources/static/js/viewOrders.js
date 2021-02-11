@@ -1,5 +1,10 @@
 $(window).on("load", function(){
 	getCurrentUser();
+	$("#back").click(function(event){
+		event.preventDefault();
+		
+		window.location.href = "index.html";
+	});
 });
 
 function getCurrentUser(){

@@ -97,4 +97,15 @@ public class PharmacistController {
 		
 		return new ResponseEntity<PharmacistDto>(pDto, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/getPharmacistFromAbsenceRequest/{absenceId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<PharmacistDto> getPharmacistFromAbsence(@PathVariable("absenceId") Long id){
+		Pharmacist p  = pharmacistService.getPharmacistFromAbsenceRequest(id);
+		
+		if(p == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		PharmacistDto pDto = new PharmacistDto(p);
+		
+		return new ResponseEntity<PharmacistDto>(pDto, HttpStatus.OK);
+	}
 }

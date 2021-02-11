@@ -7,6 +7,12 @@ $(window).on("load", function(){
 	var parts = untilDate.split('-');
 	var ourDate = parts[1] + "/" + parts[2] + "/" + parts[0];
 	$("#datepicker").val(ourDate);
+	
+	$("#back").click(function(event){
+		event.preventDefault();
+		
+		window.location.href = "viewOrders.html";
+	});
 });
 
 function getCurrentUser(){
@@ -133,7 +139,7 @@ function getOrderOffers(orderId, adminId){
 				
             	if(getUrlVars()["pharmacyAdmin"] == adminId && todayDate > myDate){
             		if(offers[i].status == "ACTIVE"){
-		            	offersTable.append("<tr><td>" + offers[i].supplier.id +
+		            	offersTable.append("<tr><td>" + offers[i].supplier.user.firstName + " " + offers[i].supplier.user.lastName + 
 		                "</td><td>" + offers[i].dateOfDelivery +
 		                "</td><td>" + offers[i].price + 
 		                "</td><td>" + offers[i].status + 

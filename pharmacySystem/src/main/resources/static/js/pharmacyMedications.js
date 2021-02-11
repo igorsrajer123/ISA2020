@@ -1,5 +1,6 @@
 $(window).on("load", function(){
 	getCurrentUser();
+	$("#datepicker").datepicker({minDate:0});
 });
 
 function getCurrentUser(){
@@ -136,8 +137,11 @@ function checkFields(pharmacyId){
 			
 		if($("#medAmount").val() == "")
 			$("#medAmount").css("background-color","red");
+		
+		if($("#datepicker").val() == "")
+			$("#datepicker").css("background-color","red");
 			
-		if($("#availableMedications").val() != "" && $("#medPrice").val() != "" && $("#medAmount").val() != ""){
+		if($("#availableMedications").val() != "" && $("#medPrice").val() != "" && $("#medAmount").val() != "" && $("#datepicker").val()){
 			var id = $("#availableMedications").find('option:selected').attr('id');
 			addMedicationToPharmacy(id, pharmacyId);
 		}	
@@ -145,6 +149,10 @@ function checkFields(pharmacyId){
 }
 
 function addMedicationToPharmacy(medId, pharmacyId){
+	var ourDate = $("#datepicker").val();
+	var parts = ourDate.split('/');
+	var sendingDate = parts[2] + "-" + parts[0] + "-" + parts[1];
+	
 	var data = {
 		"medication": {
 		 	"id": medId
@@ -153,7 +161,8 @@ function addMedicationToPharmacy(medId, pharmacyId){
 		"pharmacy": {
 			"id": pharmacyId
 		},
-		"amount": $("#medAmount").val()
+		"amount": $("#medAmount").val(),
+		"priceExpiringDate": sendingDate
 	}
 	
 	var transformedData = JSON.stringify(data);
@@ -198,6 +207,7 @@ function getPharmacyMedicationsAdmin(pharmacyId){
                 "</td><td>" + meds[i].sideEffects +
                 "</td><td>" + meds[i].price +
                 "</td><td>" + meds[i].amount +
+                "</td><td>" + meds[i].priceExpiringDate +
                 "</td></tr>");
                 
                 $("#table").append(medsTable);
@@ -224,7 +234,7 @@ function searchMedicationsAdmin(meds, pharmacyId){
 	                "</td><td>" + meds[i].dailyIntake +
 	                "</td><td>" + meds[i].sideEffects +
 	                "</td><td>" + meds[i].price +
-	                 "</td><td>" + meds[i].amount +
+	                "</td><td>" + meds[i].amount +
 	                "</td></tr>");
 	
 	                $("#table").append(medsTable);
@@ -262,6 +272,7 @@ function searchMedicationsPatient(meds, pharmacyId){
 	                "</td><td>" + meds[i].sideEffects +
 	                "</td><td>" + meds[i].price +
 	                "</td><td>" + meds[i].amount +
+	                "</td><td>" + meds[i].priceExpiringDate +
 	                "</td></tr>");
 	
 	                $("#table").append(medsTable);
@@ -308,6 +319,7 @@ function getMedicationPriceAndAmount(pharmacyId, medication){
 	        	if(meds[i].medication.id == medication.id){
 	        		$("#" + medication.id + " td:nth-child(5)").text(meds[i].price);
 	        		$("#" + medication.id + " td:nth-child(6)").text(meds[i].amount);
+	        		$("#" + medication.id + " td:nth-child(7)").text(meds[i].priceExpiringDate);
 	        	}
 	        }
        	}

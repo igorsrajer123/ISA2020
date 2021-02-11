@@ -93,6 +93,7 @@ public class MedicationService {
 		newMedInPharmacy.setMedication(myMedication);
 		newMedInPharmacy.setPharmacy(myPharmacy);
 		newMedInPharmacy.setDeleted(false);
+		newMedInPharmacy.setPriceExpiringDate(medPharmacies.getPriceExpiringDate());
 		allMedsInPharmacies.add(newMedInPharmacy);
 		myPharmacy.getMedicationsInPharmacy().add(newMedInPharmacy);
 		myMedication.getMedicationsInPharmacy().add(newMedInPharmacy);

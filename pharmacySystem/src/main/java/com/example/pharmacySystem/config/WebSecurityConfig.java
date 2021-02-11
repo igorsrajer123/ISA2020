@@ -82,6 +82,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/updateOrder").permitAll()
 		.antMatchers("/updateOrderItems/*").permitAll()
 		.antMatchers("/getOrderById/*").permitAll()
+		.antMatchers("/getAllSuppliers").permitAll()
+		.antMatchers("/getPharmacistRequests/*").permitAll()
+		.antMatchers("/getDermatologistRequests").permitAll()
+		.antMatchers("/getPharmacistFromAbsenceRequest/*").permitAll()
+		.antMatchers("/declineAbsence/*").permitAll()
+		.antMatchers("/acceptAbsence/*").permitAll()
+		.antMatchers("/getDermatologistFromAbsenceRequest/*").permitAll()
 		
 		.antMatchers("/", "/*.html", "/favicon.ico","/*.js", "/*.css").permitAll()
 		.anyRequest().authenticated().and()

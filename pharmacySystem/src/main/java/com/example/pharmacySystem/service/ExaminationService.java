@@ -134,7 +134,6 @@ public class ExaminationService {
 		if(date1.equals(date3) || date1.after(date3)) {
 			if(date1.before(date4)){
 				if(date2.before(date4) || date2.equals(date4)){
-					System.out.println("Doslo je do preklapanja sa radnim vremenom!");
 					
 					List<Examination> activeAndFreeExaminations = findAllActiveAndFreeExaminationsForDermatologistInPharmacy(d.getId(), pharmacy.getId());
 					for(Examination ex : activeAndFreeExaminations) {

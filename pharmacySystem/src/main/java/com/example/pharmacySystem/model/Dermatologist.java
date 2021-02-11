@@ -42,6 +42,10 @@ public class Dermatologist {
 	@OneToMany(mappedBy = "dermatologist", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Examination> examinations;
 	
+	@JsonManagedReference(value = "dermatologistAbsence-movement")
+	@OneToMany(mappedBy = "dermatologist", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Absence> absences;
+	
 	@Column(name = "rating")
 	private double rating;
 	
@@ -120,5 +124,13 @@ public class Dermatologist {
 
 	public void setExaminations(List<Examination> examinations) {
 		this.examinations = examinations;
+	}
+
+	public List<Absence> getAbsences() {
+		return absences;
+	}
+
+	public void setAbsences(List<Absence> absences) {
+		this.absences = absences;
 	}
 }

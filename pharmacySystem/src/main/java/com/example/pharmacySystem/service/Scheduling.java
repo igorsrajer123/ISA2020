@@ -12,11 +12,13 @@ import org.springframework.stereotype.Component;
 import com.example.pharmacySystem.model.Counseling;
 import com.example.pharmacySystem.model.Examination;
 import com.example.pharmacySystem.model.MedicationReservation;
+import com.example.pharmacySystem.model.MedicationsPharmacies;
 import com.example.pharmacySystem.model.Patient;
 import com.example.pharmacySystem.model.Promotion;
 import com.example.pharmacySystem.repository.CounselingRepository;
 import com.example.pharmacySystem.repository.ExaminationRepository;
 import com.example.pharmacySystem.repository.MedicationReservationRepository;
+import com.example.pharmacySystem.repository.MedicationsPharmaciesRepository;
 import com.example.pharmacySystem.repository.PatientRepository;
 import com.example.pharmacySystem.repository.PromotionRepository;
 
@@ -37,6 +39,9 @@ public class Scheduling {
 	
 	@Autowired
 	private PromotionRepository promotionRepository;
+	
+	@Autowired
+	private MedicationsPharmaciesRepository medsInPharmaciesRepository;
 	
 	@Scheduled(initialDelay = 5000L, fixedDelay = 10000L)
 	void patientCounselingsDone() {
@@ -107,6 +112,19 @@ public class Scheduling {
 				p.setDeleted(true);
 				promotionRepository.save(p);
 			}
+	}
+	
+	@Scheduled(initialDelay = 10000L, fixedDelay = 10000L)
+	void medicationsPriceExpires() {
+		List<MedicationsPharmacies> allMedsInPharmacies = medsInPharmaciesRepository.findAll();
+		
+		for(MedicationsPharmacies mp : allMedsInPharmacies) {
+			if(java.sql.Date.valueOf(mp.getPriceExpiringDate()).before(java.sql.Date.valueOf(LocalDate.now()))) {
+				System.out.println("Med deleted!");
+				mp.setDeleted(true);
+				medsInPharmaciesRepository.save(mp);
+			}
+		}
 	}
 
 }

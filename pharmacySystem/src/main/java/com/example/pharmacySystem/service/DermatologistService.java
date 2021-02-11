@@ -7,11 +7,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.pharmacySystem.model.Absence;
 import com.example.pharmacySystem.model.Authority;
 import com.example.pharmacySystem.model.Dermatologist;
 import com.example.pharmacySystem.model.Examination;
 import com.example.pharmacySystem.model.Pharmacy;
 import com.example.pharmacySystem.model.User;
+import com.example.pharmacySystem.repository.AbsenceRepository;
 import com.example.pharmacySystem.repository.DermatologistRepository;
 import com.example.pharmacySystem.repository.ExaminationRepository;
 import com.example.pharmacySystem.repository.PharmacyRepository;
@@ -37,6 +39,9 @@ public class DermatologistService {
 	
 	@Autowired
 	private ExaminationRepository examinationRepository;
+	
+	@Autowired
+	private AbsenceRepository absenceRepository;
 	
 	public List<Dermatologist> findAll(){
 		return dermatologistRepository.findAll();
@@ -135,5 +140,11 @@ public class DermatologistService {
 		Dermatologist dermatologist = dermatologistRepository.findOneById(dermatolistId);
 		
 		return dermatologist;
+	}
+	
+	public Dermatologist getDermatologistFromAbsence(Long absenceId) {
+		Absence a = absenceRepository.findOneById(absenceId);
+		Dermatologist d = dermatologistRepository.findOneById(a.getDermatologist().getId());
+		return d;
 	}
 }

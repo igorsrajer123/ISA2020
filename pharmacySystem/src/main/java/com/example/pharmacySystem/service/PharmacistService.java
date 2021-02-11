@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.pharmacySystem.model.Absence;
 import com.example.pharmacySystem.model.Authority;
 import com.example.pharmacySystem.model.Counseling;
 import com.example.pharmacySystem.model.Pharmacist;
 import com.example.pharmacySystem.model.Pharmacy;
 import com.example.pharmacySystem.model.User;
+import com.example.pharmacySystem.repository.AbsenceRepository;
 import com.example.pharmacySystem.repository.CounselingRepository;
 import com.example.pharmacySystem.repository.PharmacistRepository;
 import com.example.pharmacySystem.repository.PharmacyRepository;
@@ -37,6 +39,9 @@ public class PharmacistService {
 	
 	@Autowired
 	private CounselingRepository counselingRepository;
+	
+	@Autowired
+	private AbsenceRepository absenceRepository;
 	
 	@Autowired
 	private AuthorityService authorityService;
@@ -156,6 +161,12 @@ public class PharmacistService {
 	public Pharmacist getPharmacistFromCounseling(Long counselingId) {
 		Counseling c = counselingRepository.findOneById(counselingId);
 		Pharmacist p = pharmacistRepository.findOneById(c.getPharmacist().getId());
+		return p;
+	}
+	
+	public Pharmacist getPharmacistFromAbsenceRequest(Long absenceId) {
+		Absence a = absenceRepository.findOneById(absenceId);
+		Pharmacist p = pharmacistRepository.findOneById(a.getPharmacist().getId());
 		return p;
 	}
 }

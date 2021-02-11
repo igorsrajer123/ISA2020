@@ -1,5 +1,6 @@
 package com.example.pharmacySystem.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -47,6 +48,9 @@ public class MedicationsPharmacies {
 	
 	@Column(name = "deleted")
 	private boolean deleted;
+	
+	@Column(name = "priceExpiringDate")
+	private LocalDate priceExpiringDate;
 
 	public Long getId() {
 		return id;
@@ -102,5 +106,13 @@ public class MedicationsPharmacies {
 
 	public void setMedicationReservations(List<MedicationReservation> medicationReservations) {
 		this.medicationReservations = medicationReservations;
+	}
+
+	public LocalDate getPriceExpiringDate() {
+		return priceExpiringDate;
+	}
+
+	public void setPriceExpiringDate(LocalDate priceExpiringDate) {
+		this.priceExpiringDate = priceExpiringDate;
 	}
 }

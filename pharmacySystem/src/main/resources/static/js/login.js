@@ -26,7 +26,10 @@ function login(){
                 alert("Log In Successful!");
               	window.location.href = "../index.html";
                 $("#error").hide();
-                $.cookie('token', data.responseJSON.accessToken);
+                var date = new Date();
+				var m = 10;
+				date.setTime(date.getTime() + (m * 60 * 1000));
+                $.cookie('token', data.responseJSON.accessToken, { expires: date });
                 console.log(data.responseJSON.accessToken);
             }else {
                 $("#error").show();

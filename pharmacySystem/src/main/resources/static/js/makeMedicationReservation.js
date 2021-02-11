@@ -53,6 +53,7 @@ function searchMedications(meds){
 	            "</td><td>" + meds[i].medication.medicationType.name +
 	            "</td><td>" + meds[i].pharmacy.name +
 	            "</td><td>" + meds[i].price +
+	            "</td><td>" + meds[i].amount +
 	            "</td><td><button id='" + meds[i].id + meds[i].id + "'>Make Reservation!</button>" + 
 	            "</td></tr>");
 	                

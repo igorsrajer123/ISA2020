@@ -81,20 +81,20 @@ INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, desc
 INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description, counseling_price) VALUES ('Apoteka Sveti Petar', 'Mise Dimitrijevica 26', 'Novi Sad', 4.2, 101, 'Opis apoteke 4', 490);
 INSERT INTO pharmacy(pharmacy_name, address, city, rating, number_of_votes, description, counseling_price) VALUES ('Apoteka Crveni Krst', 'Vojvode Petra Bojovica 1B', 'Beograd', 3.9, 2, 'Opis apoteke 5', 1500);
 
-INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (200, 1000, 1, 1, false);
-INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (152, 700, 2, 1, false);
-INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (666, 700, 3, 1, false);
-INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (213, 670, 4, 1, false);
-INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (541, 255, 5, 1, false);
-INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (333, 555, 6, 1, false);
-INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (224, 120, 7, 1, false);
-INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (115, 800, 8, 1, false);
-INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (111, 800, 9, 1, false);
-INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (152, 220, 13, 1, false);
-INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (152, 999, 12, 1, false);
-INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (152, 870, 11, 1, false);
-INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (12, 1800, 10, 1, false);
-INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted) VALUES (2, 1300, 1, 4, false);
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted, price_expiring_date) VALUES (200, 1000, 1, 1, false, '2021-03-05');
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted, price_expiring_date) VALUES (152, 700, 2, 1, false, '2021-03-01');
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted, price_expiring_date) VALUES (666, 700, 3, 1, false, '2021-02-06');
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted, price_expiring_date) VALUES (213, 670, 4, 1, false, '2021-02-10');
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted, price_expiring_date) VALUES (541, 255, 5, 1, false, '2021-03-25');
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted, price_expiring_date) VALUES (333, 555, 6, 1, false, '2021-03-15');
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted, price_expiring_date) VALUES (224, 120, 7, 1, false, '2021-03-12');
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted, price_expiring_date) VALUES (115, 800, 8, 1, false, '2021-02-23');
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted, price_expiring_date) VALUES (111, 800, 9, 1, false, '2021-03-02');
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted, price_expiring_date) VALUES (152, 220, 13, 1, false, '2021-03-03');
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted, price_expiring_date) VALUES (152, 999, 12, 1, false, '2021-02-22');
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted, price_expiring_date) VALUES (152, 870, 11, 1, false, '2021-02-20');
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted, price_expiring_date) VALUES (12, 1800, 10, 1, false, '2021-03-05');
+INSERT INTO medications_pharmacies(amount, price, medication_id, pharmacy_id, deleted, price_expiring_date) VALUES (2, 1300, 1, 4, false, '2021-03-17');
 
 INSERT INTO dermatologist(number_of_votes, rating, user_id) VALUES (2, 5, 5);
 INSERT INTO dermatologist(number_of_votes, rating, user_id) VALUES (5, 3.2, 6);
@@ -162,3 +162,11 @@ INSERT INTO medications_to_order(amount, deleted, medication_id, order_form_id) 
 INSERT INTO offer(date_of_delivery, price, status, order_id, supplier_id) VALUES ('2021-03-03', 1555, 'ACTIVE', 1, 1);
 INSERT INTO offer(date_of_delivery, price, status, order_id, supplier_id) VALUES ('2021-03-02', 1700, 'ACTIVE', 1, 2);
 INSERT INTO offer(date_of_delivery, price, status, order_id, supplier_id) VALUES ('2021-03-07', 1800, 'ACTIVE', 1, 3);
+
+INSERT INTO absence(deleted, date_from, date_until, status, dermatologist_id, pharmacist_id, pharmacy_id) VALUES (false, '2021-03-05', '2021-04-05', 'PENDING', null, 1, 1);
+INSERT INTO absence(deleted, date_from, date_until, status, dermatologist_id, pharmacist_id, pharmacy_id) VALUES (false, '2021-03-26', '2021-04-12', 'PENDING', null, 2, 1);
+
+INSERT INTO absence(deleted, date_from, date_until, status, dermatologist_id, pharmacist_id, pharmacy_id) VALUES (false, '2021-06-06', '2021-06-21', 'PENDING', 1, null, 1);
+INSERT INTO absence(deleted, date_from, date_until, status, dermatologist_id, pharmacist_id, pharmacy_id) VALUES (false, '2021-06-25', '2021-07-01', 'PENDING', 2, null, 1);
+INSERT INTO absence(deleted, date_from, date_until, status, dermatologist_id, pharmacist_id, pharmacy_id) VALUES (false, '2021-05-11', '2021-06-05', 'PENDING', 3, null, 1);
+INSERT INTO absence(deleted, date_from, date_until, status, dermatologist_id, pharmacist_id, pharmacy_id) VALUES (false, '2021-05-26', '2021-06-09', 'PENDING', 4, null, 2);

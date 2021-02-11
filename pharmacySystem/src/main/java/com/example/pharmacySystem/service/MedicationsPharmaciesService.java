@@ -28,6 +28,10 @@ public class MedicationsPharmaciesService {
 		return medicationsPharmaciesRepository.findOneById(id);
 	}
 	
+	public List<MedicationsPharmacies> findAllByDeleted(boolean deleted){
+		return medicationsPharmaciesRepository.findAllByDeleted(deleted);
+	}
+	
 	public List<MedicationsPharmacies> findAllByPharmacyId(Long id){
 		return medicationsPharmaciesRepository.findAllByPharmacyId(id);
 	}

@@ -122,6 +122,8 @@ function scheduleCounseling(pharmacistId, patientId){
 					});
 	        	}else if(data.status == 404){
 	        		alert("You already have active counseling with this pharmacist!");
+	        	}else if(data.status == 409){
+	        		alert("Selected pharmacist is on vacation for the selected period of time!");
 	        	}
 	       	}
 		});

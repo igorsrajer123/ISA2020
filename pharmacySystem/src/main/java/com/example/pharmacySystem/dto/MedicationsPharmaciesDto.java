@@ -1,5 +1,7 @@
 package com.example.pharmacySystem.dto;
 
+import java.time.LocalDate;
+
 import com.example.pharmacySystem.model.MedicationsPharmacies;
 
 public class MedicationsPharmaciesDto {
@@ -10,6 +12,7 @@ public class MedicationsPharmaciesDto {
 	private PharmacyDto pharmacy;
 	private MedicationDto medication;
 	private boolean deleted;
+	private LocalDate priceExpiringDate;
 	
 	public MedicationsPharmaciesDto() {
 		super();
@@ -22,6 +25,7 @@ public class MedicationsPharmaciesDto {
 		this.pharmacy = new PharmacyDto(m.getPharmacy());
 		this.medication = new MedicationDto(m.getMedication());
 		this.deleted = m.isDeleted();
+		this.priceExpiringDate = m.getPriceExpiringDate();
 	}
 	
 	public Long getId() {
@@ -70,5 +74,13 @@ public class MedicationsPharmaciesDto {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+
+	public LocalDate getPriceExpiringDate() {
+		return priceExpiringDate;
+	}
+
+	public void setPriceExpiringDate(LocalDate priceExpiringDate) {
+		this.priceExpiringDate = priceExpiringDate;
 	}
 }

@@ -30,6 +30,8 @@ public class CounselingController {
 		
 		if(newCounseling == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		
+		if(newCounseling.getId() == -1) return new ResponseEntity<>(HttpStatus.CONFLICT);
+				
 		CounselingDto cDto = new CounselingDto(newCounseling);
 		
 		return new ResponseEntity<CounselingDto>(cDto, HttpStatus.OK);

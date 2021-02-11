@@ -106,11 +106,21 @@ public class DermatologistController {
 	public ResponseEntity<DermatologistDto> getDermatologistByExaminationId(@PathVariable("examinationId") Long id){
 		Dermatologist myDermatologist = dermatologistService.getDermatologistByExaminationId(id);
 	
-	if(myDermatologist == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		if(myDermatologist == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		DermatologistDto dermatologistDto = new DermatologistDto(myDermatologist);
+				
+		return new ResponseEntity<DermatologistDto>(dermatologistDto, HttpStatus.OK);
+	}
 	
-	DermatologistDto dermatologistDto = new DermatologistDto(myDermatologist);
-	
-	
-	return new ResponseEntity<DermatologistDto>(dermatologistDto, HttpStatus.OK);
+	@GetMapping(value = "/getDermatologistFromAbsenceRequest/{absenceId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<DermatologistDto> getDermatologistFromAbsence(@PathVariable("absenceId") Long id){
+		Dermatologist dermatologist = dermatologistService.getDermatologistFromAbsence(id);
+		
+		if(dermatologist == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			
+		DermatologistDto dermatologistDto = new DermatologistDto(dermatologist);
+		
+		return new ResponseEntity<DermatologistDto>(dermatologistDto, HttpStatus.OK);
 	}
 }

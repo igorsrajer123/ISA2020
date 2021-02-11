@@ -25,7 +25,7 @@ nav{
     transform: translate(-50%, -50%);
 }
 
-table{
+#table{
     overflow: auto;
     display: block;
     border-collapse: collapse;
@@ -33,22 +33,28 @@ table{
     height: 280px;
 }
 
-table::-webkit-scrollbar {
+#table::-webkit-scrollbar {
     display: none;
 }
 
-tr{
+#table tr{
     transition:  all .2s ease-in;
     cursor: pointer;
 }
 
-td, tr{
+#table td{
     padding: 12px;
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
 
-tbody{
+#table tr{
+	padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+#table tbody{
     background-color: #fff;
 }
 
@@ -59,7 +65,7 @@ tbody{
     color: #fff;
 }
 
-tr:hover{
+#table tr:hover{
     background-color: #f5f5f5;
     transform: scale(1.02);
     box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);

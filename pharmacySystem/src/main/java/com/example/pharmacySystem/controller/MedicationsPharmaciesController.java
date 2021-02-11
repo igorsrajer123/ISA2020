@@ -25,7 +25,7 @@ public class MedicationsPharmaciesController {
 	
 	@GetMapping(value = "/getAllMedicationsInPharmacies", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<MedicationsPharmaciesDto>> getAllMedicationsInPharmacies(){
-		List<MedicationsPharmacies> medsPharmacies = mpService.findAll();
+		List<MedicationsPharmacies> medsPharmacies = mpService.findAllByDeleted(false);
 		
 		List<MedicationsPharmaciesDto> asa = new ArrayList<MedicationsPharmaciesDto>();
 		

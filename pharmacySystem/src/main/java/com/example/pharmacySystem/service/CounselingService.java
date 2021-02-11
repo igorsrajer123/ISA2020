@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.pharmacySystem.dto.CounselingDto;
+import com.example.pharmacySystem.model.Absence;
 import com.example.pharmacySystem.model.Counseling;
 import com.example.pharmacySystem.model.Patient;
 import com.example.pharmacySystem.model.Pharmacist;
@@ -43,13 +44,65 @@ public class CounselingService {
 			}
 		}
 		
-		newCounseling.setDate(counselingDto.getDate());
-		newCounseling.setFrom(counselingDto.getFrom());
-		newCounseling.setTo(counselingDto.getTo());
-		newCounseling.setStatus("ACTIVE");
-		newCounseling.setPatient(patientRepository.findOneById(counselingDto.getPatient().getId()));
-		newCounseling.setPharmacist(pharmacistRepository.findOneById(counselingDto.getPharmacist().getId()));
-		counselingRepository.save(newCounseling);
+		Pharmacist pharmacist = pharmacistRepository.findOneById(counselingDto.getPharmacist().getId());
+		if(pharmacist.getAbsences() != null) {
+			for(Absence a : pharmacist.getAbsences()) {
+				if(a.getStatus().equals("ACCEPTED")) {
+					LocalDate absenceFromDate = a.getFrom();
+					Date absenceFrom = java.sql.Date.valueOf(absenceFromDate);
+					
+					Calendar calendar1 = Calendar.getInstance();
+					calendar1.setTime(absenceFrom);
+					calendar1.set(Calendar.HOUR_OF_DAY, 0);
+					calendar1.set(Calendar.MINUTE, 0);
+					calendar1.set(Calendar.SECOND, 0);
+					calendar1.set(Calendar.MILLISECOND, 0);
+					Date date1 = calendar1.getTime();
+					
+					LocalDate absenceUntilDate = a.getUntil();
+					Date absenceUntil = java.sql.Date.valueOf(absenceUntilDate);
+					
+					Calendar calendar2 = Calendar.getInstance();
+					calendar2.setTime(absenceUntil);
+					calendar2.set(Calendar.HOUR_OF_DAY, 0);
+					calendar2.set(Calendar.MINUTE, 0);
+					calendar2.set(Calendar.SECOND, 0);
+					calendar2.set(Calendar.MILLISECOND, 0);
+					Date date2 = calendar2.getTime();
+					
+					LocalDate counselingDate = counselingDto.getDate();
+					Date counselingD = java.sql.Date.valueOf(counselingDate);
+					
+					Calendar calendar3 = Calendar.getInstance();
+					calendar3.setTime(counselingD);
+					calendar3.set(Calendar.HOUR_OF_DAY, 0);
+					calendar3.set(Calendar.MINUTE, 0);
+					calendar3.set(Calendar.SECOND, 0);
+					calendar3.set(Calendar.MILLISECOND, 0);
+					Date date3 = calendar3.getTime();
+					System.out.println(date1);
+					System.out.println(date2);
+					System.out.println(date3   );
+					if(date3.equals(date1) || date3.equals(date2) || (date3.after(date1) && date3.before(date2))) {
+						System.out.println("na godisnjem!");
+						Counseling newC = new Counseling();
+						newC.setId(Long.valueOf(-1));
+						return newC;
+					}else {
+						System.out.println("Uspesno kreiran!");
+						newCounseling.setDate(counselingDto.getDate());
+						newCounseling.setFrom(counselingDto.getFrom());
+						newCounseling.setTo(counselingDto.getTo());
+						newCounseling.setStatus("ACTIVE");
+						newCounseling.setPatient(patientRepository.findOneById(counselingDto.getPatient().getId()));
+						newCounseling.setPharmacist(pharmacistRepository.findOneById(counselingDto.getPharmacist().getId()));
+						counselingRepository.save(newCounseling);
+						return newCounseling;
+					}
+				}
+			}
+		}
+		System.out.println("Nista od navedenog!");
 		return newCounseling;
 	}
 	

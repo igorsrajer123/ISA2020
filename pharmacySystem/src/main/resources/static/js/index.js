@@ -54,6 +54,7 @@ function userOptions(user){
 	    	$("#createPromotion").hide();
 	    	$("#createOrderList").hide();
 	    	$("#viewOrders").hide();
+	    	$("#holidays").hide();
     	});
     
     	$(".sideBar").mouseout(function(){
@@ -86,6 +87,7 @@ function userOptions(user){
 	    	$("#createPromotion").hide();
 	    	$("#createOrderList").hide();
 	    	$("#viewOrders").hide();
+	    	$("#holidays").show();
     	});
     
     	$(".sideBar").mouseout(function(){
@@ -119,6 +121,7 @@ function userOptions(user){
 	    	$("#createPromotion").show();
 	    	$("#createOrderList").show();
 	    	$("#viewOrders").show();
+	    	$("#holidays").show();
     	});
     
     	$(".sideBar").mouseout(function(){
@@ -214,8 +217,13 @@ function getCurrentUser(){
             welcomeMessage(data.responseJSON);
             userOptions(data.responseJSON);
             if(data.responseJSON != undefined && data.responseJSON.type != "ROLE_PATIENT"){
-            	if(data.responseJSON.firstLogin){
-            		$("#modal").modal('show');
+            	if(data.responseJSON.firstLogin){         	          
+            		$("#modal").modal({
+            			escapeClose: false,
+						clickClose: false,
+						showClose: false
+            		});
+            		
             		setTimeout(function(){
 					    window.location.href = "changePassword.html";
 					}, 1500);
