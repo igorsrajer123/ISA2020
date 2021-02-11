@@ -55,6 +55,8 @@ function userOptions(user){
 	    	$("#createOrderList").hide();
 	    	$("#viewOrders").hide();
 	    	$("#holidays").hide();
+	    	$("#searchDermatologists").show();
+	    	$("#searchPharmacists").show();
     	});
     
     	$(".sideBar").mouseout(function(){
@@ -88,6 +90,8 @@ function userOptions(user){
 	    	$("#createOrderList").hide();
 	    	$("#viewOrders").hide();
 	    	$("#holidays").show();
+	    	$("#searchDermatologists").hide();
+	    	$("#searchPharmacists").hide();
     	});
     
     	$(".sideBar").mouseout(function(){
@@ -122,6 +126,8 @@ function userOptions(user){
 	    	$("#createOrderList").show();
 	    	$("#viewOrders").show();
 	    	$("#holidays").show();
+	    	$("#searchDermatologists").show();
+	    	$("#searchPharmacists").show();
     	});
     
     	$(".sideBar").mouseout(function(){

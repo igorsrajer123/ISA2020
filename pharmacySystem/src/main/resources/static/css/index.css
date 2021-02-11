@@ -87,7 +87,8 @@ nav{
 #penalties, #myPharmacies, #complaint,
 #loyalty, #complaints, #myPharmacy, #reserveMed,
 #createPromotion, #createOrderList,
-#viewOrders, #holidays{
+#viewOrders, #holidays, #searchDermatologists,
+#searchPharmacists{
 	display: none;
 }
 

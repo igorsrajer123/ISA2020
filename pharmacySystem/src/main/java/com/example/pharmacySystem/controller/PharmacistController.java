@@ -25,7 +25,7 @@ public class PharmacistController {
 	private PharmacistService pharmacistService;
 	
 	@GetMapping(value = "/getAllPharmacists", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Pharmacist>> getAllPharmacists(){
+	public ResponseEntity<List<PharmacistDto>> getAllPharmacists(){
 		List<Pharmacist> pharmacists = pharmacistService.findAll();
 		
 		if(pharmacists == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -34,7 +34,7 @@ public class PharmacistController {
 		for(Pharmacist p : pharmacists)
 			pharmacistsDto.add(new PharmacistDto(p));
 		
-		return new ResponseEntity<List<Pharmacist>>(pharmacists, HttpStatus.OK);
+		return new ResponseEntity<List<PharmacistDto>>(pharmacistsDto, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/getPharmacyPharmacists/{pharmacyId}", produces = MediaType.APPLICATION_JSON_VALUE)
