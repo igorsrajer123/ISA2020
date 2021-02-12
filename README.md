@@ -15,3 +15,15 @@ $ git clone https://github.com/igorsrajer123/ISA2020
   <li>Apache Maven v4.0</li>
   <li>PostgreSQL</li>
 </ul>
+
+<h2>Important Notes</h2>
+<ul>
+  <li>Server port: 8080</li>
+  <li>Postgres port: 5433</li>
+  <li>Spring Email port: 587</li>
+  <li>Email used in project: isapsw123@gmail.com</li>
+  <li>Email password: isa123isa</li>
+</ul>
+
+<h2>Build</h2>
+
