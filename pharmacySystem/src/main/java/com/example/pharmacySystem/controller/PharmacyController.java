@@ -139,6 +139,7 @@ public class PharmacyController {
 	}
 	
 	@PostMapping(value = "/subscribeToPharmacy/{patientId}/{pharmacyId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<PharmacyDto> subscribeToPharmacy(@PathVariable("patientId") Long patientId, @PathVariable("pharmacyId") Long pharmacyId){
 		Pharmacy pharmacy = pharmacyService.subscribeToPharmacy(patientId, pharmacyId);
 		
@@ -150,6 +151,7 @@ public class PharmacyController {
 	}
 	
 	@PostMapping(value = "/unsubscribeFromPharmacy/{patientId}/{pharmacyId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<PharmacyDto> unsubscribeFromPharmacy(@PathVariable("patientId") Long patientId, @PathVariable("pharmacyId") Long pharmacyId){
 		Pharmacy pharmacy = pharmacyService.unsubscribeFromPharmacy(patientId, pharmacyId);
 		

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ public class CounselingController {
 	private CounselingService counselingService;
 	
 	@PostMapping(value = "/createCounseling", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<CounselingDto> createCounseling(@RequestBody CounselingDto counselingDto){
 		Counseling newCounseling = counselingService.create(counselingDto);
 		
@@ -36,7 +38,6 @@ public class CounselingController {
 		
 		return new ResponseEntity<CounselingDto>(cDto, HttpStatus.OK);
 	}
-	//@PreAuthorize("hasRole('ROLE_PATIENT')")
 	
 	@GetMapping(value = "/getPatientActiveCounselings/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CounselingDto>> getPatientActiveCounselings(@PathVariable("patientId") Long id){
@@ -51,7 +52,21 @@ public class CounselingController {
 		return new ResponseEntity<List<CounselingDto>>(counselingsDto, HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/getPatientDoneCounselings/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<CounselingDto>> getPatientDoneCounselings(@PathVariable("patientId") Long id){
+		List<Counseling> counselings = counselingService.findAllByPatientIdAndStatus(id, "DONE");
+		
+		if(counselings == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		List<CounselingDto> counselingsDto = new ArrayList<CounselingDto>();
+		for(Counseling c : counselings) 
+			counselingsDto.add(new CounselingDto(c));
+		
+		return new ResponseEntity<List<CounselingDto>>(counselingsDto, HttpStatus.OK);
+	}
+	
 	@PutMapping(value = "/cancelCounseling/{counselingId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PATIENT')")
 	public ResponseEntity<CounselingDto> cancelCounseling(@PathVariable("counselingId") Long id){
 		Counseling counseling = counselingService.cancelCounseling(id);
 		

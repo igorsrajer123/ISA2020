@@ -123,4 +123,11 @@ public class ExaminationController {
 		
 		return new ResponseEntity<Examination>(ex, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/getPatientDoneExaminations/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Examination>> getPatientDoneExaminations(@PathVariable("patientId") Long id){
+		List<Examination> examinations = examinationService.findAllByPatientIdAndStatus(id, "DONE");
+		
+		return new ResponseEntity<List<Examination>>(examinations, HttpStatus.OK);
+	}
 }

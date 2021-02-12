@@ -141,6 +141,8 @@ function userOptions(user){
     	
     }else if(user.type == "ROLE_SUPPLIER"){
     	showSupplierUserOptions();
+    }else if(user.type == "ROLE_PHARMACIST"){
+    	showPharmacistUserOptions();
     }
 }
 
@@ -211,6 +213,17 @@ function showSupplierUserOptions(){
     $(".sideBar").hide();
 }
 
+function showPharmacistUserOptions(){
+	$("#login").hide();
+    $("#register").hide();
+    $("#logout").show();
+    $("#patientProfile").hide();
+    $("#changePassword").show();
+    $("#systemAdminProfile").hide();
+    $("#pharmacyAdminProfile").hide();
+    $(".sideBar").hide();
+}
+
 
 function getCurrentUser(){
 	$.ajax({
@@ -222,6 +235,7 @@ function getCurrentUser(){
         complete: function (data) {
             welcomeMessage(data.responseJSON);
             userOptions(data.responseJSON);
+            getPatientByUserId(data.responseJSON.id);
             if(data.responseJSON != undefined && data.responseJSON.type != "ROLE_PATIENT"){
             	if(data.responseJSON.firstLogin){         	          
             		$("#modal").modal({
@@ -237,4 +251,31 @@ function getCurrentUser(){
            	}
         }
     });
+}
+
+
+function getPatientByUserId(userId){
+	$.ajax({
+        method: 'GET',
+        url: 'http://localhost:8080/getPatientByUserId/' + userId,
+        headers: {
+   			Authorization: 'Bearer ' + $.cookie('token')
+		},
+        complete: function (data) {                
+               patientPenaltiesOptions(data.responseJSON);
+        }
+	});
+}
+
+function patientPenaltiesOptions(patient){
+	if(patient.penalties >= 3){
+		$("#reserveMed a").removeAttr("href");
+		$("#reserveMed a").css("color", "red");
+		
+		$("#counseling a").removeAttr("href");
+		$("#counseling a").css("color", "red");
+		
+		$("#examination a").removeAttr("href");
+		$("#examination a").css("color", "red");
+	}
 }

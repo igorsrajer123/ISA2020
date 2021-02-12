@@ -59,8 +59,19 @@ function getPatientFromUserId(userId, pharmacyId){
         complete: function (data) {
             var patient = data.responseJSON;
            	getPatientSubscriptions(patient.id, pharmacyId);
+           	patientPenaltiesOptions(data.responseJSON);
         }
     });
+}
+
+function patientPenaltiesOptions(patient){
+	if(patient.penalties >= 3){
+		$("#reserveMedLink a").removeAttr("href");
+		$("#reserveMedLink a").css("color", "red");
+		
+		$("#scheduleCounselingLink a").removeAttr("href");
+		$("#scheduleCounselingLink a").css("color", "red");
+	}
 }
 
 function getPharmacy(userId){

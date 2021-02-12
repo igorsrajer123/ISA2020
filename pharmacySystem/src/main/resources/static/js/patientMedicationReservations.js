@@ -57,7 +57,8 @@ function getPatientActiveMedicationReservations(patientId){
 		            "</td><td>" + reservations[i].id +
 		            "</td><td>" + reservations[i].medicationFromPharmacy +
 		            "</td><td>" + reservations[i].pickUpDate +
-		            "</td><td><button id='" + reservations[i].id + reservations[i].id + "'>Cancell Reservation</button>" + 
+		            "</td><td><button id='" + reservations[i].id + reservations[i].id + "'>Cancel Reservation</button>" + 
+		            "</td><td><button id='" + reservations[i].id + "' style='color: green;'>Acquire Medication</button>" + 
 		            "</td></tr>");
 		                
 					$("#table").append(reservationsTable);
@@ -65,9 +66,34 @@ function getPatientActiveMedicationReservations(patientId){
 					getMedicationPharmacyFromReservation(reservations[i].id);
 					getMedicationPriceFromReservation(reservations[i].id);
 					cancelReservation(patientId, reservations[i].id);
+					acquireMedication(patientId, reservations[i].id);
 			}
         }
     });
+}
+
+function acquireMedication(patientId, reservationId){
+	$("#" + reservationId).click(function(event){
+		event.preventDefault();
+		
+		$.ajax({
+			url: 'http://localhost:8080/acquireMedication/' + patientId + '/' + reservationId,
+	        type: 'PUT',
+	        contentType: 'application/json',
+	        dataType: 'json',
+	        headers: {
+	   			Authorization: 'Bearer ' + $.cookie('token')
+			},
+	        complete: function (data) {
+	       		if(data.status == 200){
+	       			alert("Success!");
+	       			window.location.href = "index.html";	
+	       		}else if(data.status == 404){
+	       			alert("This reservation has expired!");
+	       		}
+	       	}
+		});
+	});
 }
 
 function getMedicationFromReservation(reservationId){

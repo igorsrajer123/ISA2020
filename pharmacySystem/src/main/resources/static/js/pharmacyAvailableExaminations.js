@@ -20,6 +20,7 @@ function getCurrentUser(){
            // 	getPharmacyFreeExaminations();
            		getPatientFromUserId(data.responseJSON.id);
            	}else if(data.responseJSON.type == "ROLE_PHARMACY_ADMIN"){
+           		$("#notification").show();
            		getAdminFromUserId(data.responseJSON.id);       		
            	}
         }

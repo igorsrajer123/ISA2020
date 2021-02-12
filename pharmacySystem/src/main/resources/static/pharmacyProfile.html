@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="css/pharmacyProfile.css">
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/jquery.cookie.js"></script> 
-    <script src="js/pharmacyProfile.js"></script>
+    <script src="js/pharmacyProfile.js"></script>  
 <body>
 	<nav class="navBar">
     </nav>
@@ -15,7 +15,7 @@
     			<img src="css/menuIcon.png" id="icon"/>
     		</li>
     		
-    		<li class="nav-item">
+    		<li class="nav-item" id="reserveMedLink">
     			<a href="makeMedicationReservation.html" class="nav-link" id="reserveMed">Reserve Medication</a>
     			<hr class="lines"/>
     		</li>
@@ -25,13 +25,13 @@
     			<hr class="lines"/>
     		</li>
     		
-    		<li class="nav-item">
+    		<li class="nav-item" id="scheduleCounselingLink">
     			<a href="scheduleCounseling.html" class="nav-link" id="scheduleCounseling">Schedule Counseling</a>
     			<hr class="lines"/>
     		</li>
     		
     		<li class="nav-item">
-    			<a href="#" class="nav-link" id="subscribe" style="color:red;"><b>Subscribe for Actions and Promotions</b></a>
+    			<a href="#" class="nav-link" id="subscribe" style="color:orange;"><b>Subscribe for Actions and Promotions</b></a>
     			<hr class="lines"/>
     		</li>
     	</ul>
@@ -52,7 +52,7 @@
 			<br/>
             <p>Pharmacy Rating:</p>
             <p class="pharmacyInfo" id="rating" style="color:#1E90FF;"></p>
-			
+            <br/>       			
 			<br/>
             <button id="pharmacyMeds">Pharmacy Medications</button>
             <br/><br/>

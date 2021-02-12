@@ -56,4 +56,14 @@ public class MedicationReservationController {
 		
 		return new ResponseEntity<MedicationReservation>(medReservations, HttpStatus.OK);
 	}
+	
+	@PutMapping(value = "/acquireMedication/{patientId}/{reservationId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_PATIENT')")
+	public ResponseEntity<MedicationReservation> acquireMedication(@PathVariable("patientId") Long patientId, @PathVariable("reservationId") Long reservationId){
+		MedicationReservation medReservations = medicationReservationService.acquireMedication(patientId, reservationId);
+		
+		if(medReservations == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		return new ResponseEntity<MedicationReservation>(medReservations, HttpStatus.OK);
+	}
 }

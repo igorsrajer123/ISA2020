@@ -59,36 +59,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/register").permitAll().antMatchers("/login").permitAll()
 		.antMatchers("/getUser").permitAll().antMatchers("/h2-console/**").permitAll()
 		
-		//.antMatchers("/cancelMedicationReservation/*").permitAll()
-		.antMatchers("/createCounseling").permitAll()
-		.antMatchers("/getPatientActiveCounselings/*").permitAll()
-		.antMatchers("/getPharmacistFromCounseling/*").permitAll()
-		.antMatchers("/cancelCounseling/*").permitAll()
-		.antMatchers("/getPharmacistCounselings/*").permitAll()
-		.antMatchers("/getPatientSubscriptions/*").permitAll()
-		.antMatchers("/subscribeToPharmacy/*/*").permitAll()
-		.antMatchers("/unsubscribeFromPharmacy/*/*").permitAll()
-		.antMatchers("/getPharmacyPromotions/*").permitAll()
-		.antMatchers("/createPromotion").permitAll()
-		.antMatchers("/createOrder").permitAll()
-		.antMatchers("/getPharmacyAdminOrders/*").permitAll()
-		.antMatchers("/createOrderItem").permitAll()
-		.antMatchers("/getOrderItems/*").permitAll()
-		.antMatchers("/getPharmacyOrders/*").permitAll()
-		.antMatchers("/getOrderOffers/*").permitAll()
-		.antMatchers("/acceptOffer/*").permitAll()
-		.antMatchers("/offerAccepted/*").permitAll()
-		.antMatchers("/deleteOrder/*").permitAll()
-		.antMatchers("/updateOrder").permitAll()
-		.antMatchers("/updateOrderItems/*").permitAll()
-		.antMatchers("/getOrderById/*").permitAll()
-		.antMatchers("/getAllSuppliers").permitAll()
-		.antMatchers("/getPharmacistRequests/*").permitAll()
-		.antMatchers("/getDermatologistRequests").permitAll()
-		.antMatchers("/getPharmacistFromAbsenceRequest/*").permitAll()
-		.antMatchers("/declineAbsence/*").permitAll()
-		.antMatchers("/acceptAbsence/*").permitAll()
-		.antMatchers("/getDermatologistFromAbsenceRequest/*").permitAll()
+		//.antMatchers("/cancelMedicationReservation/*").permitAll()	
+	//	.antMatchers("/offerAccepted/*").permitAll() ne postoji
+	//	.antMatchers("/updateOrderItems/*").permitAll() ne postoji
 		
 		.antMatchers("/", "/*.html", "/favicon.ico","/*.js", "/*.css").permitAll()
 		.anyRequest().authenticated().and()
@@ -119,6 +92,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 									"/getByStatusAndDermatologistId/*/*", "/getExaminationsByPharmacyIdAndStatus/*/*", "/getDermatologistByExaminationId/*",
 									"/getPatientActiveExaminations/*", "/getExaminationById/*", "/getMedicationInPharmacyFromReservation/*", "/getMedicationFromReservation/*",
 									"/getMedInPharmacyById/*", "/findPatientActiveMedicationReservations/*/*", "/getPatientMedicationReservations/*", "/getPharmaciesWithAvailablePharmacists/*/*",
-									"/getAvailablePharmacists/*/*/*");
+									"/getAvailablePharmacists/*/*/*", "/getPatientActiveCounselings/*", "/getPharmacistFromCounseling/*", "/getPharmacistCounselings/*",
+									"/getPatientSubscriptions/*", "/getPharmacyPromotions/*", "/getPharmacyAdminOrders/*", "/getOrderItems/*", "/getPharmacyOrders/*", "/getOrderOffers/*",
+									"/getOrderById/*", "/getAllSuppliers", "/getPharmacistRequests/*", "/getDermatologistRequests", "/getPharmacistFromAbsenceRequest/*", 
+									"/getDermatologistFromAbsenceRequest/*", "/getPatientDoneCounselings/*", "/getPatientDoneExaminations/*");
 	}
 }

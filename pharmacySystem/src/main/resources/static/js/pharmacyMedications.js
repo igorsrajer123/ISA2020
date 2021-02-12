@@ -22,6 +22,7 @@ function getCurrentUser(){
             	$("#addMedication").hide();
            	}else if(data.responseJSON.type == "ROLE_PHARMACY_ADMIN"){
            		$("#addMedication").show();
+           		$("#notification").show();
            		getAdminFromUserId(data.responseJSON.id);
            	}
         }
@@ -64,6 +65,7 @@ function getPharmacyMedicationsPatient(){
                 "</td><td>" + meds[i].sideEffects +
                 "</td><td>" + meds[i].price +
                 "</td><td>" + meds[i].amount +
+                "</td><td>" + meds[i].priceExpiringDate +
                 "</td></tr>");
                 
                 $("#table").append(medsTable);

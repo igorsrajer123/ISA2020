@@ -13,12 +13,14 @@ import com.example.pharmacySystem.model.Counseling;
 import com.example.pharmacySystem.model.Examination;
 import com.example.pharmacySystem.model.MedicationReservation;
 import com.example.pharmacySystem.model.MedicationsPharmacies;
+import com.example.pharmacySystem.model.OrderForm;
 import com.example.pharmacySystem.model.Patient;
 import com.example.pharmacySystem.model.Promotion;
 import com.example.pharmacySystem.repository.CounselingRepository;
 import com.example.pharmacySystem.repository.ExaminationRepository;
 import com.example.pharmacySystem.repository.MedicationReservationRepository;
 import com.example.pharmacySystem.repository.MedicationsPharmaciesRepository;
+import com.example.pharmacySystem.repository.OrderFormRepository;
 import com.example.pharmacySystem.repository.PatientRepository;
 import com.example.pharmacySystem.repository.PromotionRepository;
 
@@ -42,6 +44,9 @@ public class Scheduling {
 	
 	@Autowired
 	private MedicationsPharmaciesRepository medsInPharmaciesRepository;
+	
+	@Autowired
+	private OrderFormRepository orderRepository;
 	
 	@Scheduled(initialDelay = 5000L, fixedDelay = 10000L)
 	void patientCounselingsDone() {
@@ -123,6 +128,19 @@ public class Scheduling {
 				System.out.println("Med deleted!");
 				mp.setDeleted(true);
 				medsInPharmaciesRepository.save(mp);
+			}
+		}
+	}
+	
+	@Scheduled(initialDelay = 10000L, fixedDelay = 10000L)
+	void orderFormExpires() {
+		List<OrderForm> orders = orderRepository.findAll();
+		
+		for(OrderForm o : orders) {
+			if(java.sql.Date.valueOf(o.getUntilDate()).before(java.sql.Date.valueOf(LocalDate.now()))) {
+				System.out.println("Order deleted!");
+				o.setDeleted(true);
+				orderRepository.save(o);
 			}
 		}
 	}

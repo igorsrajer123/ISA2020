@@ -309,4 +309,8 @@ public class ExaminationService {
 		examinationRepository.save(ex);
 		return ex;
 	}
+	
+	public List<Examination> findAllByPatientIdAndStatus(Long patientId, String status){
+		return examinationRepository.findAllByPatientIdAndStatus(patientId, status);
+	}
 }

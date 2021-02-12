@@ -58,7 +58,7 @@ function getDermatologistAbsences(){
 	                "</td><td>" + absences[i].until +
 		            "</td><td>" + absences[i].status +
 		            "</td><td><button id='" + absences[i].id + absences[i].id + "'>Accept</button>" + 
-		            "</td><td><button id='" + absences[i].id + absences[i].id + absences[i].id +"'>Decline</button>" +
+		            "</td><td><button id='" + absences[i].id + absences[i].id + absences[i].id +"' style='color:red;'>Decline</button>" +
 	                "</td></tr>");
 	                
 	                $("#table").append(absencesTable);          	
@@ -115,7 +115,7 @@ function getPharmacistAbsences(pharmacyId){
 	                "</td><td>" + absences[i].until +
 		            "</td><td>" + absences[i].status +
 		            "</td><td><button id='" + absences[i].id + absences[i].id + "'>Accept</button>" + 
-		            "</td><td><button id='" + absences[i].id + absences[i].id + absences[i].id +"'>Decline</button>" +
+		            "</td><td><button id='" + absences[i].id + absences[i].id + absences[i].id +"' style='color:red;'>Decline</button>" +
 	                "</td></tr>");
 	                
 	                $("#table").append(absencesTable);

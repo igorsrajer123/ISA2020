@@ -13,11 +13,17 @@ $(window).on('load', function(){
 		else if(!$("#filters").is(":hidden"))
 			$("#filters").slideUp(1000);
 	});
+	
+	$("#notification").hide();
 });
 
 function blockTableClick(user){
-	if(user == undefined || user.type == "ROLE_PHARMACY_SYSTEM_ADMIN")
-	   $("#table tr").off("click");
+	if(user == undefined || user.type == "ROLE_PHARMACY_SYSTEM_ADMIN"){
+	   $("#table tr").off("click");	
+		$("#notification").hide();
+	}else if(user.type = "ROLE_PATIENT"){
+		$("#notification").show();
+	}
 }
 
 function getCurrentUser(){

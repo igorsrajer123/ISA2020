@@ -236,7 +236,8 @@ function checkFields(adminId, orderId){
 						Authorization: 'Bearer ' + $.cookie('token')
 					},
 					complete: function (data) {
-						if (data.status == 200){    							
+						if (data.status == 200){    
+							window.location.href = "viewOrders.html";							
 							$("#table [type='checkbox']").each(function(i, check){
 								if(check.checked){
 									var medId = $(this).attr('id');

@@ -10,7 +10,7 @@ INSERT INTO medication_type(name) VALUES ('Anesthetic');
 INSERT INTO medication_type(name) VALUES ('Antibiotic');
 INSERT INTO medication_type(name) VALUES ('Antihistamine');
 INSERT INTO medication_type(name) VALUES ('Androgen');
-INSERT INTO medication_type(name) VALUES ('Antiandrogens');
+INSERT INTO medication_type(name) VALUES ('Antiandrogen');
 INSERT INTO medication_type(name) VALUES ('Estrogen');
 INSERT INTO medication_type(name) VALUES ('Antiseptic');
 INSERT INTO medication_type(name) VALUES ('Local Anesthetic');
@@ -24,33 +24,33 @@ INSERT INTO medication_type(name) VALUES ('Antiviral');
 INSERT INTO medication_type(name) VALUES ('Antitoxin');
 
 --user password: 123
--- system admin password: admin
--- pharmacy admin password: phadmin
---dermatologist 1 password: derma
---supplier password: supp
---dermatologist 2 password: derma2
---dermatologist 3 password: derma3
---pharmacist 1 password: pharma
---pharmacist 2 password: pharma2
---dermatologist 4 password: derma4
---pharmacy admin2 password: phadmin2
---supplier 2 password: supp2
---supplier 3 password: supp3
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('isapsw1234@gmail.com', '$2a$10$M3.YOtEuBCSNbgzJ3hkQv.ZgOMGNSTataYMx1UU7OnqMrlC6Osgzm', 'Misa', 'Dimitrijevic', 'ROLE_PATIENT', true, true, false);
+-- system admin password: admin
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('admin@gmail.com', '$2a$10$cQSdC5wh2L6oZ2QFGNyD.OhnZ7akIGf7FEx0lmQ4RK6RiHyqz7cOC', 'Nikola', 'Stankovic', 'ROLE_PHARMACY_SYSTEM_ADMIN', true, true, true);
+-- pharmacy admin password: phadmin
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('phadmin@gmail.com', '$2a$10$n8yxFV7zy7PDResCzemMLOhcPcbwLuF7Npn5lHhxVg6pKkFOi8PE2', 'Sima', 'Savic', 'ROLE_PHARMACY_ADMIN', true, true, true);
+--supplier password: supp
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('supp@gmail.com', '$2a$10$2io/7xyfMDpHe4tkBse/VeuSYma/m4rt7lVb.MdslpFvJ/AGUGIvq', 'Sinisa', 'Bekic', 'ROLE_SUPPLIER', true, true, true);
+--dermatologist 2 password: derma2
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('derma2@gmail.com', '$2a$10$crj2ORyKLiXLB.YZaLJw8eNY.ZZCoFrMotcIfMNKNUEHnBDpg6YiW', 'Pera', 'Detlic', 'ROLE_DERMATOLOGIST', true, true, true);
+--dermatologist 1 password: derma
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('derma@gmail.com', '$2a$10$oelbk6QvYYQ507ltE2UHeO/q6a1Lc5KYUT0niU1GTbQezsIaxnCye', 'Sasa', 'Sakic', 'ROLE_DERMATOLOGIST', true, true, true);
+--dermatologist 3 password: derma3
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('derma3@gmail.com', '$2a$10$nRKPXolFTWacoiwT/gwr7.UHnfTFobcwAnFVazTjQOQWMgsbbFDCW', 'Marko', 'Savkovic', 'ROLE_DERMATOLOGIST', true, true, true);
+--pharmacist 1 password: pharma
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('pharma@gmail.com', '$2a$10$xAZAZSPxDkZwEK6M5CdRl.s..ehMpu8buh.30afnLFw.7MhsKaAHu', 'Mateja', 'Kezman', 'ROLE_PHARMACIST', true, true, true);
+--pharmacist 2 password: pharma2
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('pharma2@gmail.com', '$2a$10$RcH9987wE/Ki5A9Jcy4WxOjwO.f/Lg7qb0l3AC3a/.kYxSEDAauKO', 'Boro', 'Drljaca', 'ROLE_PHARMACIST', true, true, true);
+--dermatologist 4 password: derma4
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('derma4@gmail.com', '$2a$10$hnftkRIbDohiKU/DioxxTuuAT435oXq3Lj2sobLJ7bco/UsIqfMlK', 'Keba', 'Kraba', 'ROLE_DERMATOLOGIST', true, true, true);
+--pharmacy admin2 password: phadmin2
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('phadmin2@gmail.com', '$2a$10$/tn3byVZBK1iDkiiH7Qj.uj6nWIlAib7SHI5cASgAbj5dob33aOgK', 'Bosko', 'Buha', 'ROLE_PHARMACY_ADMIN', true, true, true);
+--supplier 2 password: supp2
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('supp2@gmail.com', '$2a$10$04z7VrBpCTgxsbZQw8/2teNFBcbyYXziBt.NGwYCRKJOvEKf7LF7a', 'Mustafa', 'Golubic', 'ROLE_SUPPLIER', true, true, true);
+--supplier 3 password: supp3
 INSERT INTO user_entity(email, password, first_name, last_name, type, activated, enabled, first_login) VALUES ('supp3@gmail.com', '$2a$10$04z7VrBpCTgxsbZQw8/2teNFBcbyYXziBt.NGwYCRKJOvEKf7LF7a', 'Miroslav', 'Ilic', 'ROLE_SUPPLIER', true, true, true);
 
-INSERT INTO patient(address, phone_number, city, country, processed, user_id, penalties) VALUES ('adresica','1234567890', 'zrenjanin', 'serbia', true, 1, 0);
+INSERT INTO patient(address, phone_number, city, country, processed, user_id, penalties) VALUES ('adresica','1234567890', 'zrenjanin', 'serbia', true, 1, 2);
 
 INSERT INTO pharmacy_system_administrator(user_id) VALUES (2);
 
@@ -141,8 +141,8 @@ INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_
 INSERT INTO examination(date, duration, status, time, dermatologist_id, patient_id, pharmacy_id, price) VALUES ('2021-02-7', 1, 'ACTIVE', '10:00', 4, 1, 1, 155.0);
 
 INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'ACTIVE', 10, 11, 1, 1);
-INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'ACTIVE', 11, 12, 1, 1);
-INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'ACTIVE', 16, 17, 1, 1);
+--INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'ACTIVE', 11, 12, 1, 1);
+--INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-09', 'ACTIVE', 16, 17, 1, 1);
 INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-05', 'CANCELLED', 8, 10, 1, 2);
 INSERT INTO counseling(date, status, start_hour, end_hour, patient_id, pharmacist_id) VALUES ('2021-02-07', 'ACTIVE', 11, 14, 1, 2);
 
@@ -153,7 +153,7 @@ INSERT INTO patient_pharmacy_subscriptions(patient_id, pharmacy_id) VALUES (1, 1
 INSERT INTO promotion(text, until_date, pharmacy_id, deleted) VALUES ('PROMOTION FOR FERVEX: -80% DISCOUNT', '2021-02-27', 1, false);	
 
 INSERT INTO order_form(deleted, until_date, pharmacy_administrator_id) VALUES (false, '2021-02-09', 1);
-INSERT INTO order_form(deleted, until_date, pharmacy_administrator_id) VALUES (false, '2021-02-5', 1);
+INSERT INTO order_form(deleted, until_date, pharmacy_administrator_id) VALUES (false, '2021-02-25', 1);
 
 INSERT INTO medications_to_order(amount, deleted, medication_id, order_form_id) VALUES (111, false, 1, 1);
 INSERT INTO medications_to_order(amount, deleted, medication_id, order_form_id) VALUES (23, false, 2, 2);
@@ -163,7 +163,7 @@ INSERT INTO offer(date_of_delivery, price, status, order_id, supplier_id) VALUES
 INSERT INTO offer(date_of_delivery, price, status, order_id, supplier_id) VALUES ('2021-03-02', 1700, 'ACTIVE', 1, 2);
 INSERT INTO offer(date_of_delivery, price, status, order_id, supplier_id) VALUES ('2021-03-07', 1800, 'ACTIVE', 1, 3);
 
-INSERT INTO absence(deleted, date_from, date_until, status, dermatologist_id, pharmacist_id, pharmacy_id) VALUES (false, '2021-03-05', '2021-04-05', 'PENDING', null, 1, 1);
+--INSERT INTO absence(deleted, date_from, date_until, status, dermatologist_id, pharmacist_id, pharmacy_id) VALUES (false, '2021-03-05', '2021-04-05', 'PENDING', null, 1, 1);
 INSERT INTO absence(deleted, date_from, date_until, status, dermatologist_id, pharmacist_id, pharmacy_id) VALUES (false, '2021-03-26', '2021-04-12', 'PENDING', null, 2, 1);
 
 INSERT INTO absence(deleted, date_from, date_until, status, dermatologist_id, pharmacist_id, pharmacy_id) VALUES (false, '2021-06-06', '2021-06-21', 'PENDING', 1, null, 1);

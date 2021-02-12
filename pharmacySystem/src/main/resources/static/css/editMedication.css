@@ -113,3 +113,14 @@ p{
 	background: red;
 	color: white;
 }
+
+#back{
+    border: 2px solid #FFFF;
+	background: white;
+	padding: 1px 1px;
+	font-size: 20px;
+	font-family: "Georgia", "Comic Sans", cursive;
+    margin: 5px;
+    color: #1E90FF;
+    font-weight: bold;
+}
