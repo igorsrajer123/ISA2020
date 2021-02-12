@@ -28,8 +28,7 @@ $ git clone https://github.com/igorsrajer123/ISA2020
 <ol>
   <li>Import Project in IDE</li>
   <li>Maven -> Update Project</li>
-  <li>Run As -> Maven Build..</li>
-  <li>Goals: clean compile install</li>
+  <li>Run As -> Maven Build.. (goals: clean compile install)</li>
   <li>Run as Java Application</li>
 </ol>
 
